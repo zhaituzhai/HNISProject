@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaojm.mapper.IDictionaryMapper">
+  <resultMap id="BaseResultMap" type="com.zhaojm.bean.DictionaryDTO">
+    <id column="dictionary_id" jdbcType="INTEGER" property="dictionaryId" />
+    <result column="data_code" jdbcType="INTEGER" property="dataCode" />
+    <result column="data_type" jdbcType="VARCHAR" property="dataType" />
+    <result column="data_value" jdbcType="VARCHAR" property="dataValue" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    dictionary_id, data_code, data_type, data_value
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dictionary
+    where dictionary_id = #{dictionaryId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dictionary
+    where dictionary_id = #{dictionaryId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhaojm.bean.DictionaryDTO">
+    insert into dictionary (dictionary_id, data_code, data_type, 
+      data_value)
+    values (#{dictionaryId,jdbcType=INTEGER}, #{dataCode,jdbcType=INTEGER}, #{dataType,jdbcType=VARCHAR}, 
+      #{dataValue,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhaojm.bean.DictionaryDTO">
+    insert into dictionary
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dictionaryId != null">
+        dictionary_id,
+      </if>
+      <if test="dataCode != null">
+        data_code,
+      </if>
+      <if test="dataType != null">
+        data_type,
+      </if>
+      <if test="dataValue != null">
+        data_value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dictionaryId != null">
+        #{dictionaryId,jdbcType=INTEGER},
+      </if>
+      <if test="dataCode != null">
+        #{dataCode,jdbcType=INTEGER},
+      </if>
+      <if test="dataType != null">
+        #{dataType,jdbcType=VARCHAR},
+      </if>
+      <if test="dataValue != null">
+        #{dataValue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhaojm.bean.DictionaryDTO">
+    update dictionary
+    <set>
+      <if test="dataCode != null">
+        data_code = #{dataCode,jdbcType=INTEGER},
+      </if>
+      <if test="dataType != null">
+        data_type = #{dataType,jdbcType=VARCHAR},
+      </if>
+      <if test="dataValue != null">
+        data_value = #{dataValue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dictionary_id = #{dictionaryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhaojm.bean.DictionaryDTO">
+    update dictionary
+    set data_code = #{dataCode,jdbcType=INTEGER},
+      data_type = #{dataType,jdbcType=VARCHAR},
+      data_value = #{dataValue,jdbcType=VARCHAR}
+    where dictionary_id = #{dictionaryId,jdbcType=INTEGER}
+  </update>
+</mapper>

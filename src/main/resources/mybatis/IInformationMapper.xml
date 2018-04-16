@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaojm.mapper.IInformationMapper">
+  <resultMap id="BaseResultMap" type="com.zhaojm.bean.InformationDTO">
+    <id column="information_id" jdbcType="INTEGER" property="informationId" />
+    <result column="information_time" jdbcType="VARCHAR" property="informationTime" />
+    <result column="information_author" jdbcType="VARCHAR" property="informationAuthor" />
+    <result column="information_title" jdbcType="VARCHAR" property="informationTitle" />
+    <result column="information_main" jdbcType="VARCHAR" property="informationMain" />
+    <result column="information_label" jdbcType="VARCHAR" property="informationLabel" />
+    <result column="entry_porson" jdbcType="INTEGER" property="entryPorson" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    information_id, information_time, information_author, information_title, information_main, 
+    information_label, entry_porson
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from information
+    where information_id = #{informationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from information
+    where information_id = #{informationId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhaojm.bean.InformationDTO">
+    insert into information (information_id, information_time, information_author, 
+      information_title, information_main, information_label, 
+      entry_porson)
+    values (#{informationId,jdbcType=INTEGER}, #{informationTime,jdbcType=VARCHAR}, #{informationAuthor,jdbcType=VARCHAR}, 
+      #{informationTitle,jdbcType=VARCHAR}, #{informationMain,jdbcType=VARCHAR}, #{informationLabel,jdbcType=VARCHAR}, 
+      #{entryPorson,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhaojm.bean.InformationDTO">
+    insert into information
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="informationId != null">
+        information_id,
+      </if>
+      <if test="informationTime != null">
+        information_time,
+      </if>
+      <if test="informationAuthor != null">
+        information_author,
+      </if>
+      <if test="informationTitle != null">
+        information_title,
+      </if>
+      <if test="informationMain != null">
+        information_main,
+      </if>
+      <if test="informationLabel != null">
+        information_label,
+      </if>
+      <if test="entryPorson != null">
+        entry_porson,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="informationId != null">
+        #{informationId,jdbcType=INTEGER},
+      </if>
+      <if test="informationTime != null">
+        #{informationTime,jdbcType=VARCHAR},
+      </if>
+      <if test="informationAuthor != null">
+        #{informationAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="informationTitle != null">
+        #{informationTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="informationMain != null">
+        #{informationMain,jdbcType=VARCHAR},
+      </if>
+      <if test="informationLabel != null">
+        #{informationLabel,jdbcType=VARCHAR},
+      </if>
+      <if test="entryPorson != null">
+        #{entryPorson,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhaojm.bean.InformationDTO">
+    update information
+    <set>
+      <if test="informationTime != null">
+        information_time = #{informationTime,jdbcType=VARCHAR},
+      </if>
+      <if test="informationAuthor != null">
+        information_author = #{informationAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="informationTitle != null">
+        information_title = #{informationTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="informationMain != null">
+        information_main = #{informationMain,jdbcType=VARCHAR},
+      </if>
+      <if test="informationLabel != null">
+        information_label = #{informationLabel,jdbcType=VARCHAR},
+      </if>
+      <if test="entryPorson != null">
+        entry_porson = #{entryPorson,jdbcType=INTEGER},
+      </if>
+    </set>
+    where information_id = #{informationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhaojm.bean.InformationDTO">
+    update information
+    set information_time = #{informationTime,jdbcType=VARCHAR},
+      information_author = #{informationAuthor,jdbcType=VARCHAR},
+      information_title = #{informationTitle,jdbcType=VARCHAR},
+      information_main = #{informationMain,jdbcType=VARCHAR},
+      information_label = #{informationLabel,jdbcType=VARCHAR},
+      entry_porson = #{entryPorson,jdbcType=INTEGER}
+    where information_id = #{informationId,jdbcType=INTEGER}
+  </update>
+</mapper>

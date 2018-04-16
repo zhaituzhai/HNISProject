@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaojm.mapper.IPatientMapper">
+  <resultMap id="BaseResultMap" type="com.zhaojm.bean.PatientDTO">
+    <id column="patient_id" jdbcType="INTEGER" property="patientId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="patient_name" jdbcType="VARCHAR" property="patientName" />
+    <result column="patient_sex" jdbcType="VARCHAR" property="patientSex" />
+    <result column="patient_born" jdbcType="VARCHAR" property="patientBorn" />
+    <result column="patient_nation" jdbcType="VARCHAR" property="patientNation" />
+    <result column="bloodtype" jdbcType="VARCHAR" property="bloodtype" />
+    <result column="patient_occupation" jdbcType="VARCHAR" property="patientOccupation" />
+    <result column="patient_marriage" jdbcType="VARCHAR" property="patientMarriage" />
+    <result column="patient_icon" jdbcType="VARCHAR" property="patientIcon" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    patient_id, user_id, patient_name, patient_sex, patient_born, patient_nation, bloodtype, 
+    patient_occupation, patient_marriage, patient_icon
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from patient
+    where patient_id = #{patientId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from patient
+    where patient_id = #{patientId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhaojm.bean.PatientDTO">
+    insert into patient (patient_id, user_id, patient_name, 
+      patient_sex, patient_born, patient_nation, 
+      bloodtype, patient_occupation, patient_marriage, 
+      patient_icon)
+    values (#{patientId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{patientName,jdbcType=VARCHAR}, 
+      #{patientSex,jdbcType=VARCHAR}, #{patientBorn,jdbcType=VARCHAR}, #{patientNation,jdbcType=VARCHAR}, 
+      #{bloodtype,jdbcType=VARCHAR}, #{patientOccupation,jdbcType=VARCHAR}, #{patientMarriage,jdbcType=VARCHAR}, 
+      #{patientIcon,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhaojm.bean.PatientDTO">
+    insert into patient
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="patientId != null">
+        patient_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="patientName != null">
+        patient_name,
+      </if>
+      <if test="patientSex != null">
+        patient_sex,
+      </if>
+      <if test="patientBorn != null">
+        patient_born,
+      </if>
+      <if test="patientNation != null">
+        patient_nation,
+      </if>
+      <if test="bloodtype != null">
+        bloodtype,
+      </if>
+      <if test="patientOccupation != null">
+        patient_occupation,
+      </if>
+      <if test="patientMarriage != null">
+        patient_marriage,
+      </if>
+      <if test="patientIcon != null">
+        patient_icon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="patientId != null">
+        #{patientId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="patientName != null">
+        #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="patientSex != null">
+        #{patientSex,jdbcType=VARCHAR},
+      </if>
+      <if test="patientBorn != null">
+        #{patientBorn,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNation != null">
+        #{patientNation,jdbcType=VARCHAR},
+      </if>
+      <if test="bloodtype != null">
+        #{bloodtype,jdbcType=VARCHAR},
+      </if>
+      <if test="patientOccupation != null">
+        #{patientOccupation,jdbcType=VARCHAR},
+      </if>
+      <if test="patientMarriage != null">
+        #{patientMarriage,jdbcType=VARCHAR},
+      </if>
+      <if test="patientIcon != null">
+        #{patientIcon,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhaojm.bean.PatientDTO">
+    update patient
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="patientName != null">
+        patient_name = #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="patientSex != null">
+        patient_sex = #{patientSex,jdbcType=VARCHAR},
+      </if>
+      <if test="patientBorn != null">
+        patient_born = #{patientBorn,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNation != null">
+        patient_nation = #{patientNation,jdbcType=VARCHAR},
+      </if>
+      <if test="bloodtype != null">
+        bloodtype = #{bloodtype,jdbcType=VARCHAR},
+      </if>
+      <if test="patientOccupation != null">
+        patient_occupation = #{patientOccupation,jdbcType=VARCHAR},
+      </if>
+      <if test="patientMarriage != null">
+        patient_marriage = #{patientMarriage,jdbcType=VARCHAR},
+      </if>
+      <if test="patientIcon != null">
+        patient_icon = #{patientIcon,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where patient_id = #{patientId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhaojm.bean.PatientDTO">
+    update patient
+    set user_id = #{userId,jdbcType=INTEGER},
+      patient_name = #{patientName,jdbcType=VARCHAR},
+      patient_sex = #{patientSex,jdbcType=VARCHAR},
+      patient_born = #{patientBorn,jdbcType=VARCHAR},
+      patient_nation = #{patientNation,jdbcType=VARCHAR},
+      bloodtype = #{bloodtype,jdbcType=VARCHAR},
+      patient_occupation = #{patientOccupation,jdbcType=VARCHAR},
+      patient_marriage = #{patientMarriage,jdbcType=VARCHAR},
+      patient_icon = #{patientIcon,jdbcType=VARCHAR}
+    where patient_id = #{patientId,jdbcType=INTEGER}
+  </update>
+</mapper>

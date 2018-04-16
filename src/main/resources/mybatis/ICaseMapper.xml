@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaojm.mapper.ICaseMapper">
+  <resultMap id="BaseResultMap" type="com.zhaojm.bean.CaseDTO">
+    <id column="case_id" jdbcType="INTEGER" property="caseId" />
+    <result column="patient_id" jdbcType="INTEGER" property="patientId" />
+    <result column="patient_name" jdbcType="VARCHAR" property="patientName" />
+    <result column="doctor_id" jdbcType="INTEGER" property="doctorId" />
+    <result column="disease_id" jdbcType="INTEGER" property="diseaseId" />
+    <result column="illness_time" jdbcType="VARCHAR" property="illnessTime" />
+    <result column="illness_grade" jdbcType="VARCHAR" property="illnessGrade" />
+    <result column="cure_time" jdbcType="VARCHAR" property="cureTime" />
+    <result column="cure_cycle" jdbcType="VARCHAR" property="cureCycle" />
+    <result column="illness_desc" jdbcType="VARCHAR" property="illnessDesc" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    case_id, patient_id, patient_name, doctor_id, disease_id, illness_time, illness_grade, 
+    cure_time, cure_cycle, illness_desc, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from case
+    where case_id = #{caseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from case
+    where case_id = #{caseId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhaojm.bean.CaseDTO">
+    insert into case (case_id, patient_id, patient_name, 
+      doctor_id, disease_id, illness_time, 
+      illness_grade, cure_time, cure_cycle, 
+      illness_desc, remark)
+    values (#{caseId,jdbcType=INTEGER}, #{patientId,jdbcType=INTEGER}, #{patientName,jdbcType=VARCHAR}, 
+      #{doctorId,jdbcType=INTEGER}, #{diseaseId,jdbcType=INTEGER}, #{illnessTime,jdbcType=VARCHAR}, 
+      #{illnessGrade,jdbcType=VARCHAR}, #{cureTime,jdbcType=VARCHAR}, #{cureCycle,jdbcType=VARCHAR}, 
+      #{illnessDesc,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhaojm.bean.CaseDTO">
+    insert into case
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="caseId != null">
+        case_id,
+      </if>
+      <if test="patientId != null">
+        patient_id,
+      </if>
+      <if test="patientName != null">
+        patient_name,
+      </if>
+      <if test="doctorId != null">
+        doctor_id,
+      </if>
+      <if test="diseaseId != null">
+        disease_id,
+      </if>
+      <if test="illnessTime != null">
+        illness_time,
+      </if>
+      <if test="illnessGrade != null">
+        illness_grade,
+      </if>
+      <if test="cureTime != null">
+        cure_time,
+      </if>
+      <if test="cureCycle != null">
+        cure_cycle,
+      </if>
+      <if test="illnessDesc != null">
+        illness_desc,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="caseId != null">
+        #{caseId,jdbcType=INTEGER},
+      </if>
+      <if test="patientId != null">
+        #{patientId,jdbcType=INTEGER},
+      </if>
+      <if test="patientName != null">
+        #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorId != null">
+        #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="diseaseId != null">
+        #{diseaseId,jdbcType=INTEGER},
+      </if>
+      <if test="illnessTime != null">
+        #{illnessTime,jdbcType=VARCHAR},
+      </if>
+      <if test="illnessGrade != null">
+        #{illnessGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="cureTime != null">
+        #{cureTime,jdbcType=VARCHAR},
+      </if>
+      <if test="cureCycle != null">
+        #{cureCycle,jdbcType=VARCHAR},
+      </if>
+      <if test="illnessDesc != null">
+        #{illnessDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhaojm.bean.CaseDTO">
+    update case
+    <set>
+      <if test="patientId != null">
+        patient_id = #{patientId,jdbcType=INTEGER},
+      </if>
+      <if test="patientName != null">
+        patient_name = #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorId != null">
+        doctor_id = #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="diseaseId != null">
+        disease_id = #{diseaseId,jdbcType=INTEGER},
+      </if>
+      <if test="illnessTime != null">
+        illness_time = #{illnessTime,jdbcType=VARCHAR},
+      </if>
+      <if test="illnessGrade != null">
+        illness_grade = #{illnessGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="cureTime != null">
+        cure_time = #{cureTime,jdbcType=VARCHAR},
+      </if>
+      <if test="cureCycle != null">
+        cure_cycle = #{cureCycle,jdbcType=VARCHAR},
+      </if>
+      <if test="illnessDesc != null">
+        illness_desc = #{illnessDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where case_id = #{caseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhaojm.bean.CaseDTO">
+    update case
+    set patient_id = #{patientId,jdbcType=INTEGER},
+      patient_name = #{patientName,jdbcType=VARCHAR},
+      doctor_id = #{doctorId,jdbcType=INTEGER},
+      disease_id = #{diseaseId,jdbcType=INTEGER},
+      illness_time = #{illnessTime,jdbcType=VARCHAR},
+      illness_grade = #{illnessGrade,jdbcType=VARCHAR},
+      cure_time = #{cureTime,jdbcType=VARCHAR},
+      cure_cycle = #{cureCycle,jdbcType=VARCHAR},
+      illness_desc = #{illnessDesc,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where case_id = #{caseId,jdbcType=INTEGER}
+  </update>
+</mapper>

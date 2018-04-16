@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaojm.mapper.IDoctorMapper">
+  <resultMap id="BaseResultMap" type="com.zhaojm.bean.DoctorDTO">
+    <id column="doctor_id" jdbcType="INTEGER" property="doctorId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="doctor_name" jdbcType="VARCHAR" property="doctorName" />
+    <result column="doctor_sex" jdbcType="VARCHAR" property="doctorSex" />
+    <result column="departement_id" jdbcType="VARCHAR" property="departementId" />
+    <result column="doctor_title" jdbcType="VARCHAR" property="doctorTitle" />
+    <result column="doctor_hospital" jdbcType="VARCHAR" property="doctorHospital" />
+    <result column="doctor_icon" jdbcType="VARCHAR" property="doctorIcon" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    doctor_id, user_id, doctor_name, doctor_sex, departement_id, doctor_title, doctor_hospital, 
+    doctor_icon
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from doctor
+    where doctor_id = #{doctorId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from doctor
+    where doctor_id = #{doctorId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhaojm.bean.DoctorDTO">
+    insert into doctor (doctor_id, user_id, doctor_name, 
+      doctor_sex, departement_id, doctor_title, 
+      doctor_hospital, doctor_icon)
+    values (#{doctorId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{doctorName,jdbcType=VARCHAR}, 
+      #{doctorSex,jdbcType=VARCHAR}, #{departementId,jdbcType=VARCHAR}, #{doctorTitle,jdbcType=VARCHAR}, 
+      #{doctorHospital,jdbcType=VARCHAR}, #{doctorIcon,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhaojm.bean.DoctorDTO">
+    insert into doctor
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="doctorId != null">
+        doctor_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="doctorName != null">
+        doctor_name,
+      </if>
+      <if test="doctorSex != null">
+        doctor_sex,
+      </if>
+      <if test="departementId != null">
+        departement_id,
+      </if>
+      <if test="doctorTitle != null">
+        doctor_title,
+      </if>
+      <if test="doctorHospital != null">
+        doctor_hospital,
+      </if>
+      <if test="doctorIcon != null">
+        doctor_icon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="doctorId != null">
+        #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="doctorName != null">
+        #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorSex != null">
+        #{doctorSex,jdbcType=VARCHAR},
+      </if>
+      <if test="departementId != null">
+        #{departementId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTitle != null">
+        #{doctorTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorHospital != null">
+        #{doctorHospital,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorIcon != null">
+        #{doctorIcon,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhaojm.bean.DoctorDTO">
+    update doctor
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="doctorName != null">
+        doctor_name = #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorSex != null">
+        doctor_sex = #{doctorSex,jdbcType=VARCHAR},
+      </if>
+      <if test="departementId != null">
+        departement_id = #{departementId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTitle != null">
+        doctor_title = #{doctorTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorHospital != null">
+        doctor_hospital = #{doctorHospital,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorIcon != null">
+        doctor_icon = #{doctorIcon,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where doctor_id = #{doctorId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhaojm.bean.DoctorDTO">
+    update doctor
+    set user_id = #{userId,jdbcType=INTEGER},
+      doctor_name = #{doctorName,jdbcType=VARCHAR},
+      doctor_sex = #{doctorSex,jdbcType=VARCHAR},
+      departement_id = #{departementId,jdbcType=VARCHAR},
+      doctor_title = #{doctorTitle,jdbcType=VARCHAR},
+      doctor_hospital = #{doctorHospital,jdbcType=VARCHAR},
+      doctor_icon = #{doctorIcon,jdbcType=VARCHAR}
+    where doctor_id = #{doctorId,jdbcType=INTEGER}
+  </update>
+</mapper>
