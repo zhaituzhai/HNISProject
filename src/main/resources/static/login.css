@@ -1,0 +1,87 @@
+/** CSS for Login Box **/
+body{
+	font-family: Helvetica,Arial,sans-serif;
+	margin: 0px 0px 0px 0px;
+	font-size: 14px;
+}
+
+div.wrapper{
+	background-image:url(images/login/bg.gif); /* our wrapper bg image */
+	background-repeat:no-repeat; /*we dont want this image to repeat ever! */
+	width:348px; /*width of the image */
+	height:384px; /* height of image */
+	margin-left:4px; /* margin from left side of screen*/
+	padding-top:75px; /* used to position rest of content below ribbon */
+}
+
+div.ribbon{
+	background-image:url(images/login/ribbon.png); /* our ribbon image */
+	background-repeat:no-repeat;	/* no repeating of image */
+	width:358px;	/* width of image */
+	height:45px;	/* height of image */
+	float:left;	/* float this image to the left */
+	margin-top:25px;	/* our margin from the top of the background */
+	padding-left:25px;	/* text padding left */
+	padding-top:5px;	/* text padding above text */
+	color:#ffffff;	/* text color */
+	font-weight:bold; /*text weight */
+}
+
+div.logo{
+	background:url(images/login/logo.png) no-repeat; /* combined background attribute */
+	width:330px;
+	height:115px;
+}
+
+/** Login Block **/
+div.loginwrapper{
+	margin-left:40px;
+}
+span.usertext{
+	color:#478fab;
+	font-weight:bold;
+}
+
+input.textbox{
+	background:url(images/login/text_field.png) 0px -25px;
+	width:264px;
+	height:20px;
+	border:0px;
+	padding-top:5px;
+	padding-left:4px;
+}
+input.textbox:hover{
+	background:url(images/login/text_field.png) 0px 0px;
+	border:0px;
+}
+
+div.bottomwrapper{
+	margin-left:40px;
+	margin-top:50px;
+}
+/** Links CSS **/
+a:link, a:visited{
+	color:#ffffff;
+	text-decoration:none;
+}
+a:hover{
+	color:#95ddf9;
+}
+
+/** Button CSS **/
+input.button{
+	background:url(images/login/login_btn.png) 0px 0px;
+	width:92px;
+	height:31px;
+	border:0px;
+	float:right;
+	margin-right:20px;
+	margin-top:5px;
+	
+}
+input.button:hover{
+	background:url(images/login/login_btn.png) 0px -31px;
+}
+input.button:active{
+	background:url(images/login/login_btn.png) 0px -62px;
+}
