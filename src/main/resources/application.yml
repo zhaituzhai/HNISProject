@@ -1,8 +1,13 @@
 mybatis.mapper-locations: classpath*:/mybatis/*Mapper.xml
 
-spring:
-  thymeleaf:
-    prefix: classpath:/templates/
+#spring:
+#  thymeleaf:
+#    prefix: classpath:/templates/
+    
+#spring:
+#  thymeleaf:
+#    cache: false
+#    mode: HTML5
 
 spring:
   datasource:
