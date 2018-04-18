@@ -1,72 +1,47 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" class="no-js">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-<title>登录</title>
-<!-- <link rel="stylesheet" href="./lib/layui/css/layui.css" media="all" />
-<link rel="stylesheet" href="./css/login.css" /> -->
-
-<link th:href="@{~/lib/layui/css/layui.css}" rel="stylesheet" type="text/css" media="all"/>
-<link th:href="@{~/css/login.css}" rel="stylesheet" type="text/css"/>
-
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<title>login</title>
+<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+<link rel="stylesheet" type="text/css" href="css/demo.css" />
+<!--必要样式-->
+<link rel="stylesheet" type="text/css" href="css/component.css" />
+<!--[if IE]>
+<script src="js/html5.js"></script>
+<![endif]-->
 </head>
-
-<body class="beg-login-bg" background="images/bg.jpg">
-	<div class="beg-login-box">
-		<header>
-			<h1>欢迎登录</h1>
-		</header>
-		<div class="beg-login-main">
-			<form action="/manage/login" class="layui-form" method="post">
-				<input name="__RequestVerificationToken" type="hidden"
-					value="fkfh8D89BFqTdrE2iiSdG_L781RSRtdWOH411poVUWhxzA5MzI8es07g6KPYQh9Log-xf84pIR2RIAEkOokZL3Ee3UKmX0Jc8bW8jOdhqo81" />
-
-				<div class="layui-form-item">
-					<label class="beg-login-icon"> <i class="layui-icon">&#xe612;</i>
-					</label> <select name="">
-						<option value="0">用户名登录</option>
-						<option value="1">唯一标识登录</option>
-					</select>
-				</div>
-				<div class="layui-form-item">
-					<label class="beg-login-icon"> <i class="layui-icon">&#xe612;</i>
-					</label> <input type="text" name="userName" lay-verify="userName"
-						autocomplete="off" placeholder="请输入登录名" class="layui-input">
-				</div>
-				<div class="layui-form-item">
-					<label class="beg-login-icon"> <i class="layui-icon">&#xe642;</i>
-					</label> <input type="password" name="password" lay-verify="password"
-						autocomplete="off" placeholder="请输入密码" class="layui-input">
-				</div>
-				<div class="layui-form-item">
-					<div class="beg-pull-right">
-						<button class="layui-btn layui-btn-primary" lay-submit lay-filter="login">
-							<i class="layui-icon">&#xe650;</i> 登录
-						</button>
+<body>
+		<div class="container demo-1">
+			<div class="content">
+				<div id="large-header" class="large-header">
+					<canvas id="demo-canvas"></canvas>
+					<div class="logo_box">
+						<h3>欢迎你</h3>
+						<form action="#" name="f" method="post">
+							<div class="input_outer">
+								<span class="u_user"></span>
+								<input name="logname" class="text" style="color: #FFFFFF !important" type="text" placeholder="请输入账户">
+							</div>
+							<div class="input_outer">
+								<span class="us_uer"></span>
+								<input name="logpass" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
+							</div>
+							<div class="mb2"><a class="act-but submit" href="javascript:;" style="color: #FFFFFF">登录</a></div>
+						</form>
 					</div>
-					<div class="beg-clear"></div>
 				</div>
-			</form>
-		</div>
-	</div>
-	<script type="text/javascript" src="lib/layui/layui.js"></script>
-	<script>
-			layui.use(['layer', 'form'], function() {
-				var layer = layui.layer,
-					$ = layui.jquery,
-					form = layui.form();
-					
-				form.on('submit(login)',function(data){
-					
-					location.href='index.html';
-					return false;
-				});
-			});
+			</div>
+		</div><!-- /container -->
+		
+		<script type="text/javascript">
+		    
 		</script>
-</body>
-
+		<script src="js/TweenLite.min.js"></script>
+		<script src="js/EasePack.min.js"></script>
+		<script src="js/rAF.js"></script>
+		<script src="js/demo-1.js"></script>
+	</body>
 </html>

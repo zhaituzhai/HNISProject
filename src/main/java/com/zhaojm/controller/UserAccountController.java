@@ -20,12 +20,14 @@ public class UserAccountController {
     @Autowired
     IUseraccountService useraccountService;
     
+    @RequestMapping("/getLoginUser")
     public ResultDTO<UseraccountDTO> getLoginUser(@RequestBody @ApiParam("登陆用户") UseraccountDTO loginUser) throws Exception{
         
-        useraccountService.verificationLoginUser(loginUser);
-        ResultDTO.valueOfError("");
-        
-        return null;
+        UseraccountDTO user = useraccountService.verificationLoginUser(loginUser);
+        if(null == user)
+            return ResultDTO.valueOfError("账户或密码错误！");
+        else
+            return ResultDTO.valueOfSuccess(user);
     }
     
 
