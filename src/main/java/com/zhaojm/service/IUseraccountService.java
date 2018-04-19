@@ -11,5 +11,7 @@ public interface IUseraccountService {
      * @throws Exception
      */
     UseraccountDTO verificationLoginUser(UseraccountDTO loginUser) throws Exception;
+    
+    int creadUseraccount(UseraccountDTO user);
 
 }
