@@ -134,7 +134,7 @@
   </update>
   
   <!-- 根据doctor的输入内容查询 -->
-  <select id="queryDoctorList">
+  <select id="queryDoctorList" parameterType="com.zhaojm.bean.DoctorDTO" resultMap="BaseResultMap">
   select 
   <include refid="Base_Column_List" />
     from doctor

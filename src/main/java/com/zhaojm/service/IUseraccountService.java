@@ -1,7 +1,5 @@
 package com.zhaojm.service;
 
-import java.util.List;
-
 import com.github.pagehelper.PageInfo;
 import com.zhaojm.bean.DoctorDTO;
 import com.zhaojm.bean.PageRequestDTO;

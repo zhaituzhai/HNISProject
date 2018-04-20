@@ -157,7 +157,7 @@
     where patient_id = #{patientId,jdbcType=INTEGER}
   </update>
   
-  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="queryPatientList" parameterType="com.zhaojm.bean.PatientDTO" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from patient

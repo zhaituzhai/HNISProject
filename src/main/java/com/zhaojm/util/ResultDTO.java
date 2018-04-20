@@ -35,9 +35,9 @@ public class ResultDTO <T>  implements Serializable {
     return valueOfError(msg, ErrorCodeEnum.SYS_ERROR_OTHER.getErrCode(), null, value);
   }
 
-  public static <T> ResultDTO<T> valueOfError(String msg, int msgCode, Class source, T value) {
+  public static <T> ResultDTO<T> valueOfError(String msg, int msgCode, Class<T> source, T value) {
     if (source != null) {
-    	 Logger log = LoggerFactory.getLogger(ResultDTO.class);;
+    	 Logger log = LoggerFactory.getLogger(ResultDTO.class);
          log.warn(msg);
     }
     ResultDTO<T> vo = new ResultDTO<T>();
