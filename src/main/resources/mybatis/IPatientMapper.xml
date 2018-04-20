@@ -23,6 +23,12 @@
     from patient
     where patient_id = #{patientId,jdbcType=INTEGER}
   </select>
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from patient
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from patient
     where patient_id = #{patientId,jdbcType=INTEGER}
@@ -150,4 +156,40 @@
       patient_icon = #{patientIcon,jdbcType=VARCHAR}
     where patient_id = #{patientId,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from patient
+    where patient_id is not null
+    <if test="userId != null and userId != ''">
+      and user_id = #{userId,jdbcType=INTEGER}
+    </if>
+    <if test="patientName != null and patientName !=''">
+      and patient_name LIKE concat('%',concat(#{patientName,jdbcType=VARCHAR},'%'))
+    </if>
+    <if test="patientSex != null and patientSex != ''">
+      and patient_sex = #{patientSex,jdbcType=VARCHAR},
+    </if>
+    <if test="patientBorn != null and patientBorn != ''">
+      and patient_born = #{patientBorn,jdbcType=VARCHAR},
+    </if>
+    <if test="patientNation != null and patientNation != ''">
+      and patient_nation LIKE concat('%',concat(#{patientNation,jdbcType=VARCHAR},'%'))
+    </if>
+    <if test="bloodtype != null and bloodtype != ''">
+      and bloodtype = #{bloodtype,jdbcType=VARCHAR},
+    </if>
+    <if test="patientOccupation != null and patientOccupation != ''">
+      and patient_occupation LIKE concat('%',concat(#{patientOccupation,jdbcType=VARCHAR},'%')) 
+    </if>
+    <if test="patientMarriage != null and patientMarriage != ''">
+      and patient_marriage = #{patientMarriage,jdbcType=VARCHAR},
+    </if>
+    <if test="patientIcon != null and patientIcon != ''">
+      and patient_icon = #{patientIcon,jdbcType=VARCHAR},
+    </if>
+    order by patient_id
+  </select>
+  
 </mapper>

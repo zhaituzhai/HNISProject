@@ -1,8 +1,11 @@
 package com.zhaojm.bean;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.springframework.boot.test.mock.mockito.MockBean;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -28,6 +31,10 @@ public class UseraccountDTO implements Serializable {
 
     @ApiModelProperty("账户类型（开启/关闭）")
     private Integer accountType;
+    
+    @ApiModelProperty("创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date creatTime;
     
     private DoctorDTO doctor;
     

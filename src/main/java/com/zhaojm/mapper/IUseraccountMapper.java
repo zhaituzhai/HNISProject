@@ -1,5 +1,7 @@
 package com.zhaojm.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.zhaojm.bean.UseraccountDTO;
@@ -19,4 +21,6 @@ public interface IUseraccountMapper {
     int updateByPrimaryKey(UseraccountDTO record);
 
     UseraccountDTO selectByAccount(String loginName);
-}
+    
+    List<UseraccountDTO> queryUserList(UseraccountDTO user); 
+ }

@@ -1,5 +1,7 @@
 package com.zhaojm.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.zhaojm.bean.DoctorDTO;
@@ -17,4 +19,8 @@ public interface IDoctorMapper {
     int updateByPrimaryKeySelective(DoctorDTO record);
 
     int updateByPrimaryKey(DoctorDTO record);
+    
+    DoctorDTO selectByUserId(Integer userId);
+    
+    List<DoctorDTO> queryDoctorList(DoctorDTO doctor);
 }

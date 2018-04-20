@@ -8,9 +8,10 @@
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="user_type" jdbcType="INTEGER" property="userType" />
     <result column="account_type" jdbcType="INTEGER" property="accountType" />
+    <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime"/>
   </resultMap>
   <sql id="Base_Column_List">
-    user_id, user_name, user_phone, password, user_type, account_type
+    user_id, user_name, user_phone, password, user_type, account_type, creat_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,10 +25,11 @@
   </delete>
   <insert id="insert" parameterType="com.zhaojm.bean.UseraccountDTO">
     insert into useraccount (user_id, user_name, user_phone, 
-      password, user_type, account_type
+      password, user_type, account_type, creat_time
       )
     values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, #{accountType,jdbcType=INTEGER}
+      #{password,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, #{accountType,jdbcType=INTEGER},
+      #{creatTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zhaojm.bean.UseraccountDTO">
@@ -51,6 +53,9 @@
       <if test="accountType != null">
         account_type,
       </if>
+      <if test="creatTime != null">
+        creat_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -70,6 +75,9 @@
       </if>
       <if test="accountType != null">
         #{accountType,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null">
+        #{creatTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -91,6 +99,9 @@
       <if test="accountType != null">
         account_type = #{accountType,jdbcType=INTEGER},
       </if>
+      <if test="creatTime != null">
+        account_type = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
@@ -101,16 +112,41 @@
       password = #{password,jdbcType=VARCHAR},
       user_type = #{userType,jdbcType=INTEGER},
       account_type = #{accountType,jdbcType=INTEGER}
+      creat_time = #{creatTime,jdbcType=TIMESTAMP}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
   
   <!-- 自定义 sql -->
-  
+  <!-- 根据名字或电话查出此人信息 -->
    <select id="selectByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from useraccount
     where (user_name = #{loginName,jdbcType=VARCHAR} OR user_phone = #{loginName,jdbcType=VARCHAR})
   </select>
+  <!-- 根据输入条件查询出用户 -->
+  <select id="queryUserList">
+  select
+  <include refid="Base_Column_List"/>
+  from useraccunt
+  where user_id is not null
+  <if test="userName != null and userName !=''">
+  and user_name LIKE 
+  ( concat('%',concat(#{userName},'%')) )
+  </if>
+  <if test="userPhone != null and userPhone != ''">
+  and user_phone LIKE
+  ( concat('%',concat(#{userPhone},'%')) )
+  </if>
+  <if test="userType != null and userType != ''">
+  and user_type = #{userType}
+  </if>
+  <if test="accountType != null and accountType != ''">
+  and accountType = #{accountType}
+  </if>
+  order by creat_time desc
+  
+  </select>
+  
   
 </mapper>

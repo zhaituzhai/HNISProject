@@ -21,6 +21,12 @@
     from doctor
     where doctor_id = #{doctorId,jdbcType=INTEGER}
   </select>
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from doctor
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from doctor
     where doctor_id = #{doctorId,jdbcType=INTEGER}
@@ -126,4 +132,35 @@
       doctor_icon = #{doctorIcon,jdbcType=VARCHAR}
     where doctor_id = #{doctorId,jdbcType=INTEGER}
   </update>
+  
+  <!-- 根据doctor的输入内容查询 -->
+  <select id="queryDoctorList">
+  select 
+  <include refid="Base_Column_List" />
+    from doctor
+    where doctor_id is not null
+  <if test="userId != null and userId != ''">
+    and user_id = #{userId,jdbcType=INTEGER},
+  </if>
+  <if test="doctorName != null and doctorName != ''">
+    and doctor_name LIKE concat('%',concat(#{doctorName,jdbcType=VARCHAR},'%'))
+  </if>
+  <if test="doctorSex != null and doctorSex != ''">
+    and doctor_sex = #{doctorSex,jdbcType=VARCHAR}
+  </if>
+  <if test="departementId != null and departementId != ''">
+    and departement_id = #{departementId,jdbcType=VARCHAR}
+  </if>
+  <if test="doctorTitle != null and doctorTitle != ''">
+    and doctor_title = #{doctorTitle,jdbcType=VARCHAR}
+  </if>
+  <if test="doctorHospital != null and doctorHospital != ''">
+    and doctor_hospital LIKE concat('%',concat(#{doctorHospital,jdbcType=VARCHAR},'%'))
+  </if>
+  <if test="doctorIcon != null and doctorIcon != ''">
+    and doctor_icon = #{doctorIcon,jdbcType=VARCHAR}
+  </if>
+    order by doctor_id
+  </select>
+  
 </mapper>

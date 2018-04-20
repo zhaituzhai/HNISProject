@@ -176,6 +176,28 @@ insert  into `patient`(`patient_id`,`user_id`,`patient_name`,`patient_sex`,`pati
 
 DROP TABLE IF EXISTS `useraccount`;
 
+/*
+Navicat MySQL Data Transfer
+
+Source Server         : zhaojiamin
+Source Server Version : 50528
+Source Host           : localhost:3306
+Source Database       : hnis
+
+Target Server Type    : MYSQL
+Target Server Version : 50528
+File Encoding         : 65001
+
+Date: 2018-04-20 15:56:17
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for useraccount
+-- ----------------------------
+DROP TABLE IF EXISTS `useraccount`;
+
 CREATE TABLE `useraccount` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户主键',
   `user_name` varchar(20) NOT NULL COMMENT '用户名称（可做登陆）',
@@ -183,12 +205,18 @@ CREATE TABLE `useraccount` (
   `password` varchar(50) NOT NULL COMMENT '密码',
   `user_type` int(11) DEFAULT NULL COMMENT '用户类型（1：管理员 2:医生 3：病人 4：普通用户',
   `account_type` int(11) DEFAULT '1' COMMENT '账户类型（开启/关闭）',
+  `creat_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
-/*Data for the table `useraccount` */
+-- ----------------------------
+-- Records of useraccount
+-- ----------------------------
+INSERT INTO `useraccount` VALUES ('1', 'admin', 'admin', '1234', '1', '1', '2018-01-01 12:12:12');
+INSERT INTO `useraccount` VALUES ('2', 'matte', '18670759820', '1234', '2', '1', '2018-01-01 12:12:12');
+INSERT INTO `useraccount` VALUES ('3', 'goy', '18670759821', '1234', '3', '1', '2018-01-01 12:12:12');
+INSERT INTO `useraccount` VALUES ('4', 'hisak', '18670679823', '1234', '2', '1', '2018-04-20 15:55:25');
 
-insert  into `useraccount`(`user_id`,`user_name`,`user_phone`,`password`,`user_type`,`account_type`) values (1,'admin','admin','1234',1,1),(2,'matte','18670759820','1234',2,1),(3,'goy','18670759821','1234',3,1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
