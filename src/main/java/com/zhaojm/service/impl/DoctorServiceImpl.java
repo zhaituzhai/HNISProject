@@ -1,5 +1,7 @@
 package com.zhaojm.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +37,8 @@ public class DoctorServiceImpl implements IDoctorService {
     @Override
     public PageInfo<DoctorDTO> DoctorList(PageRequestDTO<DoctorDTO> pageDoctor) {
         PageHelper.startPage(pageDoctor.getPageNum(), pageDoctor.getPageSize());
-//        List<DoctorDTO> list = doctorMapper
-        return null;
+        List<DoctorDTO> list = doctorMapper.queryDoctorList(pageDoctor.getParam());
+        return new PageInfo<DoctorDTO>(list);
     }
 
     @Override
