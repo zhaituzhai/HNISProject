@@ -115,4 +115,28 @@
       entry_porson = #{entryPorson,jdbcType=INTEGER}
     where information_id = #{informationId,jdbcType=INTEGER}
   </update>
+  
+  <select id="queryInfoList" parameterType="com.zhaojm.bean.InformationDTO" resultMap="BaseResultMap">
+  select
+  <include refid="Base_Column_List"/>
+  from information where information_id is not null
+  <if test="informationAuthor != null and informationAuthor != ">
+    and information_author LIKE 
+        concat(concat('%',#{informationAuthor,jdbcType=VARCHAR}),'%')
+  </if>
+  <if test="informationTitle != null and informationTitle != ''">
+    and information_title LIKE 
+        concat(concat('%',#{informationTitle,jdbcType=VARCHAR}),'%')
+  </if>
+  <if test="informationMain != null and informationMain != ''">
+    and information_main LIKE 
+        concat(concat('%',#{informationMain,jdbcType=VARCHAR}),'%')
+  </if>
+  <if test="informationLabel != null and informationLabel != ''">
+    and information_label LIKE 
+        concat(concat('%',#{informationLabel,jdbcType=VARCHAR}),'%')
+  </if>
+  order by information_time
+  </select>
+  
 </mapper>

@@ -1,5 +1,7 @@
 package com.zhaojm.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.zhaojm.bean.InformationDTO;
@@ -17,4 +19,6 @@ public interface IInformationMapper {
     int updateByPrimaryKeySelective(InformationDTO record);
 
     int updateByPrimaryKey(InformationDTO record);
+    
+    List<InformationDTO> queryInfoList(InformationDTO infomation);
 }
