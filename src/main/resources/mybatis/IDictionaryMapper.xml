@@ -79,4 +79,12 @@
       data_value = #{dataValue,jdbcType=VARCHAR}
     where dictionary_id = #{dictionaryId,jdbcType=INTEGER}
   </update>
+  
+  <select id="getDictionaryByType" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dictionary
+    where data_type = #{dataType,jdbcType=VARCHAR}
+  </select>
+  
 </mapper>

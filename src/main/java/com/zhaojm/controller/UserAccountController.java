@@ -1,8 +1,11 @@
 package com.zhaojm.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zhaojm.bean.UseraccountDTO;
@@ -20,8 +23,8 @@ public class UserAccountController {
     @Autowired
     IUseraccountService useraccountService;
     
-    @RequestMapping("/getLoginUser")
-    public ResultDTO<UseraccountDTO> getLoginUser(@RequestBody @ApiParam("登陆用户") UseraccountDTO loginUser) throws Exception{
+    @RequestMapping(value="/sys/login",method=RequestMethod.POST)
+    public ResultDTO<UseraccountDTO> getLoginUser(@RequestBody @ApiParam("登陆用户") UseraccountDTO loginUser,HttpSession session) throws Exception{
         
         UseraccountDTO user = useraccountService.verificationLoginUser(loginUser);
         if(null == user)
@@ -29,6 +32,8 @@ public class UserAccountController {
         else
             return ResultDTO.valueOfSuccess(user);
     }
+    
+    
     
 
 }

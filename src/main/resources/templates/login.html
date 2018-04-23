@@ -7,6 +7,7 @@
 <title>login</title>
 <link rel="stylesheet" type="text/css" href="login/css/normalize.css" />
 <link rel="stylesheet" type="text/css" href="login/css/demo.css" />
+<link rel="stylesheet" type="test/css" href="login/css/alertcss.css"/>
 <!--必要样式-->
 <link rel="stylesheet" type="text/css" href="login/css/component.css" />
 <!--[if IE]>
@@ -19,25 +20,69 @@
 				<div id="large-header" class="large-header">
 					<canvas id="demo-canvas"></canvas>
 					<div class="logo_box">
-						<h3>欢迎你</h3>
+						<h3>诊疗系统欢迎你</h3>
 						<form action="#" name="f" method="post">
 							<div class="input_outer">
 								<span class="u_user"></span>
-								<input name="logname" class="text" style="color: #FFFFFF !important" type="text" placeholder="请输入账户">
+								<input name="logname" id="logname" class="text" style="color: #FFFFFF !important" type="text" placeholder="请输入账户" value="">
 							</div>
 							<div class="input_outer">
 								<span class="us_uer"></span>
-								<input name="logpass" class="text" style="color: #FFFFFF !important position:absolute; z-index:100;" value="" type="password" placeholder="请输入密码">
+								<input name="logpass" id="logpass" class="text" style="color: #FFFFFF !important position:absolute; z-index:100;" value="" type="password" placeholder="请输入密码">
 							</div>
-							<div class="mb2"><a class="act-but submit" href="javascript:;" style="color: #FFFFFF">登录</a></div>
+							<div class="mb2"><a class="act-but submit" href="javascript:void(0);" onclick="login()" style="color: #FFFFFF">登录</a></div>
 						</form>
+						<div class="alert"></div>
 					</div>
 				</div>
 			</div>
 		</div><!-- /container -->
-		
+		<script type="text/javascript" src="js/jquery-1.12.1.min.js"></script>
 		<script type="text/javascript">
+		    function login(){
+		    	var userName = $("#logname").val();
+		    	var password = $("#logpass").val();
+		    	//alert(userName + password);
+		    	var logUser = {
+		    			"userName":userName,
+		    			"password":password
+		    	}
+		    	//alert(logUser.username + logUser.password);
+		    	$.ajax({
+		    		async: false,
+		    		type: "post",
+		    		contentType: "application/json;charset=UTF-8",
+		    		url: "http://localhost:8080/sys/login",
+		    		data: JSON.stringify(logUser),
+		    		success:function(result){
+		    			//alert(result.success);
+		    			if(result.success){
+		    				window.location.href = "http://localhost:8080/index";
+		    			}else{
+		    				$('.alert').html(result.message).addClass('alert-info').show().delay(1500).fadeOut();
+		    			}
+		    		}
+		    		
+		    	});
+		    }
 		    
+		    var info_prompt = function(message, time)
+		    {
+		        prompt(message, 'alert-info', time);
+		    };
+		    
+		    var prompt = function (message, style, time)
+		    {
+		        style = (style === undefined) ? 'alert-success' : style;
+		        time = (time === undefined) ? 1200 : time;
+		        $('<div>')
+		            .appendTo('body')
+		            .addClass('alert ' + style)
+		            .html(message)
+		            .show()
+		            .delay(time)
+		            .fadeOut();
+		    };
 		</script>
 		<script src="login/js/TweenLite.min.js"></script>
 		<script src="login/js/EasePack.min.js"></script>

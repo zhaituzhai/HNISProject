@@ -139,4 +139,26 @@
       price = #{price,jdbcType=DOUBLE}
     where medicine_id = #{medicineId,jdbcType=INTEGER}
   </update>
+  
+  
+<!--   <select id="selectByName" parameterType="com.zhaojm.bean.MedicineDTO" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from medicine
+    where 
+    medicine_name LIKE concat(concat('%',#{medicineName,jdbcType=VARCHAR}),'%')
+  </select> -->
+  
+  <select id="queryMedicineList" parameterType="com.zhaojm.bean.MedicineDTO" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from medicine
+    where medicine_id is not null
+	  <if test="medicineName != null and medicineName != ''">
+	    and medicine_name LIKE 
+	        concat(concat('%',#{medicineName,jdbcType=VARCHAR}),'%')
+	  </if>
+	  order by medicine_name asc
+  </select>
+  
 </mapper>
