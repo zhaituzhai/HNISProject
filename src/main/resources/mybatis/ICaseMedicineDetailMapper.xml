@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaojm.mapper.ICaseMedicineDetailMapper">
+  <resultMap id="BaseResultMap" type="com.zhaojm.bean.CaseMedicineDetailDTO">
+    <id column="case_medicine_id" jdbcType="INTEGER" property="caseMedicineId" />
+    <result column="case_id" jdbcType="INTEGER" property="caseId" />
+    <result column="medicine_name" jdbcType="VARCHAR" property="medicineName" />
+    <result column="consumption" jdbcType="VARCHAR" property="consumption" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="total_price" jdbcType="DOUBLE" property="totalPrice" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    case_medicine_id, case_id, medicine_name, consumption, price, total_price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from case_medicine_detail
+    where case_medicine_id = #{caseMedicineId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from case_medicine_detail
+    where case_medicine_id = #{caseMedicineId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhaojm.bean.CaseMedicineDetailDTO">
+    insert into case_medicine_detail (case_medicine_id, case_id, medicine_name, 
+      consumption, price, total_price
+      )
+    values (#{caseMedicineId,jdbcType=INTEGER}, #{caseId,jdbcType=INTEGER}, #{medicineName,jdbcType=VARCHAR}, 
+      #{consumption,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{totalPrice,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhaojm.bean.CaseMedicineDetailDTO">
+    insert into case_medicine_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="caseMedicineId != null">
+        case_medicine_id,
+      </if>
+      <if test="caseId != null">
+        case_id,
+      </if>
+      <if test="medicineName != null">
+        medicine_name,
+      </if>
+      <if test="consumption != null">
+        consumption,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="totalPrice != null">
+        total_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="caseMedicineId != null">
+        #{caseMedicineId,jdbcType=INTEGER},
+      </if>
+      <if test="caseId != null">
+        #{caseId,jdbcType=INTEGER},
+      </if>
+      <if test="medicineName != null">
+        #{medicineName,jdbcType=VARCHAR},
+      </if>
+      <if test="consumption != null">
+        #{consumption,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="totalPrice != null">
+        #{totalPrice,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhaojm.bean.CaseMedicineDetailDTO">
+    update case_medicine_detail
+    <set>
+      <if test="caseId != null">
+        case_id = #{caseId,jdbcType=INTEGER},
+      </if>
+      <if test="medicineName != null">
+        medicine_name = #{medicineName,jdbcType=VARCHAR},
+      </if>
+      <if test="consumption != null">
+        consumption = #{consumption,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="totalPrice != null">
+        total_price = #{totalPrice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where case_medicine_id = #{caseMedicineId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhaojm.bean.CaseMedicineDetailDTO">
+    update case_medicine_detail
+    set case_id = #{caseId,jdbcType=INTEGER},
+      medicine_name = #{medicineName,jdbcType=VARCHAR},
+      consumption = #{consumption,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      total_price = #{totalPrice,jdbcType=DOUBLE}
+    where case_medicine_id = #{caseMedicineId,jdbcType=INTEGER}
+  </update>
+</mapper>

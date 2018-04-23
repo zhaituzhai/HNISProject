@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaojm.mapper.IMedicineMapper">
+  <resultMap id="BaseResultMap" type="com.zhaojm.bean.MedicineDTO">
+    <id column="medicine_id" jdbcType="INTEGER" property="medicineId" />
+    <result column="medicine_name" jdbcType="VARCHAR" property="medicineName" />
+    <result column="main_components" jdbcType="VARCHAR" property="mainComponents" />
+    <result column="user_range" jdbcType="VARCHAR" property="userRange" />
+    <result column="user_way" jdbcType="VARCHAR" property="userWay" />
+    <result column="user_attention" jdbcType="VARCHAR" property="userAttention" />
+    <result column="save_way" jdbcType="VARCHAR" property="saveWay" />
+    <result column="specifications" jdbcType="VARCHAR" property="specifications" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    medicine_id, medicine_name, main_components, user_range, user_way, user_attention, 
+    save_way, specifications, price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from medicine
+    where medicine_id = #{medicineId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from medicine
+    where medicine_id = #{medicineId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhaojm.bean.MedicineDTO">
+    insert into medicine (medicine_id, medicine_name, main_components, 
+      user_range, user_way, user_attention, 
+      save_way, specifications, price
+      )
+    values (#{medicineId,jdbcType=INTEGER}, #{medicineName,jdbcType=VARCHAR}, #{mainComponents,jdbcType=VARCHAR}, 
+      #{userRange,jdbcType=VARCHAR}, #{userWay,jdbcType=VARCHAR}, #{userAttention,jdbcType=VARCHAR}, 
+      #{saveWay,jdbcType=VARCHAR}, #{specifications,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhaojm.bean.MedicineDTO">
+    insert into medicine
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="medicineId != null">
+        medicine_id,
+      </if>
+      <if test="medicineName != null">
+        medicine_name,
+      </if>
+      <if test="mainComponents != null">
+        main_components,
+      </if>
+      <if test="userRange != null">
+        user_range,
+      </if>
+      <if test="userWay != null">
+        user_way,
+      </if>
+      <if test="userAttention != null">
+        user_attention,
+      </if>
+      <if test="saveWay != null">
+        save_way,
+      </if>
+      <if test="specifications != null">
+        specifications,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="medicineId != null">
+        #{medicineId,jdbcType=INTEGER},
+      </if>
+      <if test="medicineName != null">
+        #{medicineName,jdbcType=VARCHAR},
+      </if>
+      <if test="mainComponents != null">
+        #{mainComponents,jdbcType=VARCHAR},
+      </if>
+      <if test="userRange != null">
+        #{userRange,jdbcType=VARCHAR},
+      </if>
+      <if test="userWay != null">
+        #{userWay,jdbcType=VARCHAR},
+      </if>
+      <if test="userAttention != null">
+        #{userAttention,jdbcType=VARCHAR},
+      </if>
+      <if test="saveWay != null">
+        #{saveWay,jdbcType=VARCHAR},
+      </if>
+      <if test="specifications != null">
+        #{specifications,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhaojm.bean.MedicineDTO">
+    update medicine
+    <set>
+      <if test="medicineName != null">
+        medicine_name = #{medicineName,jdbcType=VARCHAR},
+      </if>
+      <if test="mainComponents != null">
+        main_components = #{mainComponents,jdbcType=VARCHAR},
+      </if>
+      <if test="userRange != null">
+        user_range = #{userRange,jdbcType=VARCHAR},
+      </if>
+      <if test="userWay != null">
+        user_way = #{userWay,jdbcType=VARCHAR},
+      </if>
+      <if test="userAttention != null">
+        user_attention = #{userAttention,jdbcType=VARCHAR},
+      </if>
+      <if test="saveWay != null">
+        save_way = #{saveWay,jdbcType=VARCHAR},
+      </if>
+      <if test="specifications != null">
+        specifications = #{specifications,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where medicine_id = #{medicineId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhaojm.bean.MedicineDTO">
+    update medicine
+    set medicine_name = #{medicineName,jdbcType=VARCHAR},
+      main_components = #{mainComponents,jdbcType=VARCHAR},
+      user_range = #{userRange,jdbcType=VARCHAR},
+      user_way = #{userWay,jdbcType=VARCHAR},
+      user_attention = #{userAttention,jdbcType=VARCHAR},
+      save_way = #{saveWay,jdbcType=VARCHAR},
+      specifications = #{specifications,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE}
+    where medicine_id = #{medicineId,jdbcType=INTEGER}
+  </update>
+</mapper>

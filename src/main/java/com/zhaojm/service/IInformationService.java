@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.zhaojm.bean.InformationDTO;
+import com.zhaojm.bean.PageRequestDTO;
 
 public interface IInformationService {
     
@@ -22,7 +23,7 @@ public interface IInformationService {
     /**
      * 查(分页查询->info message)
      */
-    PageInfo<InformationDTO> getInfoList(InformationDTO information);
+    PageInfo<InformationDTO> getInfoList(PageRequestDTO<InformationDTO> pageInformation);
     /**
      * 查(根据 infoId 查 该条信息详情)
      */

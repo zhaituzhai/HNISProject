@@ -1,9 +1,7 @@
 package com.zhaojm.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import com.zhaojm.bean.CaseDTO;
-@Mapper
+
 public interface ICaseMapper {
     int deleteByPrimaryKey(Integer caseId);
 
