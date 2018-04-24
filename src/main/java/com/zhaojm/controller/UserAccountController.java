@@ -29,8 +29,10 @@ public class UserAccountController {
         UseraccountDTO user = useraccountService.verificationLoginUser(loginUser);
         if(null == user)
             return ResultDTO.valueOfError("账户或密码错误！");
-        else
+        else {
+            session.setAttribute("logUser", user);
             return ResultDTO.valueOfSuccess(user);
+        }
     }
     
     
