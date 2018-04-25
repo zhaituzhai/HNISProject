@@ -55,8 +55,8 @@ public class UseraccountServiceImpl implements IUseraccountService {
         String phoneRegex = "[0-9]{11}";
         if(!user.getUserPhone().matches(phoneRegex))
             return 0;
-        else if(useraccountMapper.insert(user)>0)
-            return useraccountMapper.insert(user);
+        else if(useraccountMapper.insertSelective(user)>0)
+            return useraccountMapper.insertSelective(user);
         else
             return -1;
     }

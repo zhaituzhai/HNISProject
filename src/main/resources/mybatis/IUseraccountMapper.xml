@@ -141,11 +141,11 @@
   and user_phone LIKE
   ( concat('%',concat(#{userPhone},'%')) )
   </if>
-  <if test="userType != null and userType != ''">
+  <if test="userType != null and userType != '' and userType !=0">
   and user_type = #{userType}
   </if>
-  <if test="accountType != null and accountType != ''">
-  and accountType = #{accountType}
+  <if test="accountType != null and accountType != '' and accountType!=0">
+  and account_type = #{accountType}
   </if>
   and a.user_type = b.data_code AND b.data_type='userType'
   order by creat_time desc

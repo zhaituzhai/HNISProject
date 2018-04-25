@@ -2,6 +2,8 @@ package com.zhaojm.user;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +38,23 @@ public class UserTest {
         PageRequestDTO<UseraccountDTO> query = new PageRequestDTO<UseraccountDTO>();
         query.setPageNum(1);
         query.setPageSize(10);
+        UseraccountDTO user = new UseraccountDTO();
+        user.setUserName("t");
+        query.setParam(user);
         PageInfo<UseraccountDTO> userList = useraccountService.queryUserList(query);
         assertTrue(userList!=null);
+    }
+    
+    @Test
+    public void addUser() {
+        UseraccountDTO user = new UseraccountDTO();
+        user.setUserName("test");
+        user.setPassword("1234");
+        user.setUserPhone("12345879641");
+        user.setUserType("2");
+        int i = useraccountService.creadUseraccount(user);
+        assertTrue(i>0);
+        
     }
     
 /*    @Test
