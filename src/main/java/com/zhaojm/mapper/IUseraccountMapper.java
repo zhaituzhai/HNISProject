@@ -13,6 +13,8 @@ public interface IUseraccountMapper {
     int insert(UseraccountDTO record);
 
     int insertSelective(UseraccountDTO record);
+    
+    UseraccountDTO selectByNamePhone(UseraccountDTO record);
 
     UseraccountDTO selectByPrimaryKey(Integer userId);
 

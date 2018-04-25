@@ -1,13 +1,12 @@
 package com.zhaojm.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
@@ -44,7 +43,15 @@ public class UserAccountController {
         return ResultDTO.valueOfSuccess(useraccountService.queryUserList(queryUser));
     }
     
+    //1存在 0不存在
+    @RequestMapping(value="/sys/verfiy",method=RequestMethod.POST)
+    public ResultDTO<Integer> verfiyName(@RequestBody UseraccountDTO user) {
+        int isCave = useraccountService.verfiy(user);
+        if(isCave>0) {
+            return ResultDTO.valueOfSuccess();
+        }else {
+            return ResultDTO.valueOfError("error");
+        }
+    }
     
-    
-
 }

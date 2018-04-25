@@ -29,6 +29,7 @@ public interface IUseraccountService {
     DoctorDTO queryDoctorById(Integer id);
     
     PatientDTO queryPatientById(Integer id);
-    
+
+    int verfiy(UseraccountDTO user);
 
 }

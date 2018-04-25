@@ -98,7 +98,13 @@ public class UseraccountServiceImpl implements IUseraccountService {
         
         return patientMapper.selectByUserId(id);
     }
-    
-    
+
+    @Override
+    public int verfiy(UseraccountDTO user) {
+        if(null != useraccountMapper.selectByNamePhone(user))
+            return 1;
+        else
+            return 0;
+    }
 
 }

@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.github.pagehelper.PageInfo;
 import com.zhaojm.bean.PageRequestDTO;
 import com.zhaojm.bean.UseraccountDTO;
+import com.zhaojm.mapper.IUseraccountMapper;
 import com.zhaojm.service.IUseraccountService;
 
 @RunWith(SpringRunner.class)
@@ -23,6 +24,9 @@ public class UserTest {
     
     @Autowired
     IUseraccountService useraccountService;
+    
+    @Autowired
+    IUseraccountMapper useraccountMapper;
     
     @Test
     public void testLogin() throws Exception {
@@ -47,13 +51,15 @@ public class UserTest {
     
     @Test
     public void addUser() {
-        UseraccountDTO user = new UseraccountDTO();
+//        UseraccountDTO user = useraccountMapper.selectName("matte");
+//        assertTrue(user!=null);
+        /*UseraccountDTO user = new UseraccountDTO();
         user.setUserName("test");
         user.setPassword("1234");
         user.setUserPhone("12345879641");
         user.setUserType("2");
         int i = useraccountService.creadUseraccount(user);
-        assertTrue(i>0);
+        assertTrue(i>0);*/
         
     }
     

@@ -22,20 +22,20 @@
 					<label for="L_email" class="layui-form-label">
                         <span class="x-red">*</span>用户名:</label>
 					<div class="layui-input-inline">
-						<input type="text" id="userName" name="userName" required placeholder="用户名必填且唯一" lay-verify="nikename" class="layui-input">
+						<input type="text" id="userName" style="width: 350px;" name="userName" required placeholder="用户名必填且唯一" lay-verify="nikename" class="layui-input">
 					</div>
 					<div class="layui-form-mid layui-word-aux">
-						<span class="x-red">*</span>
+						<span id="nameverify" class="x-red">*</span>
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label for="L_email" class="layui-form-label">
                         <span class="x-red">*</span>手机号:</label>
 					<div class="layui-input-inline">
-						<input type="text" id="userPhone" name="userPhone" required placeholder="手机号必填且唯一" lay-verify="phone" class="layui-input">
+						<input type="text" id="userPhone" style="width: 350px;" name="userPhone" required placeholder="手机号必填且唯一" lay-verify="phone" class="layui-input">
 					</div>
 					<div class="layui-form-mid layui-word-aux">
-						<span class="x-red">*</span>
+						<span id="phoneverify" class="x-red">*</span>
 					</div>
 				</div>
 
@@ -75,6 +75,67 @@
 		</div>
 		<script src="lib/layui/layui.js" charset="utf-8"></script>
 		<script src="js/x-layui.js" charset="utf-8"></script>
+		<script src="js/jquery-1.12.1.min.js"></script>
+		<script type="text/javascript">
+		   //验证重名   
+		  /* function verify_name(name){
+			 
+			   $.ajax({
+				  type: "get",
+	              contentType: "application/json;charset=UTF-8",
+	              url: "http://localhost:8080/sys/verfiyName",
+	              data: "name="+name,
+	              success:function(result){
+	                  if(result>0){
+	                	  $("#nameverify").text("已存在");
+	                  }else{
+	                	  $("#nameverify").test("可用");
+	                  }
+	              }
+			   });
+		   } */
+
+           //contentType: "application/json;charset=UTF-8",
+		   $("#userName").change(function(){
+			   $("#nameverify").text("*");
+			   var name = {
+					   "userName": ""+$("#userName").val()
+			   }
+			   $.ajax({
+                  type: "post",
+                  contentType: "application/json;charset=UTF-8",
+                  url: "http://localhost:8080/sys/verfiy",
+                  data: JSON.stringify(name),
+                  success:function(result){
+                      if(result.success){
+                          $("#nameverify").text("存在");
+                      }else{
+                          $("#nameverify").text("可用");
+                      }
+                  }
+               });
+		   });
+		   $("#userPhone").change(function(){
+               $("#phoneverify").text("*");
+               var name = {
+                       "userPhone": ""+$("#userPhone").val()
+               }
+               $.ajax({
+                  type: "post",
+                  contentType: "application/json;charset=UTF-8",
+                  url: "http://localhost:8080/sys/verfiy",
+                  data: JSON.stringify(name),
+                  success:function(result){
+                      if(result.success){
+                          $("#phoneverify").text("存在");
+                      }else{
+                          $("#phoneverify").text("可用");
+                      }
+                  }
+               });
+           });
+		
+		</script>
 		<script>
 			layui.use(['form', 'layer'], function() {
 				$ = layui.jquery;

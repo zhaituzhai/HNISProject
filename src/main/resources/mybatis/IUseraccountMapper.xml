@@ -22,6 +22,19 @@
     from useraccount
     where user_id = #{userId,jdbcType=INTEGER}
   </select>
+  
+  <select id="selectByNamePhone" parameterType="com.zhaojm.bean.UseraccountDTO" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from useraccount
+    where user_id is not null
+  <if test="userName != null and userName !=''">
+  and user_name = #{userName}
+  </if>
+  <if test="userPhone != null and userPhone != ''">
+  and user_phone = #{userPhone}
+  </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from useraccount
     where user_id = #{userId,jdbcType=INTEGER}
