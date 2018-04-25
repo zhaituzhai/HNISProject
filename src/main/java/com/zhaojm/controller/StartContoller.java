@@ -13,7 +13,17 @@ public class StartContoller {
     
     @RequestMapping("/index")
     public String index(){
-        return "index";
+        return "admin_index";
     }
+    
+    @RequestMapping("/admin_user_management")
+    public String adminUser(){
+        return "admin_user_management";
+    }
+    @RequestMapping("/admin_role_management")
+    public String adminRole(){
+        return "admin_role_management";
+    }
+
 
 }

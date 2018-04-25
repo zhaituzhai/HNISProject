@@ -1,98 +1,178 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>
-            用户管理
-        </title>
-        <meta name="renderer" content="webkit">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="format-detection" content="telephone=no">
-        <link rel="stylesheet" href="./css/x-admin.css" media="all">
-    </head>
-    <body>
-        <div class="x-nav" style="top: 8px;">
-            <span class="layui-breadcrumb">
-              <a><cite>首页</cite></a>
-              <a><cite>用户管理</cite></a>
-            </span>
-            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
-        </div>
-        <div class="x-body" style="top: 8px;">
-          <form class="layui-form x-center" action="" style="width:500px">
-                <div class="layui-form-pane" style="margin-top: 15px;">
-                  <div class="layui-form-item">
-                    <div class="layui-input-inline" style="width:400px">
-                      <input type="text" name="username"  placeholder="搜索内容" autocomplete="off" class="layui-input">
-                    </div>
-                    <div class="layui-input-inline" style="width:80px">
-                        <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-                    </div>
-                  </div>
-                </div> 
-            </form>
-            <xblock>
-            <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button>
-            <button class="layui-btn" onclick="user_management_add('添加用户','user_management_add.html','600','500')"><i class="layui-icon">&#xe608;</i>添加</button>
-            <button class="layui-btn layui-btn-danger"><i class="layui-icon"><img src="images/daoru.png" width="15" height="15"></img></i>导入</button>
-            <span class="x-right" style="line-height:25px">共有数据：88 条</span></xblock>
-            <table class="layui-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>用户名</th>
-                        <th>密码</th>
-                        <th>用户角色</th>
-                        <th>性别</th>
-                        <th>注册时间</th>
-                        <th>状态</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td><u style="cursor:pointer" onclick="user_management_show('宋加加','user_management_show.html','10001','360','400')">宋加加</u></td>
-                        <td >123456</td>
-                        <td >用户</td>
-                        <td >男</td>
-                        <td>2015-07-13 13:13:32</td>
-                        <td class="td-status">
-                            <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span>
-                        </td>
-                        <td class="td-manage">
-                            <a style="text-decoration:none" onclick="member_stop(this,'10001')" href="javascript:;" title="停用">
-                                <i class="layui-icon">&#xe601;</i>
-                            </a>
-                            <a title="编辑" href="javascript:;" onclick="user_management_edit('编辑','user_management_edit.html','4','','510')" class="ml-5" style="text-decoration:none">
-                                <i class="layui-icon">&#xe642;</i>
-                            </a>
-                            <a style="text-decoration:none"  onclick="user_management_password('修改密码','user_management_password.html','10001','600','400')" href="javascript:;" title="修改密码">
-                                <i class="layui-icon">&#xe631;</i>
-                            </a>
-                            <a title="删除" href="javascript:;" onclick="member_del(this,'1')" style="text-decoration:none">
-                                <i class="layui-icon">&#xe640;</i>
-                            </a>
-                        </td>
-                    </tr>
-                    
-                    
-                </tbody>
-            </table>
+<head>
+<meta charset="utf-8">
+<title>用户管理</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="./css/x-admin.css" media="all">
+<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="x-nav" style="top: 8px;">
+		<span class="layui-breadcrumb"> <a><cite>首页</cite></a> <a><cite>用户管理</cite></a>
+		</span> <a class="layui-btn layui-btn-small"
+			style="line-height: 1.6em; margin-top: 3px; float: right"
+			href="javascript:location.replace(location.href);" title="刷新"><i
+			class="layui-icon" style="line-height: 30px">ဂ</i></a>
+	</div>
+	<div class="x-body" style="top: 8px;">
+		<form class="layui-form x-center" action="" style="width: 500px">
+			<div class="layui-form-pane" style="margin-top: 15px;">
+				<div class="layui-form-item">
+					<div class="layui-input-inline" style="width: 400px">
+						<input type="text" name="username" placeholder="搜索内容"
+							autocomplete="off" class="layui-input">
+					</div>
+					<div class="layui-input-inline" style="width: 80px">
+						<button class="layui-btn" lay-submit="" lay-filter="sreach">
+							<i class="layui-icon">&#xe615;</i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</form>
+		<xblock>
+		<button class="layui-btn layui-btn-danger" onclick="delAll()">
+			<i class="layui-icon">&#xe640;</i>批量删除
+		</button>
+		<button class="layui-btn"
+			onclick="user_management_add('添加用户','user_management_add.html','600','500')">
+			<i class="layui-icon">&#xe608;</i>添加
+		</button>
+		<button class="layui-btn layui-btn-danger">
+			<i class="layui-icon"><img src="images/import.png" width="15" height="15"></img></i>导入
+		</button>
+		<span class="x-right" style="line-height: 25px">共有数据：88 条</span></xblock>
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>用户名</th>
+					<th>手机号码</th>
+					<th>密码</th>
+					<th>用户角色</th>
+					<th>状态</th>
+					<th>注册时间</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody id="user_table">
+				<tr>
+					<td>1</td>
+					<td><u style="cursor: pointer" onclick="user_management_show('宋加加','user_management_show.html','10001','360','400')">宋加加</u></td>
+					<td>123456</td>
+					<td>用户</td>
+					<td>男</td>
+					<td>2015-07-13 13:13:32</td>
+					<td class="td-status"><span
+						class="layui-btn layui-btn-normal layui-btn-mini">已启用</span>
+					</td>
+					<td class="td-manage">
+					   <a style="text-decoration: none" onclick="member_stop(this,'10001')" href="javascript:;" title="停用">
+							<i class="layui-icon">&#xe601;</i>
+					   </a> 
+						<a title="编辑" href="javascript:;" onclick="user_management_edit('编辑','user_management_edit.html','4','','510')"
+							class="ml-5" style="text-decoration: none"> 
+							    <i class="layui-icon">&#xe642;</i>
+						</a> 
+						<a style="text-decoration: none" onclick="user_management_password('修改密码','user_management_password.html','10001','600','400')"
+						href="javascript:;" title="修改密码"> <i class="layui-icon">&#xe631;</i>
+					    </a> 
+					    <a title="删除" href="javascript:;" onclick="member_del(this,'1')" style="text-decoration: none"> 
+					    <i class="layui-icon">&#xe640;</i>
+					</a>
+					</td>
+				</tr>
 
-            <div id="page"></div>
-        </div>
-        <br /><br /><br />
-        <script src="./lib/layui/layui.js" charset="utf-8"></script>
-        <script src="./js/x-layui.js" charset="utf-8"></script>
-        <script src="js/jquery-1.12.1.min.js"></script>
-        <script>
-        	
-        </script>
-        <script>
+
+			</tbody>
+		</table>
+
+		<div id="page"></div>
+	</div>
+	<br />
+	<br />
+	<br />
+	<script src="lib/layui/layui.js" charset="utf-8"></script>
+	<script src="js/x-layui.js" charset="utf-8"></script>
+	<script src="js/jquery-1.12.1.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+	<script>
+	   var dictionary;
+      //1、页面初次加载      
+      $(function(){
+    	  to_page(1);
+      });
+      
+      //查字典的词
+      function getDictionary (type, callback){
+    	  $.ajax({
+    		  
+              type: "get",
+              contentType: "application/json;charset=UTF-8",
+              url: "http://localhost:8080/getDictionary?type="+type,
+              success:function(result){
+            	  dictionary = result;
+            	  // TODO
+            	  // 判断callback是个函数
+            	  if(true){
+            		  callback(result);
+            	  }
+              }
+          });
+      }
+      
+      //查询第几页的信息（页面 与 条件）
+      function to_page(num){
+    	  var pageUser = {
+                  "pageNum":""+num,
+                  "pageSize":"10",
+                  "param":{}
+          }
+    	  $.ajax({
+              async: false,
+              type: "post",
+              contentType: "application/json;charset=UTF-8",
+              url: "http://localhost:8080/sys/getUserList",
+              data: JSON.stringify(pageUser),
+              success:function(result){
+                  creat_user_table(result);
+              }
+          });
+      }
+      
+      function creat_user_table(result){
+    	  $("#user_table").empty();
+    	  var users = result.value.list;
+    	  $.each(users, function(index, item) {
+              //var checkBoxTd = $("<td><input type='checkbox' class='check_item' /></td>");
+              var userIdTd = $("<td></td>").append(item.userId);
+              var userNameTd = $("<td></td>").append(item.userName);
+              var userPhoneTd = $("<td></td>").append(item.userPhone);
+              var passwordTd = $("<td></td>").append("******");
+              var userTypeTd = $("<td></td>").append(item.userType);
+              var accountType = $("<td></td>").append(item.accountType == "1" ? "开启" : "关闭");
+              var creatTime = $("<td></td>").append(item.creatTime);
+              var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn").append(
+                      $("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
+              editBtn.attr("modify-id",item.userId);
+              var delBtn = $("<a></a>").addClass("btn btn-danger btn-sm delete_btn").append(
+                      $("<span></span>").addClass("glyphicon glyphicon-trash")).append("禁用");
+              delBtn.attr("delete-id",item.userId);
+              var btnTd = $("<td></td>").append(editBtn).append(" ").append(delBtn);
+              //append方法执行完成以后还是会返回原来的元素
+              $("<tr></tr>").append(userIdTd).append(userNameTd).append(userPhoneTd).append(passwordTd).append(userTypeTd)
+                  .append(accountType).append(creatTime).append(btnTd).appendTo("#user_table");
+          });
+      }
+      </script>
+	<script>
             layui.use(['laydate','element','laypage','layer'], function(){
                 $ = layui.jquery;//jquery
               laydate = layui.laydate;//日期插件
@@ -186,7 +266,7 @@
                 });
             }
             </script>
-            <script>
+	     <script>
 		        var _hmt = _hmt || [];
 		        (function() {
 		          var hm = document.createElement("script");
@@ -194,5 +274,5 @@
 		          s.parentNode.insertBefore(hm, s);
 		        })();
         </script>
-    </body>
+</body>
 </html>

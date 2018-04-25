@@ -1,5 +1,7 @@
 package com.zhaojm.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.pagehelper.PageInfo;
+import com.zhaojm.bean.PageRequestDTO;
 import com.zhaojm.bean.UseraccountDTO;
 import com.zhaojm.service.IUseraccountService;
 import com.zhaojm.util.ResultDTO;
@@ -33,6 +37,11 @@ public class UserAccountController {
             session.setAttribute("logUser", user);
             return ResultDTO.valueOfSuccess(user);
         }
+    }
+    
+    @RequestMapping(value="/sys/getUserList",method=RequestMethod.POST)
+    public ResultDTO<PageInfo<UseraccountDTO>> getUserList(@RequestBody PageRequestDTO<UseraccountDTO> queryUser){
+        return ResultDTO.valueOfSuccess(useraccountService.queryUserList(queryUser));
     }
     
     

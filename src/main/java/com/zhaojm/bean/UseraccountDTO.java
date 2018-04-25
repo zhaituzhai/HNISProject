@@ -27,7 +27,7 @@ public class UseraccountDTO implements Serializable {
     private String password;
 
     @ApiModelProperty("用户类型（1：管理员 2:医生 3：病人 4：普通用户")
-    private Integer userType;
+    private String userType;
 
     @ApiModelProperty("账户类型（开启/关闭）")
     private Integer accountType;
@@ -90,11 +90,11 @@ public class UseraccountDTO implements Serializable {
         this.password = password;
     }
 
-    public Integer getUserType() {
+    public String getUserType() {
         return userType;
     }
 
-    public void setUserType(Integer userType) {
+    public void setUserType(String userType) {
         this.userType = userType;
     }
 

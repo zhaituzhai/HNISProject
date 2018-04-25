@@ -6,12 +6,15 @@
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="user_type" jdbcType="INTEGER" property="userType" />
+    <result column="user_type" jdbcType="VARCHAR" property="userType" />
     <result column="account_type" jdbcType="INTEGER" property="accountType" />
     <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime"/>
   </resultMap>
   <sql id="Base_Column_List">
     user_id, user_name, user_phone, password, user_type, account_type, creat_time
+  </sql>
+  <sql id="Base_Dic_Column_List">
+    a.user_id, a.user_name, a.user_phone, a.password, a.account_type, a.creat_time, b.data_value user_type
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -28,7 +31,7 @@
       password, user_type, account_type, creat_time
       )
     values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, #{accountType,jdbcType=INTEGER},
+      #{password,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, #{accountType,jdbcType=INTEGER},
       #{creatTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -71,7 +74,7 @@
         #{password,jdbcType=VARCHAR},
       </if>
       <if test="userType != null">
-        #{userType,jdbcType=INTEGER},
+        #{userType,jdbcType=VARCHAR},
       </if>
       <if test="accountType != null">
         #{accountType,jdbcType=INTEGER},
@@ -94,7 +97,7 @@
         password = #{password,jdbcType=VARCHAR},
       </if>
       <if test="userType != null">
-        user_type = #{userType,jdbcType=INTEGER},
+        user_type = #{userType,jdbcType=VARCHAR},
       </if>
       <if test="accountType != null">
         account_type = #{accountType,jdbcType=INTEGER},
@@ -110,7 +113,7 @@
     set user_name = #{userName,jdbcType=VARCHAR},
       user_phone = #{userPhone,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      user_type = #{userType,jdbcType=INTEGER},
+      user_type = #{userType,jdbcType=VARCHAR},
       account_type = #{accountType,jdbcType=INTEGER}
       creat_time = #{creatTime,jdbcType=TIMESTAMP}
     where user_id = #{userId,jdbcType=INTEGER}
@@ -125,10 +128,10 @@
     where (user_name = #{loginName,jdbcType=VARCHAR} OR user_phone = #{loginName,jdbcType=VARCHAR})
   </select>
   <!-- 根据输入条件查询出用户 -->
-  <select id="queryUserList">
+  <select id="queryUserList" resultMap="BaseResultMap">
   select
-  <include refid="Base_Column_List"/>
-  from useraccunt
+  <include refid="Base_Dic_Column_List"/>
+  from useraccount a,dictionary b
   where user_id is not null
   <if test="userName != null and userName !=''">
   and user_name LIKE 
@@ -144,6 +147,7 @@
   <if test="accountType != null and accountType != ''">
   and accountType = #{accountType}
   </if>
+  and a.user_type = b.data_code AND b.data_type='userType'
   order by creat_time desc
   
   </select>
