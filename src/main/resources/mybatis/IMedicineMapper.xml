@@ -141,13 +141,13 @@
   </update>
   
   
-<!--   <select id="selectByName" parameterType="com.zhaojm.bean.MedicineDTO" resultMap="BaseResultMap">
+   <select id="selectByVerfiy" parameterType="com.zhaojm.bean.MedicineDTO" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from medicine
     where 
-    medicine_name LIKE concat(concat('%',#{medicineName,jdbcType=VARCHAR}),'%')
-  </select> -->
+    medicine_name = #{medicineName,jdbcType=VARCHAR}
+  </select> 
   
   <select id="queryMedicineList" parameterType="com.zhaojm.bean.MedicineDTO" resultMap="BaseResultMap">
     select 
@@ -158,6 +158,14 @@
 	    and medicine_name LIKE 
 	        concat(concat('%',#{medicineName,jdbcType=VARCHAR}),'%')
 	  </if>
+	  <if test="mainComponents != null and mainComponents != ''">
+        and main_components LIKE 
+            concat(concat('%',#{mainComponents,jdbcType=VARCHAR}),'%')
+      </if>
+	  <if test="userRange != null and userRange != ''">
+        and user_range LIKE 
+            concat(concat('%',#{userRange,jdbcType=VARCHAR}),'%')
+      </if>
 	  order by medicine_name asc
   </select>
   

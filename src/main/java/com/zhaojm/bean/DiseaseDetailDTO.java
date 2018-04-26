@@ -12,10 +12,13 @@ public class DiseaseDetailDTO implements Serializable {
     private Integer diseaseId;
 
     @ApiModelProperty("所属科室")
-    private String departmentId;
+    private String department;
 
     @ApiModelProperty("所示类型")
-    private String typeId;
+    private String diseaseType;
+
+    @ApiModelProperty("疾病名称")
+    private String diseaseName;
 
     @ApiModelProperty("描述")
     private String deseaseDescription;
@@ -45,20 +48,28 @@ public class DiseaseDetailDTO implements Serializable {
         this.diseaseId = diseaseId;
     }
 
-    public String getDepartmentId() {
-        return departmentId;
+    public String getDepartment() {
+        return department;
     }
 
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
-    public String getTypeId() {
-        return typeId;
+    public String getDiseaseType() {
+        return diseaseType;
     }
 
-    public void setTypeId(String typeId) {
-        this.typeId = typeId;
+    public void setDiseaseType(String diseaseType) {
+        this.diseaseType = diseaseType;
+    }
+
+    public String getDiseaseName() {
+        return diseaseName;
+    }
+
+    public void setDiseaseName(String diseaseName) {
+        this.diseaseName = diseaseName;
     }
 
     public String getDeseaseDescription() {
@@ -122,8 +133,9 @@ public class DiseaseDetailDTO implements Serializable {
         }
         DiseaseDetailDTO other = (DiseaseDetailDTO) that;
         return (this.getDiseaseId() == null ? other.getDiseaseId() == null : this.getDiseaseId().equals(other.getDiseaseId()))
-            && (this.getDepartmentId() == null ? other.getDepartmentId() == null : this.getDepartmentId().equals(other.getDepartmentId()))
-            && (this.getTypeId() == null ? other.getTypeId() == null : this.getTypeId().equals(other.getTypeId()))
+            && (this.getDepartment() == null ? other.getDepartment() == null : this.getDepartment().equals(other.getDepartment()))
+            && (this.getDiseaseType() == null ? other.getDiseaseType() == null : this.getDiseaseType().equals(other.getDiseaseType()))
+            && (this.getDiseaseName() == null ? other.getDiseaseName() == null : this.getDiseaseName().equals(other.getDiseaseName()))
             && (this.getDeseaseDescription() == null ? other.getDeseaseDescription() == null : this.getDeseaseDescription().equals(other.getDeseaseDescription()))
             && (this.getDeseaseManifestation() == null ? other.getDeseaseManifestation() == null : this.getDeseaseManifestation().equals(other.getDeseaseManifestation()))
             && (this.getTherapeuticMethod() == null ? other.getTherapeuticMethod() == null : this.getTherapeuticMethod().equals(other.getTherapeuticMethod()))
@@ -137,8 +149,9 @@ public class DiseaseDetailDTO implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getDiseaseId() == null) ? 0 : getDiseaseId().hashCode());
-        result = prime * result + ((getDepartmentId() == null) ? 0 : getDepartmentId().hashCode());
-        result = prime * result + ((getTypeId() == null) ? 0 : getTypeId().hashCode());
+        result = prime * result + ((getDepartment() == null) ? 0 : getDepartment().hashCode());
+        result = prime * result + ((getDiseaseType() == null) ? 0 : getDiseaseType().hashCode());
+        result = prime * result + ((getDiseaseName() == null) ? 0 : getDiseaseName().hashCode());
         result = prime * result + ((getDeseaseDescription() == null) ? 0 : getDeseaseDescription().hashCode());
         result = prime * result + ((getDeseaseManifestation() == null) ? 0 : getDeseaseManifestation().hashCode());
         result = prime * result + ((getTherapeuticMethod() == null) ? 0 : getTherapeuticMethod().hashCode());
@@ -155,8 +168,9 @@ public class DiseaseDetailDTO implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", diseaseId=").append(diseaseId);
-        sb.append(", departmentId=").append(departmentId);
-        sb.append(", typeId=").append(typeId);
+        sb.append(", department=").append(department);
+        sb.append(", diseaseType=").append(diseaseType);
+        sb.append(", diseaseName=").append(diseaseName);
         sb.append(", deseaseDescription=").append(deseaseDescription);
         sb.append(", deseaseManifestation=").append(deseaseManifestation);
         sb.append(", therapeuticMethod=").append(therapeuticMethod);

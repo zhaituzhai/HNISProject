@@ -12,9 +12,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.github.pagehelper.PageInfo;
+import com.zhaojm.bean.DiseaseDetailDTO;
+import com.zhaojm.bean.MedicineDTO;
 import com.zhaojm.bean.PageRequestDTO;
 import com.zhaojm.bean.UseraccountDTO;
+import com.zhaojm.mapper.IDiseaseDetailMapper;
 import com.zhaojm.mapper.IUseraccountMapper;
+import com.zhaojm.service.IMedicineService;
 import com.zhaojm.service.IUseraccountService;
 
 @RunWith(SpringRunner.class)
@@ -27,6 +31,12 @@ public class UserTest {
     
     @Autowired
     IUseraccountMapper useraccountMapper;
+    
+    @Autowired
+    IMedicineService medicineService;
+    
+    @Autowired
+    IDiseaseDetailMapper diseaseDetailMapper;
     
     @Test
     public void testLogin() throws Exception {
@@ -47,6 +57,32 @@ public class UserTest {
         query.setParam(user);
         PageInfo<UseraccountDTO> userList = useraccountService.queryUserList(query);
         assertTrue(userList!=null);
+    }
+    @Test
+    public void testMedicine() {
+        MedicineDTO me = new MedicineDTO();
+        PageRequestDTO<MedicineDTO> page = new PageRequestDTO<>();
+        page.setPageNum(1);
+        page.setPageSize(10);
+        page.setParam(me);
+        PageInfo<MedicineDTO> list = medicineService.queryMedicineList(page);
+        assertTrue(list.getSize()>0);
+    }
+    
+    @Test
+    public void testDisease() {
+        
+        DiseaseDetailDTO dis = new DiseaseDetailDTO();
+//        dis.setDepartment("0");
+        dis.setDiseaseType("白眼疾病");
+        List<DiseaseDetailDTO> list = diseaseDetailMapper.queryDiseaseList(dis);
+        assertTrue(list.size()>0);
+        
+//        List<String> list = diseaseDetailMapper.getDiseaseDepartment("眼");
+        
+//        List<String> typeList = diseaseDetailMapper.getDiseaseType("眼");
+        
+//        assertTrue(list.size()>0);
     }
     
     @Test

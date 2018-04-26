@@ -20,6 +20,14 @@ public class StartContoller {
     public String adminUser(){
         return "admin_user_management";
     }
+    @RequestMapping("/admin_medicine_management")
+    public String adminMedicine(){
+        return "admin_medicine_management";
+    }
+    @RequestMapping("/admin_diseases_management")
+    public String adminDisease(){
+        return "admin_diseases_management";
+    }
     @RequestMapping("/admin_role_management")
     public String adminRole(){
         return "admin_role_management";

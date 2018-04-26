@@ -3,8 +3,9 @@
 <mapper namespace="com.zhaojm.mapper.IDiseaseDetailMapper">
   <resultMap id="BaseResultMap" type="com.zhaojm.bean.DiseaseDetailDTO">
     <id column="disease_id" jdbcType="INTEGER" property="diseaseId" />
-    <result column="department_id" jdbcType="VARCHAR" property="departmentId" />
-    <result column="type_id" jdbcType="VARCHAR" property="typeId" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="disease_type" jdbcType="VARCHAR" property="diseaseType" />
+    <result column="disease_name" jdbcType="VARCHAR" property="diseaseName" />
     <result column="desease_description" jdbcType="VARCHAR" property="deseaseDescription" />
     <result column="desease_manifestation" jdbcType="VARCHAR" property="deseaseManifestation" />
     <result column="therapeutic_method" jdbcType="VARCHAR" property="therapeuticMethod" />
@@ -13,8 +14,8 @@
     <result column="entry_person" jdbcType="VARCHAR" property="entryPerson" />
   </resultMap>
   <sql id="Base_Column_List">
-    disease_id, department_id, type_id, desease_description, desease_manifestation, therapeutic_method, 
-    therapeutic_mark, entry_time, entry_person
+    disease_id, department, disease_type, disease_name, desease_description, desease_manifestation, 
+    therapeutic_method, therapeutic_mark, entry_time, entry_person
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -27,12 +28,12 @@
     where disease_id = #{diseaseId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zhaojm.bean.DiseaseDetailDTO">
-    insert into disease_detail (disease_id, department_id, type_id, 
-      desease_description, desease_manifestation, 
+    insert into disease_detail (disease_id, department, disease_type, 
+      disease_name, desease_description, desease_manifestation, 
       therapeutic_method, therapeutic_mark, entry_time, 
       entry_person)
-    values (#{diseaseId,jdbcType=INTEGER}, #{departmentId,jdbcType=VARCHAR}, #{typeId,jdbcType=VARCHAR}, 
-      #{deseaseDescription,jdbcType=VARCHAR}, #{deseaseManifestation,jdbcType=VARCHAR}, 
+    values (#{diseaseId,jdbcType=INTEGER}, #{department,jdbcType=VARCHAR}, #{diseaseType,jdbcType=VARCHAR}, 
+      #{diseaseName,jdbcType=VARCHAR}, #{deseaseDescription,jdbcType=VARCHAR}, #{deseaseManifestation,jdbcType=VARCHAR}, 
       #{therapeuticMethod,jdbcType=VARCHAR}, #{therapeuticMark,jdbcType=VARCHAR}, #{entryTime,jdbcType=VARCHAR}, 
       #{entryPerson,jdbcType=VARCHAR})
   </insert>
@@ -42,11 +43,14 @@
       <if test="diseaseId != null">
         disease_id,
       </if>
-      <if test="departmentId != null">
-        department_id,
+      <if test="department != null">
+        department,
       </if>
-      <if test="typeId != null">
-        type_id,
+      <if test="diseaseType != null">
+        disease_type,
+      </if>
+      <if test="diseaseName != null">
+        disease_name,
       </if>
       <if test="deseaseDescription != null">
         desease_description,
@@ -71,11 +75,14 @@
       <if test="diseaseId != null">
         #{diseaseId,jdbcType=INTEGER},
       </if>
-      <if test="departmentId != null">
-        #{departmentId,jdbcType=VARCHAR},
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
       </if>
-      <if test="typeId != null">
-        #{typeId,jdbcType=VARCHAR},
+      <if test="diseaseType != null">
+        #{diseaseType,jdbcType=VARCHAR},
+      </if>
+      <if test="diseaseName != null">
+        #{diseaseName,jdbcType=VARCHAR},
       </if>
       <if test="deseaseDescription != null">
         #{deseaseDescription,jdbcType=VARCHAR},
@@ -100,11 +107,14 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.zhaojm.bean.DiseaseDetailDTO">
     update disease_detail
     <set>
-      <if test="departmentId != null">
-        department_id = #{departmentId,jdbcType=VARCHAR},
+      <if test="department != null">
+        department = #{department,jdbcType=VARCHAR},
       </if>
-      <if test="typeId != null">
-        type_id = #{typeId,jdbcType=VARCHAR},
+      <if test="diseaseType != null">
+        disease_type = #{diseaseType,jdbcType=VARCHAR},
+      </if>
+      <if test="diseaseName != null">
+        disease_name = #{diseaseName,jdbcType=VARCHAR},
       </if>
       <if test="deseaseDescription != null">
         desease_description = #{deseaseDescription,jdbcType=VARCHAR},
@@ -129,8 +139,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zhaojm.bean.DiseaseDetailDTO">
     update disease_detail
-    set department_id = #{departmentId,jdbcType=VARCHAR},
-      type_id = #{typeId,jdbcType=VARCHAR},
+    set department = #{department,jdbcType=VARCHAR},
+      disease_type = #{diseaseType,jdbcType=VARCHAR},
+      disease_name = #{diseaseName,jdbcType=VARCHAR},
       desease_description = #{deseaseDescription,jdbcType=VARCHAR},
       desease_manifestation = #{deseaseManifestation,jdbcType=VARCHAR},
       therapeutic_method = #{therapeuticMethod,jdbcType=VARCHAR},
@@ -139,4 +150,45 @@
       entry_person = #{entryPerson,jdbcType=VARCHAR}
     where disease_id = #{diseaseId,jdbcType=INTEGER}
   </update>
+  
+  
+  <!-- <select id="queryDiseaseList" parameterType="com.zhaojm.bean.DiseaseDetailDTO" resultMap="BaseResultMap">
+  select * from disease_detail
+  where disease_id is not null
+  <if test="diseaseType != null and diseaseType != ''">
+    and disease_type = #{diseaseType,jdbcType=VARCHAR}
+  </if>
+  </select> -->
+  
+  
+  <select id="queryDiseaseList" parameterType="com.zhaojm.bean.DiseaseDetailDTO" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from disease_detail
+    where disease_id is not null
+    <if test="diseaseName != null and diseaseName != ''">
+        and disease_name LIKE( concat('%',concat(#{diseaseName,jdbcType=VARCHAR},'%')) )
+    </if>
+    <if test="department != null and department != ''">
+        and department = #{department}
+    </if>
+    <if test="diseaseType != null and diseaseType != ''">
+        and disease_type = #{diseaseType}
+    </if>
+    <if test="deseaseDescription != null and deseaseDescription != ''">
+        and deseaseDescription LIKE( concat('%',concat(#{deseaseDescription,jdbcType=VARCHAR},'%'))
+    </if>
+    order by department asc
+  </select> 
+  <select id="getDiseaseDepartment" resultType="java.lang.String">
+    select DISTINCT department
+    from disease_detail
+	order by department asc
+  </select>
+  <select id="getDiseaseType" resultType="java.lang.String">
+    select DISTINCT disease_type
+    from disease_detail
+	order by disease_type
+  </select>
+  
 </mapper>
