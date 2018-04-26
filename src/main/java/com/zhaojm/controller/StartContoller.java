@@ -24,9 +24,9 @@ public class StartContoller {
     public String adminRole(){
         return "admin_role_management";
     }
-    @RequestMapping("/main")
+    @RequestMapping("/welcome")
     public String main(){
-        return "main";
+        return "welcome";
     }
     //admin_user_add
     @RequestMapping("/admin_user_add")

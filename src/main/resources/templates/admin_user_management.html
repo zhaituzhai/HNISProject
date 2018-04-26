@@ -69,9 +69,9 @@
 		</div>
 	</div>
 	<xblock>
-	<button class="layui-btn layui-btn-danger" onclick="delAll()">
+	<!-- <button class="layui-btn layui-btn-danger" onclick="delAll()">
 		<i class="layui-icon">&#xe640;</i>批量删除
-	</button>
+	</button> -->
 	<button class="layui-btn"
 		onclick="user_management_add('添加用户','http://localhost:8080/admin_user_add','600','500')">
 		<i class="layui-icon">&#xe608;</i>添加
@@ -121,7 +121,36 @@
       function selectByChoose(){
     	  to_page(1);
       }
-      
+      //禁用
+      $(document).on("click",".delete_btn",function(){
+    	    var user;
+            //1、弹出确认删除
+            var empName = $(this).parents("tr").find("td:eq(1)").text();
+            var empId = $(this).attr("delete-id");
+            var type = $(this).parents("tr").find("td:eq(5)").text();
+            //alert($(this).parents("tr").find("td:eq(1)").text());
+            if(type == '开启'){
+            	user = {"userId": ""+empId,"accountType": "0"};
+            	op = "禁用";
+            }else{
+            	user = {"userId": ""+empId,"accountType": "1"};
+            	op = "开启";
+            }
+            
+            if(confirm("确认"+op+"【"+empName+"】吗？")){
+                $.ajax({
+                	async: false,
+                    type: "post",
+                    contentType: "application/json;charset=UTF-8",
+                    url:"http://localhost:8080/sys/update",
+                    data: JSON.stringify(user),
+                    success:function(result){
+                        //alert(result.message);
+                        to_page(currentPage);
+                    } 
+                });
+            }
+        });
       //查询第几页的信息（页面 与 条件）
       function to_page(num){
     	  var pageUser = {
@@ -159,13 +188,20 @@
               var userPhoneTd = $("<td></td>").append(item.userPhone);
               var passwordTd = $("<td></td>").append("******");
               var userTypeTd = $("<td></td>").append(item.userType);
-              var accountType = $("<td></td>").append(item.accountType == "1" ? "开启" : "关闭");
+              var accountType,delBtn;
+              if(item.accountType == "1"){
+            	  accountType = $("<td></td>").append("开启");
+            	  delBtn = $("<a></a>").addClass("btn btn-warning btn-sm delete_btn").append(
+                          $("<span></span>").addClass("glyphicon glyphicon-ban-circle")).append("关闭");
+              }else{
+	              accountType = $("<td></td>").addClass("bg-danger").append("关闭");
+	              delBtn = $("<a></a>").addClass("btn btn-success btn-sm delete_btn").append(
+	                      $("<span></span>").addClass("glyphicon glyphicon-ok-circle")).append("开启");
+              }
               var creatTime = $("<td></td>").append(item.creatTime);
               var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn").append(
                       $("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
               editBtn.attr("modify-id",item.userId);
-              var delBtn = $("<a></a>").addClass("btn btn-danger btn-sm delete_btn").append(
-                      $("<span></span>").addClass("glyphicon glyphicon-trash")).append("禁用");
               delBtn.attr("delete-id",item.userId);
               var btnTd = $("<td></td>").append(editBtn).append(" ").append(delBtn);
               //append方法执行完成以后还是会返回原来的元素

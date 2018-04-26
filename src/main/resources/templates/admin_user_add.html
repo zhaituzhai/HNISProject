@@ -78,24 +78,6 @@
 		<script src="js/jquery-1.12.1.min.js"></script>
 		<script type="text/javascript">
 		   //验证重名   
-		  /* function verify_name(name){
-			 
-			   $.ajax({
-				  type: "get",
-	              contentType: "application/json;charset=UTF-8",
-	              url: "http://localhost:8080/sys/verfiyName",
-	              data: "name="+name,
-	              success:function(result){
-	                  if(result>0){
-	                	  $("#nameverify").text("已存在");
-	                  }else{
-	                	  $("#nameverify").test("可用");
-	                  }
-	              }
-			   });
-		   } */
-
-           //contentType: "application/json;charset=UTF-8",
 		   $("#userName").change(function(){
 			   $("#nameverify").text("*");
 			   var name = {
@@ -141,7 +123,7 @@
 				$ = layui.jquery;
 				var form = layui.form(),
 					layer = layui.layer;
-
+				
 				//自定义验证规则
 				form.verify({
 					nikename: function(value) {
@@ -162,15 +144,35 @@
 				form.on('submit(add)', function(data) {
 					console.log(data);
 					//发异步，把数据提交给php
-					layer.alert("增加成功", {
-						icon: 6
-					}, function() {
-						// 获得frame索引
-						var index = parent.layer.getFrameIndex(window.name);
-						//关闭当前frame
-						parent.layer.close(index);
-					});
-					return false;
+					var user = {
+                           "userName": ""+$("#userName").val(),
+                           "userPhone": ""+$("#userPhone").val(),
+                           "password": ""+$("#password").val(),
+                           "userType": ""+$("#usertype").val()
+                   }
+					$.ajax({
+		                  type: "post",
+		                  contentType: "application/json;charset=UTF-8",
+		                  url: "http://localhost:8080/sys/creatUser",
+		                  data: JSON.stringify(user),
+		                  success:function(result){
+		                     if(result.success){
+		                      }else{
+		                         alert(result.message);
+		                      }
+		                  }
+		               });
+                   	  layer.alert("增加成功", {
+                             icon: 6
+                         }, function() {
+                        	 //刷新页面
+                        	 window.parent.location.reload();
+                             // 获得frame索引
+                             var index = parent.layer.getFrameIndex(window.name);
+                             //关闭当前frame
+                             parent.layer.close(index);
+                         });
+                       return false;
 				});
 
 			});

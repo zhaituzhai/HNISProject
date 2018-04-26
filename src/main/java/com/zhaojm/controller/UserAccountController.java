@@ -53,5 +53,23 @@ public class UserAccountController {
             return ResultDTO.valueOfError("error");
         }
     }
+    @RequestMapping(value="/sys/creatUser",method=RequestMethod.POST)
+    public ResultDTO<Integer> creatUser(@RequestBody UseraccountDTO user){
+        int isSave = useraccountService.creadUseraccount(user);
+        if(isSave>0)
+            return ResultDTO.valueOfSuccess();
+        else
+            return ResultDTO.valueOfError("添加未成功！");
+    }
+    
+    @RequestMapping(value="/sys/update",method=RequestMethod.POST)
+    public ResultDTO<Integer> updateUser(@RequestBody UseraccountDTO user){
+        UseraccountDTO isSave = useraccountService.updateUser(user);
+        if(null != isSave)
+            return ResultDTO.valueOfSuccess();
+        else
+            return ResultDTO.valueOfError("操作失败！");
+    }
+    
     
 }

@@ -56,7 +56,7 @@ public class UseraccountServiceImpl implements IUseraccountService {
         if(!user.getUserPhone().matches(phoneRegex))
             return 0;
         else if(useraccountMapper.insertSelective(user)>0)
-            return useraccountMapper.insertSelective(user);
+            return 1;
         else
             return -1;
     }
@@ -80,7 +80,7 @@ public class UseraccountServiceImpl implements IUseraccountService {
      */
     @Override
     public UseraccountDTO updateUser(UseraccountDTO user) {
-        int isUpdate = useraccountMapper.updateByPrimaryKey(user);
+        int isUpdate = useraccountMapper.updateByPrimaryKeySelective(user);
         if(isUpdate < 0) 
             return null;
         else
