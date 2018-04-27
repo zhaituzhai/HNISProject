@@ -124,6 +124,9 @@
 				var form = layui.form(),
 					layer = layui.layer;
 				
+				
+				
+				
 				//自定义验证规则
 				form.verify({
 					nikename: function(value) {
@@ -140,8 +143,9 @@
 					}
 				});
 
+				// 添加BEGIN
 				//监听提交
-				form.on('submit(add)', function(data) {
+                form.on('submit(add)', function(data) {
 					console.log(data);
 					//发异步，把数据提交给php
 					var user = {
@@ -149,8 +153,8 @@
                            "userPhone": ""+$("#userPhone").val(),
                            "password": ""+$("#password").val(),
                            "userType": ""+$("#usertype").val()
-                   }
-					$.ajax({
+                    }
+				    $.ajax({
 		                  type: "post",
 		                  contentType: "application/json;charset=UTF-8",
 		                  url: "http://localhost:8080/sys/creatUser",
@@ -161,29 +165,36 @@
 		                         alert(result.message);
 		                      }
 		                  }
-		               });
-                   	  layer.alert("增加成功", {
-                             icon: 6
-                         }, function() {
-                        	 //刷新页面
-                        	 window.parent.location.reload();
-                             // 获得frame索引
-                             var index = parent.layer.getFrameIndex(window.name);
-                             //关闭当前frame
-                             parent.layer.close(index);
-                         });
-                       return false;
+		            });
+                   	layer.alert("增加成功", {
+                        icon: 6
+                    }, function() {
+                        //刷新页面
+                        window.parent.location.reload();
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                    });
+                    return false;
 				});
+				// 添加END
+				
+				
+				// 保存BEGIN
+
+                var iframeOpt = parent.iframeOpt;
+                if(iframeOpt.method == 'save'){
+                    var data = iframeOpt.data;
+                    console.log(data);
+                    debugger;
+                	
+                	
+                	
+                }
+				// 保存END
 
 			});
-		</script>
-		<script>
-			var _hmt = _hmt || [];
-			(function() {
-				var hm = document.createElement("script");
-				var s = document.getElementsByTagName("script")[0];
-				s.parentNode.insertBefore(hm, s);
-			})();
 		</script>
 	</body>
 

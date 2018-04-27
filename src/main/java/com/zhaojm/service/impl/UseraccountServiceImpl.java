@@ -86,6 +86,20 @@ public class UseraccountServiceImpl implements IUseraccountService {
         else
             return useraccountMapper.selectByPrimaryKey(user.getUserId());
     }
+    
+    @Override
+    public UseraccountDTO getUserFull(Integer userId) {
+        UseraccountDTO user = useraccountMapper.selectByPrimaryKey(userId);
+        if("2".equals(user.getUserType())) {
+            user.setDoctor(doctorMapper.selectByUserId(userId));
+            return user;
+        }else if("3".equals(user.getUserType())) {
+            user.setPatient(patientMapper.selectByUserId(userId));
+            return user;
+        }else {
+            return null;
+        }
+    }
 
     @Override
     public DoctorDTO queryDoctorById(Integer id) {

@@ -26,6 +26,8 @@ public interface IUseraccountService {
     
     UseraccountDTO updateUser(UseraccountDTO user);
     
+    UseraccountDTO getUserFull(Integer userId);
+    
     DoctorDTO queryDoctorById(Integer id);
     
     PatientDTO queryPatientById(Integer id);

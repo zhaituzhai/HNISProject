@@ -121,6 +121,39 @@
       function selectByChoose(){
     	  to_page(1);
       }
+      //点击修改
+      $(document).on("click",".edit_btn",function(){
+          //拿到修改的id
+    	  var userId = {
+        		  "userId": parseInt($(this).attr("modify-id"))
+          }
+          
+          
+          //请求后台 拿到相相关信息
+    	  $.ajax({
+              async: false,
+              type: "post",
+              contentType: "application/json;charset=UTF-8",
+              url:"http://localhost:8080/sys/getUser/"+parseInt($(this).attr("modify-id")),
+              data: JSON.stringify(userId),
+              success:function(result){
+            	  if(result.success){
+            		  window.iframeOpt = {
+            				 method: 'save',
+            				 data: result.value
+            		  }
+            		  // TODO
+            		  x_admin_show('修改用户','http://localhost:8080/admin_user_add','600','500');
+            	  }else{
+            		  alert(result.message);
+            	  }
+                  //alert(result.message);
+                  //to_page(currentPage);
+              } 
+          });
+          
+      });
+      
       //禁用
       $(document).on("click",".delete_btn",function(){
     	    var user;
@@ -130,7 +163,7 @@
             var type = $(this).parents("tr").find("td:eq(5)").text();
             //alert($(this).parents("tr").find("td:eq(1)").text());
             if(type == '开启'){
-            	user = {"userId": ""+empId,"accountType": "0"};
+            	user = {"userId": ""+empId,"accountType": "2"};
             	op = "禁用";
             }else{
             	user = {"userId": ""+empId,"accountType": "1"};
@@ -275,21 +308,10 @@
               lement = layui.element();//面包导航
               laypage = layui.laypage;//分页
               layer = layui.layer;//弹出层
+              parent.layer = layui.layer; // 
               form = layui.form();
 
               //以上模块根据需要引入
-
-              /* laypage({
-                cont: 'page'
-                ,pages: 100
-                ,first: 1
-                ,last: 100
-                ,prev: '<em><</em>'
-                ,next: '<em>></em>'
-              });  */
-              
-              
-              
               var start = {
                 min: laydate.now()
                 ,max: '2099-06-16 23:59:59'
@@ -308,7 +330,6 @@
                   start.max = datas; //结束日选好后，重置开始日的最大日期
                 }
               };
-              
             });
 
             //批量删除提交
@@ -320,6 +341,9 @@
              }
              /*用户-添加*/
             function user_management_add(title,url,w,h){
+            	window.iframeOpt = {
+            		method: 'add'
+            	};
                 x_admin_show(title,url,w,h);
             }
             /*用户-查看*/
@@ -365,13 +389,5 @@
                 });
             }
             </script>
-	<script>
-		        var _hmt = _hmt || [];
-		        (function() {
-		          var hm = document.createElement("script");
-		          var s = document.getElementsByTagName("script")[0]; 
-		          s.parentNode.insertBefore(hm, s);
-		        })();
-        </script>
 </body>
 </html>

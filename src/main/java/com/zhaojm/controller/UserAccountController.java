@@ -3,6 +3,7 @@ package com.zhaojm.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,11 +30,22 @@ public class UserAccountController {
     public ResultDTO<UseraccountDTO> getLoginUser(@RequestBody @ApiParam("登陆用户") UseraccountDTO loginUser,HttpSession session) throws Exception{
         
         UseraccountDTO user = useraccountService.verificationLoginUser(loginUser);
-        if(null == user)
+        if(null == user) {
             return ResultDTO.valueOfError("账户或密码错误！");
-        else {
-            session.setAttribute("logUser", user);
+        }else if(user.getAccountType() == 0) {
+            return ResultDTO.valueOfError("账户已被禁用！");
+        }else
+        session.setAttribute("logUser", user);
+        return ResultDTO.valueOfSuccess(user);
+    }
+    
+    @RequestMapping(value="/sys/getUser/{userId}",method=RequestMethod.POST)
+    public ResultDTO<UseraccountDTO> getUser(@PathVariable("userId") Integer userId){
+        UseraccountDTO user = useraccountService.getUserFull(userId);
+        if(null != user) {
             return ResultDTO.valueOfSuccess(user);
+        }else {
+            return ResultDTO.valueOfError("无法查看管理员信息");
         }
     }
     
