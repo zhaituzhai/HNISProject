@@ -28,7 +28,7 @@ public class DoctorServiceImpl implements IDoctorService {
 
     @Override
     public DoctorDTO updateDoctor(DoctorDTO doctor) {
-        if(doctorMapper.updateByPrimaryKey(doctor)>0)
+        if(doctorMapper.updateByPrimaryKeySelective(doctor)>0)
             return doctorMapper.selectByPrimaryKey(doctor.getDoctorId());
         else
             return null;

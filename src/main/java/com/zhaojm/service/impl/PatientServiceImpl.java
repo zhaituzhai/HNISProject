@@ -25,10 +25,9 @@ public class PatientServiceImpl implements IPatientService {
         }
         return 0;
     }
-
     @Override
     public PatientDTO updatePatient(PatientDTO patient) {
-        if(patientMapper.updateByPrimaryKey(patient)>0)
+        if(patientMapper.updateByPrimaryKeySelective(patient)>0)
             return patientMapper.selectByPrimaryKey(patient.getPatientId());
         return null;
     }

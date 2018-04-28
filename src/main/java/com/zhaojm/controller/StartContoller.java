@@ -41,6 +41,18 @@ public class StartContoller {
     public String userAdd() {
         return "admin_user_add";
     }
+    @RequestMapping("/admin_user_edit")
+    public String userModfiy() {
+        return "admin_user_edit";
+    }
+    @RequestMapping("/admin_doctor_edit")
+    public String doctorModfiy() {
+        return "admin_doctor_edit";
+    }
+    @RequestMapping("/admin_patient_edit")
+    public String patientModfiy() {
+        return "admin_patient_edit";
+    }
 
 
 }

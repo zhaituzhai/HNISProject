@@ -6,9 +6,9 @@
     <result column="patient_name" jdbcType="VARCHAR" property="patientName" />
     <result column="doctor_name" jdbcType="VARCHAR" property="doctorName" />
     <result column="illness_desc" jdbcType="VARCHAR" property="illnessDesc" />
-    <result column="illness_time" jdbcType="VARCHAR" property="illnessTime" />
+    <result column="illness_time" jdbcType="TIMESTAMP" property="illnessTime" />
     <result column="illness_grade" jdbcType="VARCHAR" property="illnessGrade" />
-    <result column="cure_time" jdbcType="VARCHAR" property="cureTime" />
+    <result column="cure_time" jdbcType="TIMESTAMP" property="cureTime" />
     <result column="cure_cycle" jdbcType="VARCHAR" property="cureCycle" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
@@ -32,8 +32,8 @@
       cure_time, cure_cycle, remark
       )
     values (#{caseId,jdbcType=INTEGER}, #{patientName,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, 
-      #{illnessDesc,jdbcType=VARCHAR}, #{illnessTime,jdbcType=VARCHAR}, #{illnessGrade,jdbcType=VARCHAR}, 
-      #{cureTime,jdbcType=VARCHAR}, #{cureCycle,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      #{illnessDesc,jdbcType=VARCHAR}, #{illnessTime,jdbcType=TIMESTAMP}, #{illnessGrade,jdbcType=VARCHAR}, 
+      #{cureTime,jdbcType=TIMESTAMP}, #{cureCycle,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zhaojm.bean.CaseDTO">
@@ -81,13 +81,13 @@
         #{illnessDesc,jdbcType=VARCHAR},
       </if>
       <if test="illnessTime != null">
-        #{illnessTime,jdbcType=VARCHAR},
+        #{illnessTime,jdbcType=TIMESTAMP},
       </if>
       <if test="illnessGrade != null">
         #{illnessGrade,jdbcType=VARCHAR},
       </if>
       <if test="cureTime != null">
-        #{cureTime,jdbcType=VARCHAR},
+        #{cureTime,jdbcType=TIMESTAMP},
       </if>
       <if test="cureCycle != null">
         #{cureCycle,jdbcType=VARCHAR},
@@ -110,13 +110,13 @@
         illness_desc = #{illnessDesc,jdbcType=VARCHAR},
       </if>
       <if test="illnessTime != null">
-        illness_time = #{illnessTime,jdbcType=VARCHAR},
+        illness_time = #{illnessTime,jdbcType=TIMESTAMP},
       </if>
       <if test="illnessGrade != null">
         illness_grade = #{illnessGrade,jdbcType=VARCHAR},
       </if>
       <if test="cureTime != null">
-        cure_time = #{cureTime,jdbcType=VARCHAR},
+        cure_time = #{cureTime,jdbcType=TIMESTAMP},
       </if>
       <if test="cureCycle != null">
         cure_cycle = #{cureCycle,jdbcType=VARCHAR},
@@ -132,11 +132,30 @@
     set patient_name = #{patientName,jdbcType=VARCHAR},
       doctor_name = #{doctorName,jdbcType=VARCHAR},
       illness_desc = #{illnessDesc,jdbcType=VARCHAR},
-      illness_time = #{illnessTime,jdbcType=VARCHAR},
+      illness_time = #{illnessTime,jdbcType=TIMESTAMP},
       illness_grade = #{illnessGrade,jdbcType=VARCHAR},
-      cure_time = #{cureTime,jdbcType=VARCHAR},
+      cure_time = #{cureTime,jdbcType=TIMESTAMP},
       cure_cycle = #{cureCycle,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR}
     where case_id = #{caseId,jdbcType=INTEGER}
   </update>
+  
+    <select id="queryCaseList" parameterType="com.zhaojm.bean.CaseDTO" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from case
+    where case_id is not null
+    <if test="caseId != null and caseId != ''">
+    and  case_id = #{caseId,jdbcType=VARCHAR},
+    </if>
+    <if test="patientName != null and patientName != ''">
+    and  patient_name LIKE concat(concat('%',#{patientName,jdbcType=VARCHAR}),'%')
+    </if>
+    <if test="doctorName != null and doctorName !='' ">
+    and  doctor_name LIKE concat(concat('%',#{doctorName,jdbcType=VARCHAR}),'%')
+    </if>
+    order by cure_time disc
+  </select>
+  
+  
 </mapper>

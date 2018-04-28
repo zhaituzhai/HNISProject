@@ -10,9 +10,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
+import com.zhaojm.bean.DoctorDTO;
 import com.zhaojm.bean.PageRequestDTO;
+import com.zhaojm.bean.PatientDTO;
 import com.zhaojm.bean.UseraccountDTO;
+import com.zhaojm.service.IDoctorService;
+import com.zhaojm.service.IPatientService;
 import com.zhaojm.service.IUseraccountService;
+import com.zhaojm.service.impl.PatientServiceImpl;
 import com.zhaojm.util.ResultDTO;
 
 import io.swagger.annotations.Api;
@@ -25,6 +30,12 @@ public class UserAccountController {
     
     @Autowired
     IUseraccountService useraccountService;
+    
+    @Autowired
+    IPatientService patientService;
+    
+    @Autowired
+    IDoctorService doctorService;
     
     @RequestMapping(value="/sys/login",method=RequestMethod.POST)
     public ResultDTO<UseraccountDTO> getLoginUser(@RequestBody @ApiParam("登陆用户") UseraccountDTO loginUser,HttpSession session) throws Exception{
@@ -64,6 +75,7 @@ public class UserAccountController {
             return ResultDTO.valueOfError("error");
         }
     }
+    
     @RequestMapping(value="/sys/creatUser",method=RequestMethod.POST)
     public ResultDTO<Integer> creatUser(@RequestBody UseraccountDTO user){
         int isSave = useraccountService.creadUseraccount(user);
@@ -73,9 +85,28 @@ public class UserAccountController {
             return ResultDTO.valueOfError("添加未成功！");
     }
     
-    @RequestMapping(value="/sys/update",method=RequestMethod.POST)
+    @RequestMapping(value="/sys/updateUser",method=RequestMethod.POST)
     public ResultDTO<Integer> updateUser(@RequestBody UseraccountDTO user){
         UseraccountDTO isSave = useraccountService.updateUser(user);
+        if(null != isSave)
+            return ResultDTO.valueOfSuccess();
+        else
+            return ResultDTO.valueOfError("操作失败！");
+    }
+    
+    
+    @RequestMapping(value="/sys/updatePatient",method=RequestMethod.POST)
+    public ResultDTO<Integer> updatePatient(@RequestBody PatientDTO patient){
+        PatientDTO isSave = patientService.updatePatient(patient);
+        if(null != isSave)
+            return ResultDTO.valueOfSuccess();
+        else
+            return ResultDTO.valueOfError("操作失败！");
+    }
+    
+    @RequestMapping(value="/sys/updateDoctor",method=RequestMethod.POST)
+    public ResultDTO<Integer> updateDoctor(@RequestBody DoctorDTO doctor){
+        DoctorDTO isSave = doctorService.updateDoctor(doctor);
         if(null != isSave)
             return ResultDTO.valueOfSuccess();
         else

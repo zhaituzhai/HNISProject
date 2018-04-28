@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <title>
+            用户管理-编辑
+        </title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" href="./css/x-admin.css" media="all">
+    </head>
+    
+    <body>
+        <div class="x-body">
+			<form class="layui-form">
+			
+				<div class="layui-form-item">
+					<label for="L_email" class="layui-form-label">用户ID:</label>
+					<div class="layui-input-inline">
+						<input type="text" id="userId" name="userId" readonly="readonly" lay-verify="nikename" class="layui-input">
+					</div>
+					<div class="layui-form-mid layui-word-aux">
+						<span class="x-red">*</span>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label for="L_email" class="layui-form-label">用户名:</label>
+					<div class="layui-input-inline">
+						<input type="text" id="userName" name="userName" required="required" lay-verify="nikename" class="layui-input">
+					</div>
+					<div class="layui-form-mid layui-word-aux">
+						<span class="x-red">*</span>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label for="L_email" class="layui-form-label">手机号:</label>
+					<div class="layui-input-inline">
+						<input type="text" id="userPhone" readonly="readonly" name="userPhone" lay-verify="phone" class="layui-input">
+					</div>
+					<div class="layui-form-mid layui-word-aux">
+						<span class="x-red">*</span>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<label for="L_pass" class="layui-form-label">密码:</label>
+					<div class="layui-input-inline">
+						<input type="password" id="password" name="password" required lay-verify="pass" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label for="L_username" class="layui-form-label">账户状态:</label>
+                        <div class="layui-input-block" style="width: 400px;">
+						<select id="accountType">
+							<option value="1">开启</option>
+							<option value="2">关闭</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label for="L_username" class="layui-form-label">用户角色:</label>
+						<div class="layui-input-block" style="width: 400px;">
+						<select id="userType">
+							<option value="2">医生</option>
+							<option value="3">病人</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label for="L_repass" class="layui-form-label">
+                    </label>
+					<button class="layui-btn" lay-filter="mod" lay-submit="">修改</button>
+					<button class="layui-btn" lay-filter="cal" lay-submit="">取消</button>
+				</div>
+			</form>
+		</div>
+        <script src="./lib/layui/layui.js" charset="utf-8">
+        </script>
+        <script src="./js/x-layui.js" charset="utf-8">
+        </script>
+        <script>
+        
+        layui.use(['form', 'layer'], function() {
+			$ = layui.jquery;
+			var form = layui.form(),
+			layer = layui.layer;
+	
+		//监听提交
+		form.on('submit(mod)', function(data) {
+			console.log(data);
+			
+			var user = {
+					"userId": ""+$("#userId").val(),
+                    "userName": ""+$("#userName").val(),
+                    "userPhone": ""+$("#userPhone").val(),
+                    "password": ""+$("#password").val(),
+                    "userType": ""+$("#userType").val(),
+                    "accountType": ""+$("#accountType").val()
+             }
+             $.ajax({
+                   type: "post",
+                   contentType: "application/json;charset=UTF-8",
+                   url: "http://localhost:8080/sys/updateUser",
+                   data: JSON.stringify(user),
+                   success:function(result){
+                      if(result.success){
+                       }else{
+                          alert(result.message);
+                       }
+                   }
+             });
+			
+			layer.alert("提交成功", {
+				icon: 6
+			}, function() {
+				// 获得frame索引
+				var index = parent.layer.getFrameIndex(window.name);
+				//关闭当前frame
+				parent.layer.close(index);
+				
+				window.parent.to_page(parent.currentPage);//访问父页面方法 
+			});
+			return false;
+		});
+		
+		form.on('submit(cal)', function() {
+	         // 获得frame索引
+	         var index = parent.layer.getFrameIndex(window.name);
+	         //关闭当前frame
+	         parent.layer.close(index);
+        });
+		
+		var iframeOpt = parent.iframeOpt;
+        if(iframeOpt.method == 'save'){
+            var data = iframeOpt.data;
+            console.log(data);
+            debugger;
+            $("#userId").val(data.userId);
+            $("#userName").val(data.userName);
+            $("#userPhone").val(data.userPhone);
+            $("#password").val(data.password);
+            $("#accountType").val(data.accountType);
+            $("#userType").val(data.userType);
+            form.render(); //更新全部
+            form.render('select'); //刷新select选择框渲染
+
+            
+        }
+
+    });
+    </script>
+    </body>
+
+</html>

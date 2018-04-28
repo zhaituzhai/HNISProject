@@ -2,8 +2,11 @@ package com.zhaojm.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.zhaojm.bean.CaseMedicineDetailDTO;
 
+@Mapper
 public interface ICaseMedicineDetailMapper {
     int deleteByPrimaryKey(Integer caseMedicineId);
 
@@ -17,5 +20,5 @@ public interface ICaseMedicineDetailMapper {
 
     int updateByPrimaryKey(CaseMedicineDetailDTO record);
     
-    List<CaseMedicineDetailDTO> queryDetailList(Integer CaseId);
+    List<CaseMedicineDetailDTO> queryDetailList(Integer caseId);
 }

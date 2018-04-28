@@ -121,6 +121,48 @@
       function selectByChoose(){
     	  to_page(1);
       }
+      //查看详情
+      $(document).on("click",".seem_btn",function(){
+          //拿到修改的id
+          var userId = {
+                  "userId": parseInt($(this).attr("seem-id"))
+          }
+          //请求后台 拿到相相关信息
+          $.ajax({
+              async: false,
+              type: "post",
+              contentType: "application/json;charset=UTF-8",
+              url:"http://localhost:8080/sys/getUser/"+parseInt($(this).attr("seem-id")),
+              data: JSON.stringify(userId),
+              success:function(result){
+                  if(result.success){
+                	  //医生
+                	  if(result.value.userType == 2 && (result.value.doctor != null || result.value.patient != null)){
+                		  window.iframeOpt = {
+                                  method: 'seem',
+                                  data: result.value.doctor
+                           }
+                		  x_admin_show('修改用户','http://localhost:8080/admin_doctor_edit','600','650');
+                		  
+                	  }else if(result.value.userType == 3 && (result.value.doctor != null || result.value.patient != null)){
+                		  window.iframeOpt = {
+                                  method: 'seem',
+                                  data: result.value.patient
+                           }
+                		  x_admin_show('修改用户','http://localhost:8080/admin_patient_edit','600','650');
+                	  }else{
+                		  layer.msg('此用户未绑定信息或您无权查看！',{time:500});
+                	  }
+                  }else{
+                	  layer.msg(result.message);
+                  }
+                  //alert(result.message);
+                  //to_page(currentPage);
+              } 
+          });
+          
+      });
+      
       //点击修改
       $(document).on("click",".edit_btn",function(){
           //拿到修改的id
@@ -143,15 +185,15 @@
             				 data: result.value
             		  }
             		  // TODO
-            		  x_admin_show('修改用户','http://localhost:8080/admin_user_add','600','500');
+            		  x_admin_show('修改用户','http://localhost:8080/admin_user_edit','600','500');
             	  }else{
-            		  alert(result.message);
+            		  layer.msg(result.message,{time:500});
             	  }
                   //alert(result.message);
                   //to_page(currentPage);
               } 
           });
-          
+    	  
       });
       
       //禁用
@@ -234,9 +276,12 @@
               var creatTime = $("<td></td>").append(item.creatTime);
               var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn").append(
                       $("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
+              var moreInfoBtn = $("<button></button>").addClass("btn btn-success btn-sm seem_btn").append(
+                      $("<span></span>").addClass("glyphicon glyphicon-eye-open")).append("查看详情");
+              moreInfoBtn.attr("seem-id",item.userId);
               editBtn.attr("modify-id",item.userId);
               delBtn.attr("delete-id",item.userId);
-              var btnTd = $("<td></td>").append(editBtn).append(" ").append(delBtn);
+              var btnTd = $("<td></td>").append(editBtn).append(" ").append(delBtn).append(" ").append(moreInfoBtn);
               //append方法执行完成以后还是会返回原来的元素
               $("<tr></tr>").append(userIdTd).append(userNameTd).append(userPhoneTd).append(passwordTd).append(userTypeTd)
                   .append(accountType).append(creatTime).append(btnTd).appendTo("#user_table");

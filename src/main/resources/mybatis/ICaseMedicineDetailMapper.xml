@@ -103,4 +103,13 @@
       total_price = #{totalPrice,jdbcType=DOUBLE}
     where case_medicine_id = #{caseMedicineId,jdbcType=INTEGER}
   </update>
+  
+  
+  <select id="queryDetailList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from case_medicine_detail
+    where case_id = #{caseId,jdbcType=INTEGER}
+  </select>
+  
 </mapper>

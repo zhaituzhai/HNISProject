@@ -1,6 +1,10 @@
 package com.zhaojm.bean;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -21,21 +25,33 @@ public class CaseDTO implements Serializable {
     private String illnessDesc;
 
     @ApiModelProperty("患病时间")
-    private String illnessTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date illnessTime;
 
     @ApiModelProperty("患病等级")
     private String illnessGrade;
 
     @ApiModelProperty("治疗时间")
-    private String cureTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date cureTime;
 
     @ApiModelProperty("治疗周期")
     private String cureCycle;
 
     @ApiModelProperty("备注")
     private String remark;
+    
+    private List<CaseMedicineDetailDTO> caseDetail;
 
     private static final long serialVersionUID = 1L;
+
+    public List<CaseMedicineDetailDTO> getCaseDetail() {
+        return caseDetail;
+    }
+
+    public void setCaseDetail(List<CaseMedicineDetailDTO> caseDetail) {
+        this.caseDetail = caseDetail;
+    }
 
     public Integer getCaseId() {
         return caseId;
@@ -69,11 +85,11 @@ public class CaseDTO implements Serializable {
         this.illnessDesc = illnessDesc;
     }
 
-    public String getIllnessTime() {
+    public Date getIllnessTime() {
         return illnessTime;
     }
 
-    public void setIllnessTime(String illnessTime) {
+    public void setIllnessTime(Date illnessTime) {
         this.illnessTime = illnessTime;
     }
 
@@ -85,11 +101,11 @@ public class CaseDTO implements Serializable {
         this.illnessGrade = illnessGrade;
     }
 
-    public String getCureTime() {
+    public Date getCureTime() {
         return cureTime;
     }
 
-    public void setCureTime(String cureTime) {
+    public void setCureTime(Date cureTime) {
         this.cureTime = cureTime;
     }
 

@@ -29,7 +29,7 @@ public class PageRequestDTO<T> implements Serializable {
     public PageRequestDTO(T value, Integer pageSzie) {
         super();
         this.setPageSize(pageSzie);
-        this.param = param;
+        this.param = value;
     }
 
     public PageRequestDTO(T param) {
