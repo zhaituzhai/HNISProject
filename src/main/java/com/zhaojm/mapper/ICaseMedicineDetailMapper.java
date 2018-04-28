@@ -1,5 +1,7 @@
 package com.zhaojm.mapper;
 
+import java.util.List;
+
 import com.zhaojm.bean.CaseMedicineDetailDTO;
 
 public interface ICaseMedicineDetailMapper {
@@ -14,4 +16,6 @@ public interface ICaseMedicineDetailMapper {
     int updateByPrimaryKeySelective(CaseMedicineDetailDTO record);
 
     int updateByPrimaryKey(CaseMedicineDetailDTO record);
+    
+    List<CaseMedicineDetailDTO> queryDetailList(Integer CaseId);
 }

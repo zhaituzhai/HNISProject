@@ -1,5 +1,7 @@
 package com.zhaojm.mapper;
 
+import java.util.List;
+
 import com.zhaojm.bean.CaseDTO;
 
 public interface ICaseMapper {
@@ -14,4 +16,6 @@ public interface ICaseMapper {
     int updateByPrimaryKeySelective(CaseDTO record);
 
     int updateByPrimaryKey(CaseDTO record);
+    
+    List<CaseDTO> queryCaseList(CaseDTO record);
 }
