@@ -22,26 +22,36 @@ DROP TABLE IF EXISTS `case`;
 
 CREATE TABLE `case` (
   `case_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '病例主键',
-  `patient_id` int(11) DEFAULT NULL COMMENT '关联病人人（已在数据库）',
-  `patient_name` varchar(16) DEFAULT NULL COMMENT '病人名字（未在数据库中）',
-  `doctor_id` int(11) DEFAULT NULL COMMENT '关联医生（写病例的人）',
-  `disease_id` int(11) DEFAULT NULL COMMENT '疾病id',
-  `illness_time` varchar(10) DEFAULT NULL COMMENT '患病时间',
-  `illness_grade` varchar(10) DEFAULT NULL COMMENT '患病等级',
-  `cure_time` varchar(20) DEFAULT NULL COMMENT '治疗时间',
-  `cure_cycle` varchar(10) DEFAULT NULL COMMENT '治疗周期',
+  `patient_name` varchar(50) DEFAULT NULL COMMENT '病人名字（未在数据库中）',
+  `doctor_name` varchar(50) DEFAULT NULL COMMENT '主治医生',
   `illness_desc` varchar(1024) DEFAULT NULL COMMENT '病情描述',
+  `illness_time` timestamp NULL DEFAULT NULL COMMENT '患病时间',
+  `illness_grade` varchar(10) DEFAULT NULL COMMENT '患病等级',
+  `cure_time` timestamp NULL DEFAULT NULL COMMENT '治疗时间',
+  `cure_cycle` varchar(10) DEFAULT NULL COMMENT '治疗周期',
   `remark` varchar(1024) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`case_id`),
-  KEY `fk_case_patient_id` (`patient_id`),
-  KEY `fk_case_disease` (`disease_id`),
-  KEY `fk_case_doctor_id` (`doctor_id`),
-  CONSTRAINT `fk_case_disease` FOREIGN KEY (`disease_id`) REFERENCES `diseasedetail` (`disease_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_case_doctor_id` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`doctor_id`) ON DELETE NO ACTION,
-  CONSTRAINT `fk_case_patient_id` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`) ON DELETE NO ACTION
+  PRIMARY KEY (`case_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `case` */
+
+/*Table structure for table `case_medicine_detail` */
+
+DROP TABLE IF EXISTS `case_medicine_detail`;
+
+CREATE TABLE `case_medicine_detail` (
+  `case_medicine_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '病例用药详情主键',
+  `case_id` int(11) DEFAULT NULL COMMENT '关联病例id',
+  `medicine_name` varchar(64) DEFAULT NULL COMMENT '药品名/id',
+  `consumption` varchar(64) DEFAULT NULL COMMENT '用量',
+  `price` double DEFAULT NULL COMMENT '单价',
+  `total_price` double DEFAULT NULL COMMENT '总价',
+  PRIMARY KEY (`case_medicine_id`),
+  KEY `case_medicine_fk` (`case_id`),
+  CONSTRAINT `case_medicine_fk` FOREIGN KEY (`case_id`) REFERENCES `case` (`case_id`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `case_medicine_detail` */
 
 /*Table structure for table `dictionary` */
 
@@ -53,45 +63,33 @@ CREATE TABLE `dictionary` (
   `data_type` varchar(32) DEFAULT NULL COMMENT '数据类型',
   `data_value` varchar(32) DEFAULT NULL COMMENT '数据值',
   PRIMARY KEY (`dictionary_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 /*Data for the table `dictionary` */
 
-insert  into `dictionary`(`dictionary_id`,`data_code`,`data_type`,`data_value`) values (1,0,'userType','管理员'),(2,1,'userType','医生'),(3,2,'userType','病人'),(4,3,'userType','游客'),(5,1,'hospDeptType','五官科');
+insert  into `dictionary`(`dictionary_id`,`data_code`,`data_type`,`data_value`) values (1,1,'userType','管理员'),(2,2,'userType','医生'),(3,3,'userType','病人'),(4,4,'userType','游客'),(5,1,'hospDeptType','五官科'),(6,2,'hospDeptType','内科'),(7,3,'hospDeptType','外科'),(8,4,'hospDeptType','皮肤科'),(9,5,'hospDeptType','科科');
 
-/*Table structure for table `diseasedetail` */
+/*Table structure for table `disease_detail` */
 
-DROP TABLE IF EXISTS `diseasedetail`;
+DROP TABLE IF EXISTS `disease_detail`;
 
-CREATE TABLE `diseasedetail` (
+CREATE TABLE `disease_detail` (
   `disease_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '疾病主键',
-  `department_id` varchar(16) DEFAULT NULL COMMENT '所属科室',
-  `type_id` varchar(16) DEFAULT NULL COMMENT '所示类型',
+  `department` varchar(64) DEFAULT NULL COMMENT '所属科室',
+  `disease_type` varchar(64) DEFAULT NULL COMMENT '所示类型',
+  `disease_name` varchar(64) DEFAULT NULL COMMENT '疾病名称',
   `desease_description` varchar(2048) DEFAULT NULL COMMENT '描述',
   `desease_manifestation` varchar(2048) DEFAULT NULL COMMENT '病发表现',
   `therapeutic_method` varchar(2048) DEFAULT NULL COMMENT '治疗方法',
   `therapeutic_mark` varchar(20) DEFAULT NULL COMMENT '治疗标识（自我治疗、在线治疗、到院治疗）',
-  `entry_time` varchar(20) DEFAULT NULL COMMENT '录入时间',
+  `entry_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '录入时间',
   `entry_person` varchar(20) DEFAULT NULL COMMENT '录入人',
-  PRIMARY KEY (`disease_id`),
-  KEY `fk_disease_dept_id` (`department_id`),
-  KEY `fk_disease_type_id` (`type_id`),
-  KEY `fk_disease_user_id` (`entry_person`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`disease_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
-/*Data for the table `diseasedetail` */
+/*Data for the table `disease_detail` */
 
-/*Table structure for table `diseasetype` */
-
-DROP TABLE IF EXISTS `diseasetype`;
-
-CREATE TABLE `diseasetype` (
-  `type_id` int(11) NOT NULL AUTO_INCREMENT,
-  `type_name` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `diseasetype` */
+insert  into `disease_detail`(`disease_id`,`department`,`disease_type`,`disease_name`,`desease_description`,`desease_manifestation`,`therapeutic_method`,`therapeutic_mark`,`entry_time`,`entry_person`) values (1,'眼科','白眼疾病','天行赤眼','天行赤眼是白睛暴发红赤，眵多粘结，常累及双眼，能迅速传染并引起广泛流行','初感疠气型天行赤眼的病因病机是：因患者内热不重，外邪初感，故局部之病变较明显，而全身脉症尚无明显异常','疏风散热饮子加减，病初起，眼局部症状俱悉，但不严重，全身症状多不明显疏风散邪，兼以清热','到院治疗','2018-04-20 21:41:15','李生'),(2,'眼科','红眼疾病','风轮赤豆','风轮赤豆是因黑睛上有颗粒样小泡突起，且有赤脉追随牵绊，色红如赤小豆之状而得名','本病多因肝经积热，火郁风轮，气血失调，脉络瘀滞所致。或脾虚气弱，痰停气滞，痰气混结，郁于风轮。','本病多因肝经积热，火郁风轮，气血失调，脉络瘀滞所致。或脾虚气弱，痰停气滞，痰气混结，郁于风轮。','到院治疗','2018-04-20 21:41:15','李生'),(3,'儿科','新生儿病','胎怯','胎怯是指初生儿体重低下，身材矮小，脏腑形气均未充实的一种病证。','五脏亏虚型胎怯的症状是：身材短小，形体瘦弱，精神萎靡，气弱声低，目无神采，皮肤薄嫩，肌肤不温，胎毛细软，面色无华，唇甲淡白，肌肉瘠薄，萎软无力，筋弛肢软，虚里动疾，时有惊惕，吮乳量少，指甲软或短，指纹淡。','健脾益肾，培元补虚。','到院治疗','2018-04-20 21:41:15','赵生'),(4,'儿科','新生儿病','脐风','经络闭阻型脐风的证候表现是：喷嚏多涕，烦躁啼哭，张口不利，吮乳口松，苦笑面容，项颈强直，或有四肢抽搐，舌淡红，苔薄，指纹紫。','喷嚏多涕，烦躁啼哭，张口不利，吮乳口松，苦笑面容，项颈强直，或有四肢抽搐，舌淡红，苔薄，指纹紫。','玉真散加减。','到院治疗','2018-04-20 21:41:15','赵生');
 
 /*Table structure for table `doctor` */
 
@@ -114,20 +112,7 @@ CREATE TABLE `doctor` (
 
 /*Data for the table `doctor` */
 
-insert  into `doctor`(`doctor_id`,`user_id`,`doctor_name`,`doctor_sex`,`departement_id`,`doctor_title`,`doctor_hospital`,`doctor_icon`) values (1,2,'matte','M','全部','教授','人民医院',NULL);
-
-/*Table structure for table `hospotaldepartment` */
-
-DROP TABLE IF EXISTS `hospotaldepartment`;
-
-CREATE TABLE `hospotaldepartment` (
-  `department_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '科室主键',
-  `department_name` varchar(50) DEFAULT NULL COMMENT '科室名',
-  `department_impl` varchar(256) DEFAULT NULL COMMENT '科室描述',
-  PRIMARY KEY (`department_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `hospotaldepartment` */
+insert  into `doctor`(`doctor_id`,`user_id`,`doctor_name`,`doctor_sex`,`departement_id`,`doctor_title`,`doctor_hospital`,`doctor_icon`) values (1,2,'matte','M','全能型超级医生','教授导师','人民医院','');
 
 /*Table structure for table `information` */
 
@@ -148,6 +133,27 @@ CREATE TABLE `information` (
 
 /*Data for the table `information` */
 
+/*Table structure for table `medicine` */
+
+DROP TABLE IF EXISTS `medicine`;
+
+CREATE TABLE `medicine` (
+  `medicine_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '药品id',
+  `medicine_name` varchar(64) DEFAULT NULL COMMENT '药品名字',
+  `main_components` varchar(1024) DEFAULT NULL COMMENT '主要成分',
+  `user_range` varchar(128) DEFAULT NULL COMMENT '使用范围',
+  `user_way` varchar(64) DEFAULT NULL COMMENT '使用方法',
+  `user_attention` varchar(128) DEFAULT NULL COMMENT '注意事项',
+  `save_way` varchar(128) DEFAULT NULL COMMENT '贮藏方式',
+  `specifications` varchar(128) DEFAULT NULL COMMENT '规格',
+  `price` double DEFAULT NULL COMMENT '单价',
+  PRIMARY KEY (`medicine_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+/*Data for the table `medicine` */
+
+insert  into `medicine`(`medicine_id`,`medicine_name`,`main_components`,`user_range`,`user_way`,`user_attention`,`save_way`,`specifications`,`price`) values (1,'阿莫西林','玄参、百部、天冬、牡丹皮等','感冒、发烧','口服','孕妇忌口','常温下','10片一版，一盒两版',20),(2,'六味地黄丸','黄连、连翘、哈西草、狗尾巴草','肾亏','口服','正常人不必服用','阴凉处储存','100粒/一瓶',200),(3,'咽喉片','地黄、板蓝根、青果','喉咙痛','口服','过敏者不可复用','干燥处','20片一版，一盒两版',200),(4,'头孢克污片','头孢克污、乳糖、蔗糖','肺炎球菌','口服','感觉恶心者不服用','遮光、密封','18片/版*1版/盒',30.9);
+
 /*Table structure for table `patient` */
 
 DROP TABLE IF EXISTS `patient`;
@@ -161,7 +167,7 @@ CREATE TABLE `patient` (
   `patient_nation` varchar(10) DEFAULT NULL COMMENT '病人民族',
   `bloodtype` varchar(4) DEFAULT NULL COMMENT '血型',
   `patient_occupation` varchar(20) DEFAULT NULL COMMENT '职业',
-  `patient_marriage` varchar(4) DEFAULT NULL COMMENT '婚否',
+  `patient_marriage` varchar(10) DEFAULT NULL COMMENT '婚否',
   `patient_icon` varchar(100) DEFAULT NULL COMMENT '病人图片',
   PRIMARY KEY (`patient_id`),
   KEY `fk_user_id` (`user_id`),
@@ -170,32 +176,10 @@ CREATE TABLE `patient` (
 
 /*Data for the table `patient` */
 
-insert  into `patient`(`patient_id`,`user_id`,`patient_name`,`patient_sex`,`patient_born`,`patient_nation`,`bloodtype`,`patient_occupation`,`patient_marriage`,`patient_icon`) values (1,3,'goy','M','1996-06-16','汉族','O','程序猿','未婚',NULL);
+insert  into `patient`(`patient_id`,`user_id`,`patient_name`,`patient_sex`,`patient_born`,`patient_nation`,`bloodtype`,`patient_occupation`,`patient_marriage`,`patient_icon`) values (1,3,'goy','M','undefined','猛汉族','B','程序猿','marry','');
 
 /*Table structure for table `useraccount` */
 
-DROP TABLE IF EXISTS `useraccount`;
-
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : zhaojiamin
-Source Server Version : 50528
-Source Host           : localhost:3306
-Source Database       : hnis
-
-Target Server Type    : MYSQL
-Target Server Version : 50528
-File Encoding         : 65001
-
-Date: 2018-04-20 15:56:17
-*/
-
-SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for useraccount
--- ----------------------------
 DROP TABLE IF EXISTS `useraccount`;
 
 CREATE TABLE `useraccount` (
@@ -203,20 +187,15 @@ CREATE TABLE `useraccount` (
   `user_name` varchar(20) NOT NULL COMMENT '用户名称（可做登陆）',
   `user_phone` varchar(20) DEFAULT NULL COMMENT '用户手机号（登陆）',
   `password` varchar(50) NOT NULL COMMENT '密码',
-  `user_type` int(11) DEFAULT NULL COMMENT '用户类型（1：管理员 2:医生 3：病人 4：普通用户',
+  `user_type` varchar(11) DEFAULT NULL COMMENT '用户类型（1：管理员 2:医生 3：病人 4：普通用户',
   `account_type` int(11) DEFAULT '1' COMMENT '账户类型（开启/关闭）',
-  `creat_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `creat_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of useraccount
--- ----------------------------
-INSERT INTO `useraccount` VALUES ('1', 'admin', 'admin', '1234', '1', '1', '2018-01-01 12:12:12');
-INSERT INTO `useraccount` VALUES ('2', 'matte', '18670759820', '1234', '2', '1', '2018-01-01 12:12:12');
-INSERT INTO `useraccount` VALUES ('3', 'goy', '18670759821', '1234', '3', '1', '2018-01-01 12:12:12');
-INSERT INTO `useraccount` VALUES ('4', 'hisak', '18670679823', '1234', '2', '1', '2018-04-20 15:55:25');
+/*Data for the table `useraccount` */
 
+insert  into `useraccount`(`user_id`,`user_name`,`user_phone`,`password`,`user_type`,`account_type`,`creat_time`) values (1,'admin','admin','1234','1',1,'2018-04-20 21:41:15'),(2,'matte','18670759820','1234','2',1,'2018-04-20 21:41:15'),(3,'你爱我吗','18670759821','1234','3',2,'2018-04-20 21:41:15'),(4,'hisak','18670679823','1234','2',1,'2018-04-20 15:55:25'),(5,'我是医生','15654958491','1234','2',1,'2018-04-25 15:51:37'),(6,'dawfq','12548889607','1234','2',1,'2018-04-25 15:51:59'),(7,'asdwe','12549878455','1234','3',1,'2018-04-25 15:52:16'),(8,'adf','21312345678','1234','3',1,'2018-04-25 15:52:34'),(9,'sad','12458796521','1234','3',2,'2018-04-25 15:52:53'),(10,'terw','12556988871','1234','3',1,'2018-04-25 15:53:09'),(11,'geqss','12358974611','1234','3',2,'2018-04-25 15:53:30'),(12,'test','12345879641','1234','2',1,'2018-04-25 20:37:04'),(13,'test','12345879641','1234','2',1,'2018-04-25 20:37:00'),(14,'test','12345879641','1234','2',1,'2018-04-25 20:36:10'),(15,'test','12345879641','1234','2',1,'2018-04-25 20:36:11'),(16,'test','12345879641','1234','2',1,'2018-04-25 21:50:39'),(17,'test','12345879641','1234','2',1,'2018-04-25 21:50:39'),(18,'yoga','12345678911','1234','1',2,'2018-04-26 07:57:15'),(19,'yoga','12345678911','1234','3',1,'2018-04-26 07:57:15'),(20,'ryeo','12345678912','1234','3',2,'2018-04-26 07:58:53'),(21,'yeow','12345678913','1234','1',2,'2018-04-26 08:06:25'),(22,'yiiwi','12345678914','1234','2',1,'2018-04-26 08:07:08'),(23,'uane','45789513246','1234','2',1,'2018-04-26 08:14:58'),(24,'我的中文名','12345678915','1234','2',2,'2018-04-26 08:16:25'),(25,'aeont','12345678916','4321','1',1,'2018-04-26 08:18:31');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
