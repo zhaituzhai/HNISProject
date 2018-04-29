@@ -56,9 +56,12 @@ layui.use(['form', 'layer'], function() {
 	});
 	// 添加END
 
-
 	// 保存BEGIN	
-	}
+	 var iframeOpt = parent.iframeOpt;
+     if(iframeOpt.method == 'add'){
+    	 form.render(); //更新全部
+         form.render('select'); //刷新select选择框渲染
+     }
 	// 保存END
 });
 //验证重名   
