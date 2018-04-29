@@ -53,4 +53,10 @@ public class MedicineServiceImpl implements IMedicineService {
             return 0;
     }
 
+    @Override
+    public MedicineDTO queryMeidcineFull(Integer medicineId) {
+        
+        return medicineMapper.selectByPrimaryKey(medicineId);
+    }
+
 }

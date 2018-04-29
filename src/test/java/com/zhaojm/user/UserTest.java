@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.apache.catalina.servlet4preview.http.ServletMapping;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,22 @@ public class UserTest {
         page.setParam(me);
         PageInfo<MedicineDTO> list = medicineService.queryMedicineList(page);
         assertTrue(list.getSize()>0);
+    }
+    
+    @Test
+    public void addMedicine() {
+        MedicineDTO medicine = new MedicineDTO();
+        medicine.setMedicineName("咽喉片");
+        medicine.setMainComponents("地黄、板蓝根、青果");
+        medicine.setUserRange("喉咙痛");
+        medicine.setUserWay("口服");
+        medicine.setUserAttention("过敏者不可复用");
+        medicine.setSaveWay("干燥处");
+        medicine.setSpecifications("20片一版，一盒两版");
+        medicine.setPrice(200.00);
+        
+        int isSave = medicineService.addMedicine(medicine);
+        assertTrue(isSave>0);
     }
     
     @Test

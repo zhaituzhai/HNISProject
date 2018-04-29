@@ -24,6 +24,8 @@ public interface IDiseaseDetailService {
      * 查
      */
     PageInfo<DiseaseDetailDTO> queryDiseaseDetailList(PageRequestDTO<DiseaseDetailDTO> disease);
+    
+    DiseaseDetailDTO queryDiseaseFull(Integer diseaseId);
     /**
      * 验证
      */

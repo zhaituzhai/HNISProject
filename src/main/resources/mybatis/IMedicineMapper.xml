@@ -39,9 +39,6 @@
   <insert id="insertSelective" parameterType="com.zhaojm.bean.MedicineDTO">
     insert into medicine
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="medicineId != null">
-        medicine_id,
-      </if>
       <if test="medicineName != null">
         medicine_name,
       </if>
@@ -68,9 +65,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="medicineId != null">
-        #{medicineId,jdbcType=INTEGER},
-      </if>
       <if test="medicineName != null">
         #{medicineName,jdbcType=VARCHAR},
       </if>

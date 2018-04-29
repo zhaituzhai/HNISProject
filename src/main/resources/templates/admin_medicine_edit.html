@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <title>疾病库管理-编辑</title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" href="./css/x-admin.css" media="all">
+    </head>
+    
+    <body>
+        <div class="x-body">
+			<form class="layui-form">
+				<div class="layui-form-item">
+					<label for="L_email" class="layui-form-label">药品编号:</label>
+					<div class="layui-input-inline">
+						<input type="text" id="medicineId" name="medicineId" placeholder="录入不需填写" readonly="readonly" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label for="L_email" class="layui-form-label">药品名字:</label>
+					<div class="layui-input-inline">
+						<input type="text" id="medicineName" name="medicineName" required="required" lay-verify="nikename" class="layui-input">
+					</div>
+					<div class="layui-form-mid layui-word-aux">
+						<span class="x-red">*</span>
+					</div>
+				</div>
+				<div class="layui-form-item layui-form-text">
+				    <label class="layui-form-label">主要成分:</label>
+				    <div class="layui-input-block">
+				      <textarea id="mainComponents" name="mainComponents" class="layui-textarea" placeholder="请输入内容，请不要出现转换符号"></textarea>
+				    </div>
+			  	</div>
+				<div class="layui-form-item">
+					<label for="L_email" class="layui-form-label">使用范围:</label>
+					<div class="layui-input-inline">
+						<input type="text" id="userRange" name="userRange" required="required" lay-verify="userRange" class="layui-input">
+					</div>
+					<div class="layui-form-mid layui-word-aux">
+						<span class="x-red">*</span>
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label for="L_email" class="layui-form-label">使用方法:</label>
+					<div class="layui-input-inline">
+						<input type="text" id="userWay" name="userWay" required="required" lay-verify="userWay" class="layui-input">
+					</div>
+					<div class="layui-form-mid layui-word-aux">
+						<span class="x-red">*</span>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label for="L_pass" class="layui-form-label">注意事项:</label>
+					<div class="layui-input-inline">
+						<input type="text" id="userAttention" name="userAttention" lay-verify="userAttention" class="layui-input">
+					</div>
+					<div class="layui-form-mid layui-word-aux">
+						<span class="x-red">*</span>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label for="L_pass" class="layui-form-label">储存方法:</label>
+					<div class="layui-input-inline">
+						<input type="text" id="saveWay" name="saveWay" lay-verify="saveWay" class="layui-input">
+					</div>
+					<div class="layui-form-mid layui-word-aux">
+						<span class="x-red">*</span>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label for="L_pass" class="layui-form-label">药品规格:</label>
+					<div class="layui-input-inline">
+						<input type="text" id="specifications" name="specifications" lay-verify="specifications" class="layui-input">
+					</div>
+					<div class="layui-form-mid layui-word-aux">
+						<span class="x-red">*</span>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label for="L_pass" class="layui-form-label">药品单价:</label>
+					<div class="layui-input-inline">
+						<input type="text" id="price" name="price" required="required" lay-verify="price" class="layui-input">
+					</div>
+				</div>
+				
+				<div id="save" style="display: none;" class="layui-form-item">
+					<label for="L_repass" class="layui-form-label">
+                    </label>
+					<button class="layui-btn" lay-filter="add" lay-submit="">保存</button>
+				</div>
+				
+				<div id="modify" style="display: none;" class="layui-form-item">
+					<label for="L_repass" class="layui-form-label">
+                    </label>
+					<button class="layui-btn" lay-filter="mod" lay-submit="">修改</button>
+					<button class="layui-btn" lay-filter="cal" lay-submit="">取消</button>
+				</div>
+			</form>
+		</div>
+        <script src="./lib/layui/layui.js" charset="utf-8">
+        </script>
+        <script src="./js/x-layui.js" charset="utf-8">
+        </script>
+        <script charset="utf-8">
+        layui.use(['form', 'layer'], function() {
+		$ = layui.jquery;
+		var form = layui.form(),
+		layer = layui.layer;
+
+		//自定义验证规则
+		form.verify({
+			nikename: function(value) {
+				if(value.length < 2) {
+					return '昵称至少得2个字符啊';
+				}
+			},
+			price: [/^[0-9]+(.[0-9]{2})?$/, '只能是小数点后两位'],
+			
+		});
+		//添加药品
+		form.on('submit(add)', function(data) {
+            console.log(data);
+            
+            var medicine = {
+            		"medicineId": ""+$("#medicineId").val(),
+            		"medicineName": ""+$("#medicineName").val(),
+                    "mainComponents": ""+$("#mainComponents").val(),
+                    "userRange": ""+$("#userRange").val(),
+                    "userWay": ""+$("#userWay").val(),
+                    "userAttention": ""+$("#userAttention").val(),
+                    "saveWay": ""+$("#saveWay").val(),
+                    "specifications": ""+$("#specifications").val(),
+                    "price": ""+$("#price").val()
+             }
+             $.ajax({
+                   type: "post",
+                   contentType: "application/json;charset=UTF-8",
+                   url: "http://localhost:8080/medi/creatMedicine",
+                   data: JSON.stringify(medicine),
+                   success:function(result){
+                      if(result.success){
+                       }else{
+                          alert(result.message);
+                       }
+                   }
+             });
+		});
+	    //监听提交 修改药品
+        form.on('submit(mod)', function(data) {
+            console.log(data);
+            
+            var medicine = {
+            		"medicineId": ""+$("#medicineId").val(),
+            		"medicineName": ""+$("#medicineName").val(),
+                    "mainComponents": ""+$("#mainComponents").val(),
+                    "userRange": ""+$("#userRange").val(),
+                    "userWay": ""+$("#userWay").val(),
+                    "userAttention": ""+$("#userAttention").val(),
+                    "saveWay": ""+$("#saveWay").val(),
+                    "specifications": ""+$("#specifications").val(),
+                    "price": ""+$("#price").val()
+             }
+             $.ajax({
+                   type: "post",
+                   contentType: "application/json;charset=UTF-8",
+                   url: "http://localhost:8080/medi/updateMedicine",
+                   data: JSON.stringify(medicine),
+                   success:function(result){
+                      if(result.success){
+                       }else{
+                          alert(result.message);
+                       }
+                   }
+             });
+            
+            layer.alert("提交成功", {
+                icon: 6
+            }, function() {
+                // 获得frame索引
+                var index = parent.layer.getFrameIndex(window.name);
+                //关闭当前frame
+                parent.layer.close(index);
+                
+                window.parent.to_page(parent.currentPage);//访问父页面方法 
+            });
+            return false;
+        });
+        
+        form.on('submit(cal)', function() {
+             // 获得frame索引
+             var index = parent.layer.getFrameIndex(window.name);
+             //关闭当前frame
+             parent.layer.close(index);
+        });
+        
+        
+        
+        var iframeOpt = parent.iframeOpt;
+        if(iframeOpt.method == 'seem'){
+        	$("#modify").css('display','inline-block');
+            var data = iframeOpt.data;
+            console.log(data);
+            debugger;
+            $("#medicineId").val(data.medicineId),
+            $("#medicineName").val(data.medicineName),
+            $("#mainComponents").val(data.mainComponents),
+            $("#userRange").val(data.userRange),
+            $("#userWay").val(data.userWay),
+            $("#userAttention").val(data.userAttention),
+            $("#saveWay").val(data.saveWay),
+            $("#specifications").val(data.specifications),
+            $("#price").val(data.price)
+            
+            form.render(); //更新全部
+            form.render('select'); //刷新select选择框渲染
+
+        }
+        if(iframeOpt.method == 'save'){
+        	$("#save").css('display','inline-block');
+        }
+
+});
+        </script>
+    </body>
+
+</html>

@@ -21,7 +21,10 @@ public interface IMedicineService {
     /**
      * 查
      */
-    PageInfo<MedicineDTO> queryMedicineList(PageRequestDTO<MedicineDTO> medincine);
+    PageInfo<MedicineDTO> queryMedicineList(PageRequestDTO<MedicineDTO> medicine);
+    
+    MedicineDTO queryMeidcineFull (Integer medicineId);
+    
     /**
      * 验证
      */

@@ -17,7 +17,6 @@ import com.zhaojm.bean.UseraccountDTO;
 import com.zhaojm.service.IDoctorService;
 import com.zhaojm.service.IPatientService;
 import com.zhaojm.service.IUseraccountService;
-import com.zhaojm.service.impl.PatientServiceImpl;
 import com.zhaojm.util.ResultDTO;
 
 import io.swagger.annotations.Api;

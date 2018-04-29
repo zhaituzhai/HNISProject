@@ -62,7 +62,7 @@
 		<i class="layui-icon">&#xe640;</i>批量删除
 	</button> -->
 	<button class="layui-btn"
-		onclick="user_management_add('添加用户','http://localhost:8080/admin_user_add','600','500')">
+		onclick="user_management_add('添加药品信息','http://localhost:8080/admin_medicine_edit','700','850')">
 		<i class="layui-icon">&#xe608;</i>添加
 	</button>
 	<button class="layui-btn layui-btn-danger">
@@ -93,7 +93,6 @@
             <div id="page_info_area" class="col-md-6"></div>
             <div id="page_nav_area" class="col-md-6"></div>
         </div>
-	</div>
 	<br />
 	<br />
 	<br />
@@ -112,6 +111,28 @@
       function selectByChoose(){
     	  to_page(1);
       }
+      
+    //查看修改疾病库
+      $(document).on("click",".edit_btn",function disese_management(){
+          $.ajax({
+                async: false,
+                type: "post",
+                contentType: "application/json;charset=UTF-8",
+                url:"http://localhost:8080/medi/getMedicine/"+parseInt($(this).attr("modify-id")),
+                success:function(result){
+                    if(result.success){
+                        window.iframeOpt = {
+                                method: 'seem',
+                                data: result.value
+                            }
+                        x_admin_show('修改疾病信息','http://localhost:8080/admin_medicine_edit','700','720');
+                    }else{
+                        layer.msg(result.message);
+                    }
+                } 
+            });
+      });
+      
       //禁用
       $(document).on("click",".delete_btn",function(){
     	    var user;
@@ -188,8 +209,8 @@
                       $("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
               var delBtn = $("<a></a>").addClass("btn btn-danger btn-sm delete_btn").append(
                       $("<span></span>").addClass("glyphicon glyphicon-trash")).append("开启");
-              editBtn.attr("modify-id",item.userId);
-              delBtn.attr("delete-id",item.userId);
+              editBtn.attr("modify-id",item.medicineId);
+              delBtn.attr("delete-id",item.medicineId);
               var btnTd = $("<td></td>").append(editBtn).append(" ").append(delBtn);
               //append方法执行完成以后还是会返回原来的元素
               $("<tr></tr>").append(medicineIdTd).append(medicineNameTd).append(mainComponentsTd).append(userRangeTd).append(userWayTd)
@@ -308,6 +329,9 @@
              }
              /*用户-添加*/
             function user_management_add(title,url,w,h){
+            	window.iframeOpt = {
+                        method: 'save'
+                    }
                 x_admin_show(title,url,w,h);
             }
             /*用户-查看*/
@@ -353,13 +377,5 @@
                 });
             }
             </script>
-	<script>
-		        var _hmt = _hmt || [];
-		        (function() {
-		          var hm = document.createElement("script");
-		          var s = document.getElementsByTagName("script")[0]; 
-		          s.parentNode.insertBefore(hm, s);
-		        })();
-        </script>
 </body>
 </html>

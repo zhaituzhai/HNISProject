@@ -30,7 +30,7 @@ public class DiseaseDetailServicelImpl implements IDiseaseDetailService {
 
     @Override
     public int updateDiseaseDetail(DiseaseDetailDTO disease) {
-        return updateDiseaseDetail(disease);
+        return diseaseDetailMapper.updateByPrimaryKeySelective(disease);
     }
 
     @Override
@@ -39,6 +39,8 @@ public class DiseaseDetailServicelImpl implements IDiseaseDetailService {
         List<DiseaseDetailDTO> list = diseaseDetailMapper.queryDiseaseList(page.getParam());
         return new PageInfo<DiseaseDetailDTO>(list);
     }
+    
+    
 
     @Override
     public int verfiy(DiseaseDetailDTO disease) {
@@ -56,6 +58,12 @@ public class DiseaseDetailServicelImpl implements IDiseaseDetailService {
     public List<String> queryTypeList() {
         
         return diseaseDetailMapper.getDiseaseType();
+    }
+
+    @Override
+    public DiseaseDetailDTO queryDiseaseFull(Integer diseaseId) {
+        
+        return diseaseDetailMapper.selectByPrimaryKey(diseaseId);
     }
 
 }

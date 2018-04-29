@@ -10,7 +10,7 @@
     <result column="desease_manifestation" jdbcType="VARCHAR" property="deseaseManifestation" />
     <result column="therapeutic_method" jdbcType="VARCHAR" property="therapeuticMethod" />
     <result column="therapeutic_mark" jdbcType="VARCHAR" property="therapeuticMark" />
-    <result column="entry_time" jdbcType="VARCHAR" property="entryTime" />
+    <result column="entry_time" jdbcType="TIMESTAMP" property="entryTime" />
     <result column="entry_person" jdbcType="VARCHAR" property="entryPerson" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -34,7 +34,7 @@
       entry_person)
     values (#{diseaseId,jdbcType=INTEGER}, #{department,jdbcType=VARCHAR}, #{diseaseType,jdbcType=VARCHAR}, 
       #{diseaseName,jdbcType=VARCHAR}, #{deseaseDescription,jdbcType=VARCHAR}, #{deseaseManifestation,jdbcType=VARCHAR}, 
-      #{therapeuticMethod,jdbcType=VARCHAR}, #{therapeuticMark,jdbcType=VARCHAR}, #{entryTime,jdbcType=VARCHAR}, 
+      #{therapeuticMethod,jdbcType=VARCHAR}, #{therapeuticMark,jdbcType=VARCHAR}, #{entryTime,jdbcType=TIMESTAMP}, 
       #{entryPerson,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zhaojm.bean.DiseaseDetailDTO">
@@ -97,7 +97,7 @@
         #{therapeuticMark,jdbcType=VARCHAR},
       </if>
       <if test="entryTime != null">
-        #{entryTime,jdbcType=VARCHAR},
+        #{entryTime,jdbcType=TIMESTAMP},
       </if>
       <if test="entryPerson != null">
         #{entryPerson,jdbcType=VARCHAR},
@@ -129,7 +129,7 @@
         therapeutic_mark = #{therapeuticMark,jdbcType=VARCHAR},
       </if>
       <if test="entryTime != null">
-        entry_time = #{entryTime,jdbcType=VARCHAR},
+        entry_time = #{entryTime,jdbcType=TIMESTAMP},
       </if>
       <if test="entryPerson != null">
         entry_person = #{entryPerson,jdbcType=VARCHAR},
@@ -146,7 +146,7 @@
       desease_manifestation = #{deseaseManifestation,jdbcType=VARCHAR},
       therapeutic_method = #{therapeuticMethod,jdbcType=VARCHAR},
       therapeutic_mark = #{therapeuticMark,jdbcType=VARCHAR},
-      entry_time = #{entryTime,jdbcType=VARCHAR},
+      entry_time = #{entryTime,jdbcType=TIMESTAMP},
       entry_person = #{entryPerson,jdbcType=VARCHAR}
     where disease_id = #{diseaseId,jdbcType=INTEGER}
   </update>

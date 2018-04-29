@@ -29,14 +29,14 @@ $(document).on("click",".seem_btn",function(){
 	                	method: 'seem',
 	                	data: result.value.doctor
 	            	}
-	        		x_admin_show('修改用户','http://localhost:8080/admin_doctor_edit','600','650');
+	        		x_admin_show('修改医生用户','http://localhost:8080/admin_doctor_edit','600','650');
 	        		  
 	        	}else if(result.value.userType == 3 && (result.value.doctor != null || result.value.patient != null)){
 	        		window.iframeOpt = {
 	                	method: 'seem',
 	                	data: result.value.patient
 	        		}
-	        		x_admin_show('修改用户','http://localhost:8080/admin_patient_edit','600','650');
+	        		x_admin_show('修改病人用户','http://localhost:8080/admin_patient_edit','600','650');
 	        	}else{
 	        		layer.msg('此用户未绑定信息或您无权查看！',{time:500});
 	        	}

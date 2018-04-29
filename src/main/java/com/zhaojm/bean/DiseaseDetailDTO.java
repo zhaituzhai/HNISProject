@@ -1,6 +1,9 @@
 package com.zhaojm.bean;
 
 import java.io.Serializable;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -33,7 +36,8 @@ public class DiseaseDetailDTO implements Serializable {
     private String therapeuticMark;
 
     @ApiModelProperty("录入时间")
-    private String entryTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date entryTime;
 
     @ApiModelProperty("录入人")
     private String entryPerson;
@@ -104,11 +108,11 @@ public class DiseaseDetailDTO implements Serializable {
         this.therapeuticMark = therapeuticMark;
     }
 
-    public String getEntryTime() {
+    public Date getEntryTime() {
         return entryTime;
     }
 
-    public void setEntryTime(String entryTime) {
+    public void setEntryTime(Date entryTime) {
         this.entryTime = entryTime;
     }
 
