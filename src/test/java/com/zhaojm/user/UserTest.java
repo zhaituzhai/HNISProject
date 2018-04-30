@@ -2,25 +2,29 @@ package com.zhaojm.user;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
-import org.apache.catalina.servlet4preview.http.ServletMapping;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageInfo;
 import com.zhaojm.bean.DiseaseDetailDTO;
 import com.zhaojm.bean.MedicineDTO;
 import com.zhaojm.bean.PageRequestDTO;
 import com.zhaojm.bean.UseraccountDTO;
+import com.zhaojm.controller.MedicineController;
 import com.zhaojm.mapper.IDiseaseDetailMapper;
 import com.zhaojm.mapper.IUseraccountMapper;
 import com.zhaojm.service.IMedicineService;
 import com.zhaojm.service.IUseraccountService;
+import com.zhaojm.util.ResultDTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -38,6 +42,20 @@ public class UserTest {
     
     @Autowired
     IDiseaseDetailMapper diseaseDetailMapper;
+    
+    @Autowired
+    MedicineController medicineController;
+    
+    @Test
+    public void testUpload() throws FileNotFoundException{
+        FileInputStream file = new FileInputStream("E:\\Aisino\\药品导入模板.xlsx");
+//        ResultDTO<Integer> result = medicineController.importMedicine((MultipartFile) file);
+//        byte[] xmlByte = file.?
+        int result = medicineService.toParse(file);
+        
+        assertTrue(result > 0);
+    }
+    
     
     @Test
     public void testLogin() throws Exception {

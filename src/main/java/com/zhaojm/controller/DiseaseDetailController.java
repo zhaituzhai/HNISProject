@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.pagehelper.PageInfo;
 import com.zhaojm.bean.DiseaseDetailDTO;
 import com.zhaojm.bean.PageRequestDTO;
-import com.zhaojm.bean.UseraccountDTO;
 import com.zhaojm.service.IDiseaseDetailService;
 import com.zhaojm.util.ResultDTO;
 

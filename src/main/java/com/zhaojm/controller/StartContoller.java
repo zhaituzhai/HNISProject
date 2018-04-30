@@ -71,7 +71,5 @@ public class StartContoller {
     public String medicineModify() {
         return "admin_medicine_edit";
     }
-    
-
 
 }

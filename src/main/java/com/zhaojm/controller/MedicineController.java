@@ -1,14 +1,20 @@
 package com.zhaojm.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.MultipartFilter;
 
 import com.github.pagehelper.PageInfo;
-import com.zhaojm.bean.DiseaseDetailDTO;
 import com.zhaojm.bean.MedicineDTO;
 import com.zhaojm.bean.PageRequestDTO;
 import com.zhaojm.service.IMedicineService;
@@ -56,6 +62,23 @@ public class MedicineController {
             return ResultDTO.valueOfSuccess();
         else
             return ResultDTO.valueOfError("更新失败！！");
+    }
+    
+    public ResultDTO<Integer> importMedicine(File xmlFile){
+        
+        //得到上传文件 并变成二进制文件
+        FileInputStream xmlByte = null;
+        try {
+            xmlByte = new FileInputStream(xmlFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        //解析二进制文件
+        int isParse = medicineService.toParse(xmlByte);
+        if(isParse > 0)
+            return ResultDTO.valueOfSuccess(isParse);
+        else
+            return ResultDTO.valueOfError("上传出错了");
     }
 
 }

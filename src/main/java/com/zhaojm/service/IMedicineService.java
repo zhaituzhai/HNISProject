@@ -1,5 +1,7 @@
 package com.zhaojm.service;
 
+import java.io.FileInputStream;
+
 import com.github.pagehelper.PageInfo;
 import com.zhaojm.bean.MedicineDTO;
 import com.zhaojm.bean.PageRequestDTO;
@@ -29,5 +31,11 @@ public interface IMedicineService {
      * 验证
      */
     int verfiy(MedicineDTO medicine);
+    /**
+     * 解析上传文件
+     * @param xmlByte
+     * @return
+     */
+    int toParse(FileInputStream xmlByte);
 
 }

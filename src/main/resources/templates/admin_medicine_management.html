@@ -65,10 +65,12 @@
 		onclick="user_management_add('添加药品信息','http://localhost:8080/admin_medicine_edit','700','850')">
 		<i class="layui-icon">&#xe608;</i>添加
 	</button>
-	<button class="layui-btn layui-btn-danger">
+	<button type="button" class="layui-btn" id="import"><i class="layui-icon">&#xe67c;</i>选择文件</button>
+	
+	<!-- <button onclick="" class="layui-btn layui-btn-danger">
 		<i class="layui-icon" ><img src="images/import.png" width="15"
-			height="15"></img></i>导入
-	</button>
+			height="15"></img></i>批量导入
+	</button> -->
 		<!-- <span class="x-right" style="line-height: 25px">共有数据：88 条</span> --></xblock>
 		<table class="layui-table">
 			<thead>
@@ -101,6 +103,33 @@
 	<script src="js/jquery-1.12.1.min.js"></script>
 	<script src="lib/bootstrap/js/bootstrap.min.js"></script>
 	<script src="functionjs/admin_medicine_management.js" ></script>
+	<script type="text/javascript">
+	layui.use('upload', function(){
+		var $ = layui.jquery,
+		upload = layui.upload;
+		  
+		var uploadInst = upload.render({ //允许上传的文件后缀
+			elem: '#import',
+			url: '/upload/',
+			method: 'POST',
+			accept: 'file',//普通文件
+			exts: 'xlsx|xls', //只允许上传excel格式的文件
+			before: function(obj){
+                layer.load();
+            },
+			done: function(res){
+				console.log(res);
+				debugger;
+			},
+			error: function(){//请求异常回调
+                layer.closeAll('loading');
+                layer.msg('网络异常，请稍后重试！');
+            }
+		});
+
+		  
+	});
+	</script>
 
 </body>
 </html>
