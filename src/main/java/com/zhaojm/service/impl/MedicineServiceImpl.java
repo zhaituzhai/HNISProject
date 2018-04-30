@@ -94,12 +94,13 @@ public class MedicineServiceImpl implements IMedicineService {
     
     private List<MedicineDTO> parseSheet(Sheet sheet, int starRow) {
         List<MedicineDTO> list = new ArrayList<MedicineDTO>();
-        MedicineDTO medicine = new MedicineDTO();
+        MedicineDTO medicine = null;
         if(null == sheet)
             return list;
         //循环解析
         int rowNum = sheet.getLastRowNum();
         for(int i = starRow;i <= rowNum;i++){
+            medicine = new MedicineDTO();
             Row hss = sheet.getRow(i);
             if(null != hss && hss.getPhysicalNumberOfCells() > 0){ //去除空行判断 https://www.tapd.cn/20490491/bugtrace/bugs/view?bug_id=1120490491001005787
                 medicine.setMedicineName(String.valueOf(hss.getCell(0)));

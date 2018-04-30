@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.support.MultipartFilter;
 
 import com.github.pagehelper.PageInfo;
 import com.zhaojm.bean.MedicineDTO;
@@ -63,13 +63,22 @@ public class MedicineController {
         else
             return ResultDTO.valueOfError("更新失败！！");
     }
-    
-    public ResultDTO<Integer> importMedicine(File xmlFile){
+    @RequestMapping(value = "/medi/importFile", method = RequestMethod.POST)
+    public ResultDTO<Integer> importMedicine(@RequestParam(value = "excelFile", required = true) MultipartFile xmlFile){
+        
+        File file = null;
+        try {
+            file=File.createTempFile("tmp", null);
+            xmlFile.transferTo(file);
+            file.deleteOnExit();         
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         
         //得到上传文件 并变成二进制文件
         FileInputStream xmlByte = null;
         try {
-            xmlByte = new FileInputStream(xmlFile);
+            xmlByte = new FileInputStream(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
