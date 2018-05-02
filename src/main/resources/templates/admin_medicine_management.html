@@ -58,9 +58,6 @@
 		</div>
 	</div>
 	<xblock>
-	<!-- <button class="layui-btn layui-btn-danger" onclick="delAll()">
-		<i class="layui-icon">&#xe640;</i>批量删除
-	</button> -->
 	<button class="layui-btn"
 		onclick="user_management_add('添加药品信息','http://localhost:8080/admin_medicine_edit','700','850')">
 		<i class="layui-icon">&#xe608;</i>添加
@@ -71,9 +68,6 @@
 			<div class="yayun-div">
 				<input id="excelFile" type="file" name="excelFile" lay-type="file"
 					class="layui-upload-file">
-				<!-- <button class="layui-btn" lay-submit lay-filter="uploadExcel">提交</button> -->
-				<!-- lay-submit定义一个触发表单提交的button，不用填写值  ;
-	                lay-submit 事件过滤器。你可能会在很多地方看到他，他一般是用于监听特定的自定义事件。你可以把它看作是一个ID选择器 -->
 			</div>
 		</form>
 	</div>
@@ -110,52 +104,6 @@
 	<script src="lib/bootstrap/js/bootstrap.min.js"></script>
 	<script src="functionjs/admin_medicine_management.js" ></script>
 	<script type="text/javascript">
-/* 	layui.use('upload', function(){
-		var $ = layui.jquery,
-		upload = layui.upload;
-		  
-		layui.upload({ //允许上传的文件后缀
-			elem: '#import',
-			contentType: "application/json;charset=UTF-8",
-			url: 'http://localhost:8080/medi/importFile',
-			method: 'POST',
-			accept: 'file',//普通文件
-			ext: 'xlsx|xls', //只允许上传excel格式的文件
-			success: function(res){
-				console.log(res);
-				debugger;
-			}
-		});
-
-		  
-	}); */
-	layui.use([ 'form', 'upload', 'laypage', 'layer' ], function() { // 如果只加载一个模块，可以不填数组。如：layui.use('form')
-	    var form = layui.form() // 获取form模块
-	    , upload = layui.upload // 获取upload模块
-	    , laypage = layui.laypage
-	    , layer = layui.layer;
-
-	upload({
-	    url : 'http://localhost:8080/medi/importFile',
-	    ext : 'xls|xlsx',
-	    title : '批量导入',
-	    before : function(input) {
-	        // 返回的参数item，即为当前的input DOM对象
-	        console.log('文件上传中');
-	    },
-	    success : function(res) {
-	    	console.log(res);
-	    	debugger;
-	        layer.msg(res.value+"条数据上传成功！");
-	    }
-	});
-
-	//监听特定的自定义事件。你可以把它看作是一个ID选择器
-	form.on('submit(queryData)', function(data) {
-	    each();
-	    return false;
-	});
-	});
 	</script>
 
 </body>

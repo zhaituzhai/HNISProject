@@ -71,5 +71,9 @@ public class StartContoller {
     public String medicineModify() {
         return "admin_medicine_edit";
     }
+    @RequestMapping("/case_table")
+    public String caseTable() {
+        return "case_table";
+    }
 
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,14 @@ public class MedicineController {
     public ResultDTO<PageInfo<MedicineDTO>> getMedicineList (@RequestBody PageRequestDTO<MedicineDTO> page){
         
         return ResultDTO.valueOfSuccess(medicineService.queryMedicineList(page));
+        
+    }
+    
+    ///medi/getMedicineName
+    @RequestMapping(value="/medi/getMedicineName",method=RequestMethod.POST)
+    public ResultDTO<List<MedicineDTO>> getMedicineName (@RequestBody MedicineDTO medicine){
+        
+        return ResultDTO.valueOfSuccess(medicineService.queryMedicineName(medicine));
         
     }
     

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="css/case_table.css" rel="stylesheet" />
+	</head>
+	<body>
+	<form class="layui-form" action="">
+	<div align="center">
+		<table align="center" class="my-table1" border="1">
+			<tr><td class="my-table-td1">
+		<table cellspacing="8px;" class="word-size" width="581" align="center">
+		  <tr>
+		    <td width="90">&nbsp;</td>
+		    <td width="90">&nbsp;</td>
+		    <td colspan="2" rowspan="2" align="center" valign="middle"><h1><strong>处&nbsp;&nbsp;&nbsp;方&nbsp;&nbsp;&nbsp;单</strong></h1></td>
+		    <td width="90">&nbsp;</td>
+		    <td width="90">&nbsp;</td>
+		  </tr>
+		  <tr>
+		    <td>&nbsp;</td>
+		    <td>&nbsp;</td>
+		    <td class="word-size" align="right" valign="middle">流水号：</td>
+		    <td><input style="width: 90px;height: 25px;" id="caseid" /></td>
+		  </tr>
+		  </table>
+		 </td></tr>
+		  <tr><td class="my-table-td2">
+		  <table cellspacing="8px;" class="word-size" width="581" align="center">
+		  <tr>
+		    <td width="90" align="right" valign="middle">姓名</td>
+		    <td width="90" align="right" valign="middle">
+		    	<input id="patientName" required="required" onkeyup="getPatient()" lay-verify="requcheck" style="width: 90px;height: 25px;" />
+		    	<div id="nameshow" class="show">
+                </div>
+		    </td>
+		    <td width="90" align="right" valign="middle">性别</td>
+		    <td width="90" align="right" valign="middle">
+		          <input id="patientSex" required="required" lay-verify="requcheck" style="width: 90px;height: 25px;" />
+<!-- 		    	<select id="patientSex" style="width: 90px;height: 25px;">
+	                 <option value="M" selected="selected">男</option>
+	                 <option value="F">女</option>
+	             </select> -->
+		    </td>
+		    <td width="90" align="right" valign="middle">年龄</td>
+		    <td width="90" align="right" valign="middle">
+		    	<input id="patientAge" required="required" lay-verify="requcheck" style="width: 90px;height: 25px;" />
+		    </td>
+		  </tr>
+		  <tr>
+		    <td width="90" align="right" valign="middle"><span>患病时间</span></td>
+		    <td colspan="4" align="left" valign="middle">
+		    	<input id="illnessTime" required="required" lay-verify="requcheck" type="date" style="width: 150px;height: 25px;" />
+		    	
+		    </td>
+		    </tr>
+		    </table>
+		  </td></tr>
+		  <tr><td class="my-table-td2">		  
+		  <table cellspacing="8px;" class="word-size" width="581" align="center">
+		  <tr>
+		    <td colspan="3" align="left" width="90">病情描述</td>
+		    <td width="90">&nbsp;</td>
+		    <td width="90">&nbsp;</td>
+		    <td width="90">&nbsp;</td>
+		  </tr>
+		  <tr>
+		    <td align="left" colspan="6">
+		    	<textarea id="illnessDesc" lay-verify="requcheck" style="width: 553px;height: 130px;"></textarea>
+		    </td>
+		    </tr>
+		  </table>
+        </td></tr>
+        <tr><td class="my-table-td2">
+        <table id="medicineTable" cellspacing="8px;" class="word-size" width="581" align="center">
+		  <tr>
+		    <td width="90px;" align="left">用&nbsp;药</td>
+		    <td width="90px;">&nbsp;</td>
+		    <td width="90px;">&nbsp;</td>
+		    <td width="90px;">&nbsp;</td>
+		    <td width="90px;">&nbsp;</td>
+		    <td width="90px;">&nbsp;</td>
+		  </tr>
+		  <tr>
+		    <td align="right">药&nbsp;名</td>
+		    <td colspan="2" align="left">
+		    	<input name="medicineName" onkeyup="getMedicine(this)" lay-verify="requcheck" required="required" style="width: 180px;height: 25px;"  />
+		    	<div id="medishow" class="medishow">
+                </div>
+		    </td>
+		    <td align="right">用&nbsp;量</td>
+		    <td align="left" colspan="2">
+		    	<input name="consumption" required="required" lay-verify="requcheck" style="width: 90px;height: 25px;" />
+		    	<input type="button" style="width: 30px;height: 25px;" onclick="operateMedicine(this)" id="addMedicine" value="+" />
+		    </td>
+		  </tr>
+		  </table>
+		  </td></tr>
+		  <tr><td class="my-table-td3">
+		  <table cellspacing="5px;" class="word-size" width="581" align="center">
+		  <tr>
+		    <td colspan="1" align="right">治疗周期</td>
+		    <td colspan="3" align="left" valign="middle">
+		    	<input id="cureCycle" required="required" lay-verify="requcheck" style="width: 260px;height: 25px;" />
+		    </td>
+		    <td width="90">&nbsp;</td>
+		    <td width="90">&nbsp;</td>
+		  </tr>
+		  <tr>
+		    <td width="90">医生</td>
+		    <td width="90">
+		    	<input id="doctorName" required="required" lay-verify="requcheck" style="width: 90px;height: 25px;" />
+		    </td>
+		    <td>&nbsp;</td>
+		    <td width="90">时间</td>
+		    <td colspan="2">
+		    	<input id="cureTime" type="date" required="required" lay-verify="requcheck" style="width: 178px;height: 25px;" />
+		    </td>
+		    </tr>
+		</table>
+		</td></tr>
+		</table>
+		<br />
+		<button class="layui-btn" style="width: 178px;height: 25px;" lay-filter="add" lay-submit="" >保存</button>
+	</div>
+	</form>
+	<script src="js/jquery-1.12.1.min.js" type="text/javascript"></script>
+	<script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script src="js/x-layui.js" charset="utf-8"></script>
+    
+	<script type="text/javascript" src="functionjs/case_table.js"></script>
+
+	
+	</body>
+</html>

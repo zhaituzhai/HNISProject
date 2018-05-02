@@ -1,5 +1,7 @@
 package com.zhaojm.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,6 +112,13 @@ public class UserAccountController {
             return ResultDTO.valueOfSuccess();
         else
             return ResultDTO.valueOfError("操作失败！");
+    }
+    
+    @RequestMapping(value="/sys/getPatientName",method=RequestMethod.POST)
+    public ResultDTO<List<PatientDTO>> getPatientName(@RequestBody PatientDTO patient){
+        List<PatientDTO> list = useraccountService.queryPatientName(patient);
+        
+        return ResultDTO.valueOfSuccess(list);
     }
     
     

@@ -1,6 +1,7 @@
 package com.zhaojm.service;
 
 import java.io.FileInputStream;
+import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.zhaojm.bean.MedicineDTO;
@@ -27,6 +28,7 @@ public interface IMedicineService {
     
     MedicineDTO queryMeidcineFull (Integer medicineId);
     
+    List<MedicineDTO> queryMedicineName(MedicineDTO medicine);
     /**
      * 验证
      */

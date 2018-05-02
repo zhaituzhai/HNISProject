@@ -1,5 +1,7 @@
 package com.zhaojm.service;
 
+import java.util.List;
+
 import com.github.pagehelper.PageInfo;
 import com.zhaojm.bean.DoctorDTO;
 import com.zhaojm.bean.PageRequestDTO;
@@ -33,5 +35,7 @@ public interface IUseraccountService {
     PatientDTO queryPatientById(Integer id);
 
     int verfiy(UseraccountDTO user);
+    
+    List<PatientDTO> queryPatientName(PatientDTO patient);
 
 }

@@ -121,4 +121,10 @@ public class UseraccountServiceImpl implements IUseraccountService {
             return 0;
     }
 
+    @Override
+    public List<PatientDTO> queryPatientName(PatientDTO patient) {
+        
+        return patientMapper.queryPatientList(patient);
+    }
+
 }

@@ -187,14 +187,36 @@ function build_page_nav(result) {
 }
 
 
-layui.use(['laydate','element','laypage','layer','form'], function(){
-    $ = layui.jquery;//jquery
-  laydate = layui.laydate;//日期插件
-  lement = layui.element();//面包导航
-  laypage = layui.laypage;//分页
-  layer = layui.layer;//弹出层
+layui.use(['laydate','element', 'upload' ,'laypage','layer','form'], function(){
+    $ = layui.jquery ,//jquery
+  laydate = layui.laydate,//日期插件
+  lement = layui.element(),//面包导航
+  laypage = layui.laypage,//分页
+  layer = layui.layer, //弹出层
+  upload = layui.upload, 
   form = layui.form();
 
+    upload({
+	    url : 'http://localhost:8080/medi/importFile',
+	    ext : 'xls|xlsx',
+	    title : '批量导入',
+	    before : function(input) {
+	        // 返回的参数item，即为当前的input DOM对象
+	        console.log('文件上传中');
+	    },
+	    success : function(res) {
+	    	console.log(res);
+	    	debugger;
+	        layer.msg(res.value+"条数据上传成功！");
+	    }
+	});
+
+	//监听特定的自定义事件。你可以把它看作是一个ID选择器
+	form.on('submit(queryData)', function(data) {
+	    each();
+	    return false;
+	});
+    
   var start = {
     min: laydate.now()
     ,max: '2099-06-16 23:59:59'

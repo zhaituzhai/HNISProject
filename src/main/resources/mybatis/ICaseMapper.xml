@@ -19,15 +19,15 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from case
+    from `case`
     where case_id = #{caseId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from case
+    delete from `case`
     where case_id = #{caseId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zhaojm.bean.CaseDTO">
-    insert into case (case_id, patient_name, doctor_name, 
+  <insert id="insert" useGeneratedKeys="true" keyProperty="case_id" parameterType="com.zhaojm.bean.CaseDTO">
+    insert into `case` (case_id, patient_name, doctor_name, 
       illness_desc, illness_time, illness_grade, 
       cure_time, cure_cycle, remark
       )
@@ -36,8 +36,8 @@
       #{cureTime,jdbcType=TIMESTAMP}, #{cureCycle,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.zhaojm.bean.CaseDTO">
-    insert into case
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="caseId" parameterType="com.zhaojm.bean.CaseDTO">
+    insert into `case`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="caseId != null">
         case_id,
@@ -98,7 +98,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zhaojm.bean.CaseDTO">
-    update case
+    update `case`
     <set>
       <if test="patientName != null">
         patient_name = #{patientName,jdbcType=VARCHAR},
@@ -128,7 +128,7 @@
     where case_id = #{caseId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zhaojm.bean.CaseDTO">
-    update case
+    update `case`
     set patient_name = #{patientName,jdbcType=VARCHAR},
       doctor_name = #{doctorName,jdbcType=VARCHAR},
       illness_desc = #{illnessDesc,jdbcType=VARCHAR},
@@ -143,7 +143,7 @@
     <select id="queryCaseList" parameterType="com.zhaojm.bean.CaseDTO" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from case
+    from `case`
     where case_id is not null
     <if test="caseId != null and caseId != ''">
     and  case_id = #{caseId,jdbcType=VARCHAR},

@@ -1,6 +1,5 @@
 package com.zhaojm.service.impl;
 
-import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,6 +63,13 @@ public class MedicineServiceImpl implements IMedicineService {
             return 1;
         else
             return 0;
+    }
+    
+    @Override
+    public List<MedicineDTO> queryMedicineName(MedicineDTO medicine){
+        
+        return medicineMapper.queryMedicineList(medicine);
+        
     }
 
     @Override
