@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>处方单管理</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="css/x-admin.css" media="all">
+<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="lib/layui/css/layui.css"  media="all">
+<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="x-nav" style="top: 8px;">
+		<span class="layui-breadcrumb"> <a><cite>首页</cite></a> <a><cite>处方单管理</cite></a>
+		</span> <a class="layui-btn layui-btn-small"
+			style="line-height: 1.6em; margin-top: 3px; float: right"
+			href="javascript:location.replace(location.href);" title="刷新"><i
+			class="layui-icon" style="line-height: 30px">ဂ</i></a>
+	</div>
+	<div class="x-body" style="top: 8px;">
+		<!-- 按条件查寻 -->
+		<div class="layui-form x-center">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+                    <label class="layui-form-label" style="width: 115px;">病人名字:</label>
+                    <div class="layui-input-inline" style="width: 250px;">
+                        <input type="text" id="patientName" placeholder="病人名字:"
+                            autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+				<div class="layui-inline">
+                    <label class="layui-form-label" style="width: 115px;">病情描述:</label>
+                    <div class="layui-input-inline" style="width: 250px;">
+                        <input type="text" id="illnessDesc" placeholder="病情描述:"
+                            autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+				<!-- <div class="layui-inline">
+                    <label class="layui-form-label" style="width: 115px;">使用范围:</label>
+                    <div class="layui-input-inline" style="width: 250px;">
+                        <input type="text" id="userRange" placeholder="使用范围"
+                            autocomplete="off" class="layui-input">
+                    </div>
+                </div> -->
+				<div class="layui-inline" style="width: 90px">
+					<button class="layui-btn" lay-submit="" lay-filter="sreach">
+						<i class="layui-icon" href="javascript:void(0);"
+							onclick="selectByChoose()">&#xe615;</i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<xblock>
+	<!-- <button class="layui-btn"
+		onclick="user_management_add('添加药品信息','http://localhost:8080/admin_medicine_edit','700','850')">
+		<i class="layui-icon">&#xe608;</i>添加
+	</button> -->
+	<!-- <div class="layui-inline">
+		<form class="layui-form layui-form-pane" id="uploadExcelForm" action=""
+			method="post" enctype="multipart/form-data">
+			<div class="yayun-div">
+				<input id="excelFile" type="file" name="excelFile" lay-type="file"
+					class="layui-upload-file">
+			</div>
+		</form>
+	</div> -->
+	<!-- <span class="x-right" style="line-height: 25px">共有数据：88 条</span> --></xblock>
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th>处方ID</th>
+					<th>病人名字</th>
+					<th>医生名字</th>
+					<th>疾病描述</th>
+					<th>生病时间</th>
+					<th>治疗时间</th>
+					<th>治疗周期</th>
+					<th>备注</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody id="medicine_table">
+			</tbody>
+		</table>
+		<!-- 显示分页 -->
+        <div class="row">
+            <div id="page_info_area" class="col-md-6"></div>
+            <div id="page_nav_area" class="col-md-6"></div>
+        </div>
+	<br />
+	<br />
+	<br />
+	<script src="lib/layui/layui.js" charset="utf-8"></script>
+	<script src="js/x-layui.js" charset="utf-8"></script>
+	<script src="js/jquery-1.12.1.min.js"></script>
+	<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+	var totalRecord,currentPage,queryUser;
+	var num = 1;
+	//1、页面初次加载      
+	$(function(){
+	    to_page(1);
+	});
+	      
+	function selectByChoose() {
+	    to_page(1);
+	}
+	  
+	// 查看修改疾病库
+	$(document).on("click",".edit_btn",function disese_management() {
+	    $.ajax({
+	        async : false,
+	        type : "post",
+	        contentType : "application/json;charset=UTF-8",
+	        url : "http://localhost:8080/medi/getMedicine/" + parseInt($(this).attr("modify-id")),
+	        success : function(result) {
+	            if (result.success) {
+	                window.iframeOpt = {
+	                    method : 'seem',
+	                    data : result.value
+	                }
+	                x_admin_show('查看处方详情',
+	                        'http://localhost:8080/case_table',
+	                        '700', '720');
+	            } else {
+	                layer.msg(result.message);
+	            }
+	        }
+	    });
+	});
+	
+	// 查询第几页的信息（页面 与 条件）
+	function to_page(num) {
+	    var caseInfo = {
+	        "pageNum" : "" + num,
+	        "pageSize" : "10",
+	        "param" : {
+	            "patientName" : "" + $("#patientName").val(),
+	            "illnessDesc" : "" + $("#illnessDesc").val()
+	        }
+	    }
+	    // async: false,
+	    $.ajax({
+	        async : false,
+	        type : "post",
+	        contentType : "application/json;charset=UTF-8",
+	        url : "http://localhost:8080/case/getCaseList",
+	        data : JSON.stringify(caseInfo),
+	        success : function(result) {
+	            creat_medicine_table(result);
+	            build_page_info(result);
+	            build_page_nav(result);
+	        }
+	    });
+	}
+
+	//创建表      
+	function creat_medicine_table(result){
+	    $("#medicine_table").empty();
+	    var medicines = result.value.list;
+	    $.each(medicines, function(index, item) {
+	        // var checkBoxTd = $("<td><input type='checkbox'
+	        // class='check_item' /></td>");
+	        var medicineIdTd = $("<td></td>").append(item.caseId);
+	        var medicineNameTd = $("<td></td>").append(item.patientName);
+	        var mainComponentsTd = $("<td></td>").append(item.doctorName);
+	        var userRangeTd = $("<td></td>").append(item.illnessDesc);
+	        var userWayTd = $("<td></td>").append(item.illnessTime);
+	        var userAttentionTd = $("<td></td>").append(item.cureTime);
+	        var saveWayTd = $("<td></td>").append(item.cureCycle);
+	        var specificationsTd = $("<td></td>").append(item.remark);
+	        var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn").append(
+	                $("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
+	        var delBtn = $("<a></a>").addClass("btn btn-danger btn-sm delete_btn").append(
+	                $("<span></span>").addClass("glyphicon glyphicon-trash")).append("删除");
+	        editBtn.attr("modify-id",item.caseId);
+	        delBtn.attr("delete-id",item.caseId);
+	        var btnTd = $("<td></td>").append(editBtn).append(" ").append(delBtn);
+	  //append方法执行完成以后还是会返回原来的元素
+	        $("<tr></tr>").append(medicineIdTd).append(medicineNameTd).append(mainComponentsTd).append(userRangeTd).append(userWayTd)
+	            .append(userAttentionTd).append(saveWayTd).append(specificationsTd)
+	            .append(btnTd).appendTo("#medicine_table");
+	    });
+	}
+	      
+	//分页信息
+	function build_page_info(result) {
+	    $("#page_info_area").empty();
+	    $("#page_info_area").append("当前" + result.value.pageNum + "页，总共"
+	            + result.value.pages + "页,总共"+ result.value.total + "条");
+	    totalRecord = result.value.total;
+	    currentPage = result.value.pageNum;
+	}
+	//分页条，添加链接
+	function build_page_nav(result) {
+	    $("#page_nav_area").empty();
+	    //page_nav_area
+	    var ul = $("<ul></ul>").addClass("pagination");
+	    var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href", "#"));
+	    var prePageLi = $("<li></li>").append($("<a></a>").append("&laquo;"));
+	    if (!result.value.hasPreviousPage) {
+	        firstPageLi.addClass("disabled");
+	        prePageLi.addClass("disabled")
+	        } else {
+	            firstPageLi.click(function() {
+	                to_page(1);
+	            });
+	            prePageLi.click(function() {
+	                to_page(result.value.pageNum - 1);
+	            });
+	        }
+	        var nextPageLi = $("<li></li>").append($("<a></a>").append("&raquo;"));
+	        var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").attr("href", "#"));
+	        if (!result.value.hasNextPage) {
+	            nextPageLi.addClass("disabled");
+	            lastPageLi.addClass("disabled")
+	        } else {
+	            nextPageLi.click(function() {
+	                to_page(result.value.pageNum + 1);
+	            });
+	            lastPageLi.click(function() {
+	                to_page(result.value.pages);
+	            });
+	        }
+	        ul.append(firstPageLi).append(prePageLi);
+
+	        $.each(result.value.navigatepageNums, function(index,item) {
+	            var numLi = $("<li></li>").append($("<a></a>").append(item));
+	            if (result.value.pageNum == item) {
+	                numLi.addClass("active");
+	            }
+	            numLi.click(function() {
+	                to_page(item);
+	            });
+	            ul.append(numLi);
+	        });
+	        ul.append(nextPageLi).append(lastPageLi);
+	        var navEle = $("<nav></nav>").append(ul);
+	        navEle.appendTo("#page_nav_area");
+	}
+
+
+	layui.use(['laydate','element', 'upload' ,'laypage','layer','form'], function(){
+	    $ = layui.jquery ,//jquery
+	  laydate = layui.laydate,//日期插件
+	  lement = layui.element(),//面包导航
+	  laypage = layui.laypage,//分页
+	  layer = layui.layer, //弹出层
+	  upload = layui.upload, 
+	  form = layui.form();
+
+	    upload({
+	        url : 'http://localhost:8080/medi/importFile',
+	        ext : 'xls|xlsx',
+	        title : '批量导入',
+	        before : function(input) {
+	            // 返回的参数item，即为当前的input DOM对象
+	            console.log('文件上传中');
+	        },
+	        success : function(res) {
+	            console.log(res);
+	            debugger;
+	            layer.msg(res.value+"条数据上传成功！");
+	        }
+	    });
+
+	    //监听特定的自定义事件。你可以把它看作是一个ID选择器
+	    form.on('submit(queryData)', function(data) {
+	        each();
+	        return false;
+	    });
+	    
+	  var start = {
+	    min: laydate.now()
+	    ,max: '2099-06-16 23:59:59'
+	    ,istoday: false
+	    ,choose: function(datas){
+	      end.min = datas; //开始日选好后，重置结束日的最小日期
+	      end.start = datas //将结束日的初始值设定为开始日
+	    }
+	  };
+	  
+	  var end = {
+	    min: laydate.now()
+	    ,max: '2099-06-16 23:59:59'
+	    ,istoday: false
+	    ,choose: function(datas){
+	      start.max = datas; //结束日选好后，重置开始日的最大日期
+	    }
+	  };
+	  
+	});
+
+	//批量删除提交
+	 function delAll () {
+	    layer.confirm('确认要删除吗？',function(index){
+	        //捉到所有被选中的，发异步进行删除
+	        layer.msg('删除成功', {icon: 1});
+	    });
+	 }
+	 /*用户-添加*/
+	function user_management_add(title,url,w,h){
+	    window.iframeOpt = {
+	            method: 'save'
+	        }
+	    x_admin_show(title,url,w,h);
+	}
+	/*用户-查看*/
+	function user_management_show(title,url,id,w,h){
+	    x_admin_show(title,url,w,h);
+	}
+
+	 /*用户-停用*/
+	function member_stop(obj,id){
+	    layer.confirm('确认要停用吗？',function(index){
+	        //发异步把用户状态进行更改
+	        $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="layui-icon">&#xe62f;</i></a>');
+	        $(obj).parents("tr").find(".td-status").html('<span class="layui-btn layui-btn-disabled layui-btn-mini">已停用</span>');
+	        $(obj).remove();
+	        layer.msg('已停用!',{icon: 5,time:1000});
+	    });
+	}
+
+	/*用户-启用*/
+	function member_start(obj,id){
+	    layer.confirm('确认要启用吗？',function(index){
+	        //发异步把用户状态进行更改
+	        $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="layui-icon">&#xe601;</i></a>');
+	        $(obj).parents("tr").find(".td-status").html('<span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span>');
+	        $(obj).remove();
+	        layer.msg('已启用!',{icon: 6,time:1000});
+	    });
+	}
+	// 用户-编辑
+	function user_management_edit (title,url,id,w,h) {
+	    x_admin_show(title,url,w,h); 
+	}
+	/*密码-修改*/
+	function user_management_password(title,url,id,w,h){
+	    x_admin_show(title,url,w,h);  
+	}
+	/*用户-删除*/
+	function member_del(obj,id){
+	    layer.confirm('确认要删除吗？',function(index){
+	        //发异步删除数据
+	        $(obj).parents("tr").remove();
+	        layer.msg('已删除!',{icon:1,time:1000});
+	    });
+	}
+	</script>
+
+</body>
+</html>

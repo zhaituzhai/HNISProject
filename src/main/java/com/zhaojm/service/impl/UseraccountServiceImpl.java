@@ -36,11 +36,13 @@ public class UseraccountServiceImpl implements IUseraccountService {
         if(exiseUser == null || !(exiseUser.getPassword().equals(loginUser.getPassword())) ) {
             return null;
         }else {
-            String type = exiseUser.getUserType();
-            if(type == UserTypeEnum.USER_TYPE_DOCTOR.getMessage()){
-                exiseUser.setDoctor(doctorMapper.selectByPrimaryKey(exiseUser.getUserId()));
-            }else if(type == UserTypeEnum.USER_TYPR_PATIENT.getMessage()) {
-                exiseUser.setPatient(patientMapper.selectByPrimaryKey(exiseUser.getUserId()));
+            int type = Integer.parseInt(exiseUser.getUserType());
+            if(type == UserTypeEnum.USER_TYPE_DOCTOR.getTypeCode()){
+                DoctorDTO doctor = doctorMapper.selectByUserId(exiseUser.getUserId());
+                if(null != doctor)
+                exiseUser.setDoctor(doctor);
+            }else if(type == UserTypeEnum.USER_TYPR_PATIENT.getTypeCode()) {
+                exiseUser.setPatient(patientMapper.selectByUserId(exiseUser.getUserId()));
             }
             return exiseUser;
         }  

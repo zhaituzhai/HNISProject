@@ -16,11 +16,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageInfo;
 import com.zhaojm.bean.DiseaseDetailDTO;
+import com.zhaojm.bean.DoctorDTO;
 import com.zhaojm.bean.MedicineDTO;
 import com.zhaojm.bean.PageRequestDTO;
 import com.zhaojm.bean.UseraccountDTO;
 import com.zhaojm.controller.MedicineController;
 import com.zhaojm.mapper.IDiseaseDetailMapper;
+import com.zhaojm.mapper.IDoctorMapper;
 import com.zhaojm.mapper.IUseraccountMapper;
 import com.zhaojm.service.IMedicineService;
 import com.zhaojm.service.IUseraccountService;
@@ -44,6 +46,9 @@ public class UserTest {
     IDiseaseDetailMapper diseaseDetailMapper;
     
     @Autowired
+    IDoctorMapper doctorMapper;
+    
+    @Autowired
     MedicineController medicineController;
     
     @Test
@@ -64,6 +69,8 @@ public class UserTest {
         loginUser.setPassword("1234");
         UseraccountDTO user = useraccountService.verificationLoginUser(loginUser);
         System.out.println(user);
+//        DoctorDTO doctor = doctorMapper.selectByPrimaryKey(doctorId)
+        
     }
     
     @Test

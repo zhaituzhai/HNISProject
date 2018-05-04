@@ -37,6 +37,13 @@ public class CaseDTO implements Serializable {
 
     @ApiModelProperty("治疗周期")
     private String cureCycle;
+    
+    @ApiModelProperty("录入时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date enterTime;
+    
+    @ApiModelProperty("录入人")
+    private String enterPerson;
 
     @ApiModelProperty("备注")
     private String remark;
@@ -44,6 +51,22 @@ public class CaseDTO implements Serializable {
     private List<CaseMedicineDetailDTO> caseDetail;
 
     private static final long serialVersionUID = 1L;
+
+    public Date getEnterTime() {
+        return enterTime;
+    }
+
+    public void setEnterTime(Date enterTime) {
+        this.enterTime = enterTime;
+    }
+
+    public String getEnterPerson() {
+        return enterPerson;
+    }
+
+    public void setEnterPerson(String enterPerson) {
+        this.enterPerson = enterPerson;
+    }
 
     public List<CaseMedicineDetailDTO> getCaseDetail() {
         return caseDetail;

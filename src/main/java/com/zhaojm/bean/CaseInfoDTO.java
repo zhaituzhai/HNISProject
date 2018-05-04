@@ -13,6 +13,7 @@ public class CaseInfoDTO {
      * list };
      */
 
+    private Integer patientId;
     private String patientName;
     private String patientSex;
     private String patientAge;

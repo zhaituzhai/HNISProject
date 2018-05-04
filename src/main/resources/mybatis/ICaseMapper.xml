@@ -10,11 +10,13 @@
     <result column="illness_grade" jdbcType="VARCHAR" property="illnessGrade" />
     <result column="cure_time" jdbcType="TIMESTAMP" property="cureTime" />
     <result column="cure_cycle" jdbcType="VARCHAR" property="cureCycle" />
+    <result column="enter_time" jdbcType="TIMESTAMP" property="enterTime" />
+    <result column="enter_person" jdbcType="VARCHAR" property="enterPerson" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
   <sql id="Base_Column_List">
     case_id, patient_name, doctor_name, illness_desc, illness_time, illness_grade, cure_time, 
-    cure_cycle, remark
+    cure_cycle, enter_time, enter_person, remark
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -29,11 +31,12 @@
   <insert id="insert" useGeneratedKeys="true" keyProperty="case_id" parameterType="com.zhaojm.bean.CaseDTO">
     insert into `case` (case_id, patient_name, doctor_name, 
       illness_desc, illness_time, illness_grade, 
-      cure_time, cure_cycle, remark
+      cure_time, cure_cycle, enter_time, enter_person, remark
       )
     values (#{caseId,jdbcType=INTEGER}, #{patientName,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, 
       #{illnessDesc,jdbcType=VARCHAR}, #{illnessTime,jdbcType=TIMESTAMP}, #{illnessGrade,jdbcType=VARCHAR}, 
-      #{cureTime,jdbcType=TIMESTAMP}, #{cureCycle,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      #{cureTime,jdbcType=TIMESTAMP}, #{cureCycle,jdbcType=VARCHAR}, 
+      #{enterTime,jdbcType=TIMESTAMP}, #{enterPerson,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" useGeneratedKeys="true" keyProperty="caseId" parameterType="com.zhaojm.bean.CaseDTO">
@@ -61,6 +64,12 @@
         cure_time,
       </if>
       <if test="cureCycle != null">
+        cure_cycle,
+      </if>
+      <if test="enterTime != null">
+        cure_time,
+      </if>
+      <if test="enterPerson != null">
         cure_cycle,
       </if>
       <if test="remark != null">
@@ -92,6 +101,12 @@
       <if test="cureCycle != null">
         #{cureCycle,jdbcType=VARCHAR},
       </if>
+      <if test="enterTime != null">
+        #{enterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enterPerson != null">
+        #{enterPerson,jdbcType=VARCHAR},
+      </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
       </if>
@@ -121,6 +136,12 @@
       <if test="cureCycle != null">
         cure_cycle = #{cureCycle,jdbcType=VARCHAR},
       </if>
+      <if test="enterTime != null">
+        enter_time = #{enterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enterPerson != null">
+        enter_person = #{enterPerson,jdbcType=VARCHAR},
+      </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
@@ -136,6 +157,8 @@
       illness_grade = #{illnessGrade,jdbcType=VARCHAR},
       cure_time = #{cureTime,jdbcType=TIMESTAMP},
       cure_cycle = #{cureCycle,jdbcType=VARCHAR},
+      enter_time = #{enterTime,jdbcType=TIMESTAMP},
+      enter_person = #{enter_person,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR}
     where case_id = #{caseId,jdbcType=INTEGER}
   </update>
@@ -146,15 +169,18 @@
     from `case`
     where case_id is not null
     <if test="caseId != null and caseId != ''">
-    and  case_id = #{caseId,jdbcType=VARCHAR},
+    and  case_id = #{caseId,jdbcType=VARCHAR}
     </if>
     <if test="patientName != null and patientName != ''">
     and  patient_name LIKE concat(concat('%',#{patientName,jdbcType=VARCHAR}),'%')
     </if>
-    <if test="doctorName != null and doctorName !='' ">
-    and  doctor_name LIKE concat(concat('%',#{doctorName,jdbcType=VARCHAR}),'%')
+    <if test="illnessDesc != null and illnessDesc !='' ">
+    and  illness_desc LIKE concat(concat('%',#{illnessDesc,jdbcType=VARCHAR}),'%')
     </if>
-    order by cure_time disc
+    <if test="enterPerson !=null and enterPerson !=''">
+    and enter_person = #{enterPerson,jdbcType=VARCHAR}
+    </if>
+    order by enter_time desc
   </select>
   
   

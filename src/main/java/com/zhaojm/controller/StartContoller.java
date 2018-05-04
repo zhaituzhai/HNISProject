@@ -79,5 +79,9 @@ public class StartContoller {
     public String doctorIndex() {
         return "doctor_index";
     }
+    @RequestMapping("/case_management")
+    public String caseManagment() {
+        return "doctor_case_management";
+    }
 
 }
