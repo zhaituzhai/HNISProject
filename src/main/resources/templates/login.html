@@ -28,7 +28,7 @@
 							</div>
 							<div class="input_outer">
 								<span class="us_uer"></span>
-								<input name="logpass" id="logpass" class="text" style="color: #FFFFFF !important position:absolute; z-index:100;" value="" type="password" placeholder="请输入密码">
+								<input name="logpass" id="logpass" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;" value="" type="password" placeholder="请输入密码">
 							</div>
 							<div class="mb2"><a class="act-but submit" href="javascript:void(0);" onclick="login()" style="color: #FFFFFF">登录</a></div>
 						</form>
@@ -57,7 +57,12 @@
 		    		success:function(result){
 		    			//alert(result.success);
 		    			if(result.success){
-		    				window.location.href = "http://localhost:8080/index";
+		    				debugger;
+		    				if(result.value.userType == "1"){
+			    				window.location.href = "http://localhost:8080/index";
+		    				}else if(result.value.userType == "2"){
+		    					window.location.href = "http://localhost:8080/doctor_index";
+		    				}
 		    			}else{
 		    				$('.alert').html(result.message).addClass('alert-info').show().delay(1500).fadeOut();
 		    			}

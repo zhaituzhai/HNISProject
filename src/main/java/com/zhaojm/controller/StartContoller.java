@@ -75,5 +75,9 @@ public class StartContoller {
     public String caseTable() {
         return "case_table";
     }
+    @RequestMapping("/doctor_index")
+    public String doctorIndex() {
+        return "doctor_index";
+    }
 
 }

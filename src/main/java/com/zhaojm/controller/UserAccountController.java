@@ -51,6 +51,12 @@ public class UserAccountController {
         return ResultDTO.valueOfSuccess(user);
     }
     
+    @RequestMapping(value="/sys/getLoginUser",method=RequestMethod.GET)
+    public ResultDTO<UseraccountDTO> getLoginUser(HttpSession session) {
+        UseraccountDTO loginUser = (UseraccountDTO) session.getAttribute("logUser");
+        return ResultDTO.valueOfSuccess(loginUser);
+    }
+    
     @RequestMapping(value="/sys/getUser/{userId}",method=RequestMethod.POST)
     public ResultDTO<UseraccountDTO> getUser(@PathVariable("userId") Integer userId){
         UseraccountDTO user = useraccountService.getUserFull(userId);

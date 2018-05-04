@@ -19,23 +19,23 @@
 			<!-- 全局头 -->
 			<div class="layui-header header header-demo">
 				<div class="layui-main">
-					<a class="logo" href="./index">
+					<a class="logo" href="./doctor_index">
 						<img src="images/mainlogo.jpg" style="width: 315px;"></img>
 					</a>
 					<ul class="layui-nav" lay-filter="">
 						<li class="layui-nav-item"><img src="images/headpic.jpg" class="layui-circle" style="border: 2px solid #A9B7B7;" width="35px" alt=""></li>
 						<li class="layui-nav-item">
-							<a id="loginName" href="javascript:;"></a>
+							<a href="javascript:;">doctor</a>
 							<dl class="layui-nav-child">
 								<!-- 二级菜单 -->
 								<dd>
 									<a href="#">个人信息</a>
 								</dd>
 								<dd>
-									<a href="/exit">切换帐号</a>
+									<a href="#">切换帐号</a>
 								</dd>
 								<dd>
-									<a href="/exit">退出</a>
+									<a href="./login.html">退出</a>
 								</dd>
 							</dl>
 						</li>
@@ -47,34 +47,48 @@
 			</div>
 			<!-- 全局头结尾 -->
 			<!-- 左侧导航栏 -->
-			<div class="layui-side layui-bg-black x-side">
-				<div class="layui-side-scroll">
-					<ul class="layui-nav layui-nav-tree site-demo-nav" lay-filter="side">
-						<!--用户管理-->
-						<li class="layui-nav-item">
-							<a class="javascript:;" href="javascript:;" _href="admin_user_management">
-								<i class="layui-icon" style="top: 3px;">&#xe613;</i>
-								<cite>用户管理</cite>
-							</a>
-						</li>
-						<!--药品管理-->
-						<li class="layui-nav-item">
-							<a class="javascript:;" href="javascript:;" _href="admin_medicine_management">
-								<i class="layui-icon" style="top: 3px;">&#xe612;</i>
-								<cite>药品管理</cite>
-							</a>
-						</li>
-						<!--疾病库管理-->
-                        <li class="layui-nav-item">
-                            <a class="javascript:;" href="javascript:;" _href="admin_diseases_management">
-                                <i class="layui-icon" style="top: 3px;">&#xe612;</i>
-                                <cite>疾病库管理</cite>
-                            </a>
-                        </li>
-					</ul>
-				</div>
+		<div class="layui-side layui-bg-black x-side">
+			<div class="layui-side-scroll">
+				<!--用户管理-->
+				<ul class="layui-nav layui-nav-tree site-demo-nav" lay-filter="side">
+					<li class="layui-nav-item"><a class="javascript:;"
+						href="javascript:;" _href="main.html"> <i class="layui-icon"
+							style="top: 3px;">&#xe62d;</i><cite>处方单</cite>
+					</a>
+						<dl class="layui-nav-child">
+							<dd class="">
+							<dd class="">
+								<a href="javascript:;" _href="case_table"> <cite>开处方</cite>
+								</a>
+							</dd>
+							</dd>
+							<dd class="">
+							<dd class="">
+								<a href="javascript:;" _href="case_table"> <cite>处方单管理</cite>
+								</a>
+							</dd>
+							</dd>
+							<dd class="">
+							<dd class="">
+								<a href="javascript:;" _href="case_table"> <cite>处方单统计</cite>
+								</a>
+							</dd>
+							</dd>
+						</dl></li>
+					<!--药品管理-->
+					<li class="layui-nav-item"><a class="javascript:;"
+						href="javascript:;" _href="admin_medicine_management"> <i
+							class="layui-icon" style="top: 3px;">&#xe612;</i> <cite>药品查看</cite>
+					</a></li>
+					<!--疾病库管理-->
+					<li class="layui-nav-item"><a class="javascript:;"
+						href="javascript:;" _href="admin_diseases_management"> <i
+							class="layui-icon" style="top: 3px;">&#xe612;</i> <cite>疾病库查看</cite>
+					</a></li>
+				</ul>
 			</div>
-			<!-- 左侧导航栏结束 -->
+		</div>
+		<!-- 左侧导航栏结束 -->
 			<!-- 右侧主显示 -->
 			<div class="layui-tab layui-tab-card site-demo-title x-main" lay-filter="x-tab" lay-allowclose="true">
                 <div class="x-slide_left"></div>
@@ -94,8 +108,8 @@
 			<!-- js 代码   -->
 			<script src="lib/layui/layui.js" charset="utf-8"></script>
         	<script src="js/x-admin.js"></script>
-			<script src="js/jquery-1.12.1.min.js" charset="utf-8"></script>
-			<script type="text/javascript" src="functionjs/login_user.js"></script>
+            <script src="js/jquery-1.12.1.min.js" charset="utf-8"></script>
+        	<script type="text/javascript" src="functionjs/login_user.js"></script>
 			<!-- js 结束 -->
 		</div>
 	</body>
