@@ -3,6 +3,8 @@ package com.zhaojm.bean;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class CaseInfoDTO {
 
     /*
@@ -13,16 +15,38 @@ public class CaseInfoDTO {
      * list };
      */
 
-    private Integer patientId;
+    private Integer caseId;
+    private String patientId;
     private String patientName;
     private String patientSex;
     private String patientAge;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date illnessTime;
     private String cureCycle;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date cureTime;
     private String doctorName;
     private String illnessDesc;
     private List<CaseMedicineDetailDTO> detailList;
     
+    public Date getCureTime() {
+        return cureTime;
+    }
+    public void setCureTime(Date cureTime) {
+        this.cureTime = cureTime;
+    }
+    public Integer getCaseId() {
+        return caseId;
+    }
+    public void setCaseId(Integer caseId) {
+        this.caseId = caseId;
+    }
+    public String getPatientId() {
+        return patientId;
+    }
+    public void setPatientId(String patientId) {
+        this.patientId = patientId;
+    }
     public String getIllnessDesc() {
         return illnessDesc;
     }

@@ -13,26 +13,29 @@
 	        });
 
 	        var iframeOpt = parent.iframeOpt;
-	    	if(iframeOpt.method == 'seem'){
-	    		$("#modify").css('display','none');
-	    		$("#seem").css('display','inline-block');
-	    	    var data = iframeOpt.data;
-	    	    console.log(data);
-	    	    debugger;
-	    	    $("#caseId").val(data.caseId);
-	    	    $("#patientName").val(data.patient.patientName);
-	    	    $("#patientSex").val(data.patient.patientSex);
-	    	    $("#patientAge").val(data.patient.patientAge);
-	    	    $("#illnessTime").val(data.illnessTime);
-	    	    $("#illnessDesc").val(data.illnessDesc);
-	    	    fillMedicine(data.medicines);
-	    	    $("#doctorName").val(data.doctorName);
-	    	    $("#cureTime").val(data.cureTime);
-	    	    
-	    	    form.render(); //更新全部
-	    	    form.render('select'); //刷新select选择框渲染
-	    	
-	    	}
+	        if(iframeOpt != null){
+		    	if(iframeOpt.method == 'seem'){
+		    		$("#modify").css('display','none');
+		    		$("#seem").css('display','inline-block');
+		    	    var data = iframeOpt.data;
+		    	    console.log(data);
+		    	    debugger;
+		    	    $("#caseId").val(data.caseId);
+		    	    $("#patientName").val(data.patientName);
+		    	    $("#patientSex").val(data.patientSex == "M" ? "男" : "女");
+		    	    $("#patientAge").val(data.patientAge);
+		    	    $("#illnessTime").val(data.illnessTime);
+		    	    $("#illnessDesc").val(data.illnessDesc);
+		    	    fillMedicine(data.detailList);
+		    	    $("#doctorName").val(data.doctorName);
+		    	    $("#cureCycle").val(data.cureCycle);
+		    	    $("#cureTime").val(data.cureTime);
+		    	    
+		    	    form.render(); //更新全部
+		    	    form.render('select'); //刷新select选择框渲染
+		    	
+		    	}
+	        }
 	    	
 	    	form.on('submit(cal)', function() {
     	         // 获得frame索引
@@ -42,7 +45,12 @@
     	    });
 	    		
 	    	    
-	        
+	    	form.on('submit(print)', function() {
+	   	         // 获得frame索引
+	   	         var index = parent.layer.getFrameIndex(window.name);
+	   	         //关闭当前frame
+	   	         parent.layer.close(index);
+	   	    });
 	        
 		   form.on('submit(add)', function() {
 			   var caseInfo = getInfo();
@@ -58,8 +66,9 @@
 	                      debugger;
 	                     if(result.success){
 	                         fillName(result.value);
+	                    	 layer.msg('存入成功！',{time:500});
 	                      }else{
-	                         alert(result.message);
+	                         layer.msg(result.message,{time:500});
 	                      }
 	                  }
 	            });
@@ -75,7 +84,7 @@
 	   });
 	   
 	   	function fillMedicine(medicine){
-			$("#medicineTable tbody").empty();
+			$("#medicineBody").empty();
 			$.each(medicine, function(index, item) {
 			//var checkBoxTd = $("<td><input type='checkbox' class='check_item' /></td>");
 			var diseaseIdTd = $("<td align='right'>药&nbsp;名</td>");
@@ -84,8 +93,9 @@
 			var diseaseNameTd = $("<td></td>").append(item.diseaseName);
 			var deseaseDescriptionTd = $("<td align='left' colspan='2'></td>").append(item.consumption);
 			$("<tr></tr>").append(diseaseIdTd).append(departmentTd).append(diseaseTypeTd).append(diseaseNameTd).append(deseaseDescriptionTd)
-			.appendTo("#disease_table tbody");
-		}
+			.appendTo("#medicineBody");
+			});
+	   	}
 		   
 	   function getMedicine(obj){
 		   var medicine = {
@@ -146,7 +156,7 @@
                      if(result.success){
                     	 fillName(result.value);
                       }else{
-                         alert(result.message);
+                         layer.msg(result.message,{time:500});
                       }
                   }
             });
@@ -154,6 +164,7 @@
 	   
 	   function fillName (patients){
 		   $("#nameshow").empty();
+		   patientPerson = new Array();
 		   var line = patients.length >=3 ? 3 : patients.length;
 		   for (var item = 0; item < line; item++) {
 			   var height = 0;
@@ -167,6 +178,7 @@
 	   }
 	   function fillBlack(item){
 		   $("#patientName").val(patientPerson[item].patientName);
+		   $("#patientId").val(patientPerson[item].patientId);
 		   $("#patientSex").val(patientPerson[item].patientSex=='M'?'男':'女');
 		   $("#patientAge").val(patientPerson[item].patientBorn);
 		   $("#nameshow").empty();
@@ -199,6 +211,7 @@
 			//病例信息
 			var caseInfo = {
 				"patientName" : "" + $("#patientName").val(),
+				"patientId" : "" + $("#patientId").val(),
 				"patientSex" : "" + $("#patientSex").val(),
 				"patientAge" : "" + $("#patientAge").val(),
 				"illnessTime" : "" + $("#illnessTime").val(),

@@ -1,9 +1,14 @@
 package com.zhaojm.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.pagehelper.PageInfo;
 import com.zhaojm.bean.CaseDTO;
 import com.zhaojm.bean.CaseInfoDTO;
+import com.zhaojm.bean.CaseMedicineDetailDTO;
 import com.zhaojm.bean.PageRequestDTO;
 import com.zhaojm.bean.PatientDTO;
 import com.zhaojm.bean.UseraccountDTO;
@@ -42,18 +48,25 @@ public class CaseController {
     @RequestMapping(value = "/case/saveCase",method=RequestMethod.POST)
     public ResultDTO<Integer> saveCase(@RequestBody CaseInfoDTO caseInfo,HttpSession session){
         
-        UseraccountDTO loginUser =(UseraccountDTO) session.getAttribute("loginUser");
+        UseraccountDTO loginUser =(UseraccountDTO) session.getAttribute("logUser");
         
-        PatientDTO patient = new PatientDTO();
-        patient.setPatientName(caseInfo.getPatientName());
-        if(useraccountService.queryPatientName(patient).size() < 1) {
+        //判断此人是否在数据库中（根据是否有patientID传值 如何存在就是数据库的老病人，如果没有就是新病人）
+        //useraccountService.queryPatientName(patient).size() < 1
+        PatientDTO patient = null;
+        if(null == caseInfo.getPatientId() || caseInfo.getPatientId().equals("")) {
+            patient = new PatientDTO();
+            patient.setPatientName(caseInfo.getPatientName());
             patient.setPatientSex(caseInfo.getPatientSex().equals("男") ? "M":"F");
             patient.setPatientBorn(caseInfo.getPatientAge());
             patientService.creatPatient(patient);
         }
         CaseDTO caseInset = new CaseDTO();
         caseInset.setIllnessDesc(caseInfo.getIllnessDesc());
-        caseInset.setPatientName(caseInfo.getPatientName());
+        if(null != patient) {
+            caseInset.setPatientName( patient.getPatientId()+"-"+caseInfo.getPatientName());
+        }else {
+            caseInset.setPatientName( caseInfo.getPatientId()+"-"+caseInfo.getPatientName());
+        }
         caseInset.setDoctorName(caseInfo.getDoctorName());
         caseInset.setIllnessTime(caseInfo.getIllnessTime());
         caseInset.setCureCycle(caseInfo.getCureCycle());
@@ -81,12 +94,45 @@ public class CaseController {
         return ResultDTO.valueOfSuccess(caseService.getCaseList(caseinfo));
     }
     
+    
+    public void printChar(HttpServletResponse response,HttpServletRequest request ) {
+        //response
+//        request.get
+        
+        
+    }
+    
+    
     //根据 casdid 查出改信息的所有内容
     @RequestMapping(value="/case/getCaseAll/{caseId}",method=RequestMethod.GET)
-    public ResultDTO<CaseDTO> getCaseAll(@PathVariable Integer caseId){
+    public ResultDTO<CaseInfoDTO> getCaseAll(@PathVariable("caseId") Integer caseId){
+        //case 
+        CaseDTO caseInfo = caseService.getCase(caseId);
+        //medicine
+        List<CaseMedicineDetailDTO> detailList = caseMedicineDetailService.getListByCaseId(caseId);
+        String patientName = caseInfo.getPatientName();
+        String[] idName = patientName.split("-");
+        //patient
+        PatientDTO patient = patientService.getPatientById(Integer.parseInt(idName[0]));
         
-        return ResultDTO.valueOfSuccess(caseService.getCase(caseId));
+        return ResultDTO.valueOfSuccess(fillCaseAll(caseInfo, patient, detailList));
         
+    }
+    
+    private CaseInfoDTO fillCaseAll(CaseDTO caseInfo,PatientDTO patient,List<CaseMedicineDetailDTO> detailList) {
+        CaseInfoDTO caseAll = new CaseInfoDTO();
+        caseAll.setCaseId(caseInfo.getCaseId());
+        caseAll.setCureCycle(caseInfo.getCureCycle());
+        caseAll.setCureTime(caseInfo.getCureTime());
+        caseAll.setDetailList(detailList);
+        caseAll.setDoctorName(caseInfo.getDoctorName());
+        caseAll.setIllnessDesc(caseInfo.getIllnessDesc());
+        caseAll.setIllnessTime(caseInfo.getIllnessTime());
+        caseAll.setPatientAge(patient.getPatientBorn());
+        caseAll.setPatientId(""+patient.getPatientId());
+        caseAll.setPatientName(patient.getPatientName());
+        caseAll.setPatientSex(patient.getPatientSex());
+        return caseAll;
     }
     
 

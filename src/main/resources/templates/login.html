@@ -30,65 +30,15 @@
 								<span class="us_uer"></span>
 								<input name="logpass" id="logpass" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;" value="" type="password" placeholder="请输入密码">
 							</div>
-							<div class="mb2"><a class="act-but submit" href="javascript:void(0);" onclick="login()" style="color: #FFFFFF">登录</a></div>
+							<div class="mb2"><a class="act-but submit" href="javascript:void(0);" onclick="login();" style="color: #FFFFFF">登录</a></div>
 						</form>
 						<div class="alert"></div>
 					</div>
 				</div>
 			</div>
 		</div><!-- /container -->
-		<script type="text/javascript" src="js/jquery-1.12.1.min.js"></script>
-		<script type="text/javascript">
-		    function login(){
-		    	var userName = $("#logname").val();
-		    	var password = $("#logpass").val();
-		    	//alert(userName + password);
-		    	var logUser = {
-		    			"userName":userName,
-		    			"password":password
-		    	}
-		    	//alert(logUser.username + logUser.password);
-		    	$.ajax({
-		    		async: false,
-		    		type: "post",
-		    		contentType: "application/json;charset=UTF-8",
-		    		url: "http://localhost:8080/sys/login",
-		    		data: JSON.stringify(logUser),
-		    		success:function(result){
-		    			//alert(result.success);
-		    			if(result.success){
-		    				debugger;
-		    				if(result.value.userType == "1"){
-			    				window.location.href = "http://localhost:8080/index";
-		    				}else if(result.value.userType == "2"){
-		    					window.location.href = "http://localhost:8080/doctor_index";
-		    				}
-		    			}else{
-		    				$('.alert').html(result.message).addClass('alert-info').show().delay(1500).fadeOut();
-		    			}
-		    		}
-		    		
-		    	});
-		    }
-		    
-		    var info_prompt = function(message, time)
-		    {
-		        prompt(message, 'alert-info', time);
-		    };
-		    
-		    var prompt = function (message, style, time)
-		    {
-		        style = (style === undefined) ? 'alert-success' : style;
-		        time = (time === undefined) ? 1200 : time;
-		        $('<div>')
-		            .appendTo('body')
-		            .addClass('alert ' + style)
-		            .html(message)
-		            .show()
-		            .delay(time)
-		            .fadeOut();
-		    };
-		</script>
+		<script src="js/jquery-1.12.1.min.js" charset="utf-8"></script>
+	    <script src="functionjs/login.js" type="text/javascript"></script>
 		<script src="login/js/TweenLite.min.js"></script>
 		<script src="login/js/EasePack.min.js"></script>
 		<script src="login/js/rAF.js"></script>

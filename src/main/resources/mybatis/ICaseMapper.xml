@@ -70,7 +70,7 @@
         cure_time,
       </if>
       <if test="enterPerson != null">
-        cure_cycle,
+        enter_person,
       </if>
       <if test="remark != null">
         remark,

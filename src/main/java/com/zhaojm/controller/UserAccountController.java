@@ -44,7 +44,7 @@ public class UserAccountController {
         UseraccountDTO user = useraccountService.verificationLoginUser(loginUser);
         if(null == user) {
             return ResultDTO.valueOfError("账户或密码错误！");
-        }else if(user.getAccountType() == 0) {
+        }else if(user.getAccountType() == 2) {
             return ResultDTO.valueOfError("账户已被禁用！");
         }else
         session.setAttribute("logUser", user);
@@ -127,5 +127,16 @@ public class UserAccountController {
         return ResultDTO.valueOfSuccess(list);
     }
     
+    //sys/inserDoctor
+    @RequestMapping(value="/sys/inserDoctor",method=RequestMethod.POST)
+    public ResultDTO<Integer> inserDoctor(@RequestBody DoctorDTO doctor,HttpSession session){
+        UseraccountDTO loginUser = (UseraccountDTO) session.getAttribute("logUser");
+        doctor.setUserId(loginUser.getUserId());
+        int isSave = doctorService.creatDoctor(doctor);
+        if(isSave > 0)
+            return ResultDTO.valueOfSuccess();
+        else
+            return ResultDTO.valueOfError("操作失败！");
+    }
     
 }

@@ -38,6 +38,7 @@
 		  <tr>
 		    <td width="90" align="right" valign="middle">姓名</td>
 		    <td width="90" align="right" valign="middle">
+		        <input id=patientId type="hidden" value="" />
 		    	<input id="patientName" required="required" onkeyup="getPatient()" lay-verify="requcheck" style="width: 90px;height: 25px;" />
 		    	<div id="nameshow" class="show">
                 </div>
@@ -89,7 +90,7 @@
 		    <td width="90px;">&nbsp;</td>
 		    <td width="90px;">&nbsp;</td>
 		  </tr>
-		  <tbody>
+		  <tbody id="medicineBody">
 		  <tr>
 		    <td align="right">药&nbsp;名</td>
 		    <td colspan="2" align="left">
@@ -136,7 +137,7 @@
 		</div>
 		<div id="seem" style="display: none;">
           <button class="layui-btn" style="width: 178px;height: 25px;" lay-filter="print" lay-submit="" >打印</button>
-          <button class="layui-btn" style="width: 178px;height: 25px;" lay-filter="print" lay-submit="" >取消</button>
+          <button class="layui-btn" style="width: 178px;height: 25px;" lay-filter="cal" lay-submit="" >取消</button>
         </div>
 	</div>
 	</form>

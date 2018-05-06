@@ -25,22 +25,19 @@
 					<ul class="layui-nav" lay-filter="">
 						<li class="layui-nav-item"><img src="images/headpic.jpg" class="layui-circle" style="border: 2px solid #A9B7B7;" width="35px" alt=""></li>
 						<li class="layui-nav-item">
-							<a href="javascript:;">doctor</a>
+							<a id="loginName" href="javascript:;"></a>
 							<dl class="layui-nav-child">
 								<!-- 二级菜单 -->
 								<dd>
-									<a href="#">个人信息</a>
+									<a href="./login">切换帐号</a>
 								</dd>
 								<dd>
-									<a href="#">切换帐号</a>
-								</dd>
-								<dd>
-									<a href="./login.html">退出</a>
+									<a href="./login">退出</a>
 								</dd>
 							</dl>
 						</li>
 						<li class="layui-nav-item x-index">
-							<a href="../网页/index.html">前台首页</a>
+							<a href="/mainindex">前台首页</a>
 						</li>
 					</ul>
 				</div>
@@ -107,6 +104,8 @@
 			
 			<!-- js 代码   -->
 			<script src="lib/layui/layui.js" charset="utf-8"></script>
+            <script src="js/x-layui.js" charset="utf-8"></script>
+			
         	<script src="js/x-admin.js"></script>
             <script src="js/jquery-1.12.1.min.js" charset="utf-8"></script>
         	<script type="text/javascript" src="functionjs/login_user.js"></script>

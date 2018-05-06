@@ -27,6 +27,11 @@ public class CaseMedicineDetailServiceImpl implements ICaseMedicineDetailService
         return detailNum;
     }
     
+    @Override
+    public List<CaseMedicineDetailDTO> getListByCaseId(Integer caseId){
+        return caseMedicineDetailMapper.queryDetailList(caseId);
+    }
+    
     
 
 }

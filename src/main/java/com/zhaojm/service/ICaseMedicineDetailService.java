@@ -7,5 +7,7 @@ import com.zhaojm.bean.CaseMedicineDetailDTO;
 public interface ICaseMedicineDetailService {
     
     int creatCaseDeatil(int caseId,List<CaseMedicineDetailDTO> detailList);
+    
+    List<CaseMedicineDetailDTO> getListByCaseId(Integer caseId);
 
 }

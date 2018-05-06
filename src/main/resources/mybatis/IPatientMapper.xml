@@ -33,7 +33,7 @@
     delete from patient
     where patient_id = #{patientId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zhaojm.bean.PatientDTO">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="patientId"  parameterType="com.zhaojm.bean.PatientDTO">
     insert into patient (patient_id, user_id, patient_name, 
       patient_sex, patient_born, patient_nation, 
       bloodtype, patient_occupation, patient_marriage, 
@@ -43,7 +43,7 @@
       #{bloodtype,jdbcType=VARCHAR}, #{patientOccupation,jdbcType=VARCHAR}, #{patientMarriage,jdbcType=VARCHAR}, 
       #{patientIcon,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.zhaojm.bean.PatientDTO">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="patientId" parameterType="com.zhaojm.bean.PatientDTO">
     insert into patient
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="patientId != null">

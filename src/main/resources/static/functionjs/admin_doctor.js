@@ -52,22 +52,24 @@ layui.use(['form', 'layer'], function() {
         });
         
         var iframeOpt = parent.iframeOpt;
-        if(iframeOpt.method == 'seem'){
-            var data = iframeOpt.data;
-            console.log(data);
-            debugger;
-            $("#doctorId").val(data.doctorId);
-            $("#userId").val(data.userId);
-            $("#doctorName").val(data.doctorName);
-            $("#doctorSex").val(data.doctorSex);
-            $("#departementId").val(data.departementId);
-            $("#doctorTitle").val(data.doctorTitle);
-            $("#doctorHospital").val(data.doctorHospital);
-            $("#doctorIcon").val(data.doctorIcon);
-            form.render(); //更新全部
-            form.render('select'); //刷新select选择框渲染
-
-            
+        if(iframeOpt != null){
+	        if(iframeOpt.method == 'seem'){
+	            var data = iframeOpt.data;
+	            console.log(data);
+	            debugger;
+	            $("#doctorId").val(data.doctorId);
+	            $("#userId").val(data.userId);
+	            $("#doctorName").val(data.doctorName);
+	            $("#doctorSex").val(data.doctorSex);
+	            $("#departementId").val(data.departementId);
+	            $("#doctorTitle").val(data.doctorTitle);
+	            $("#doctorHospital").val(data.doctorHospital);
+	            $("#doctorIcon").val(data.doctorIcon);
+	            form.render(); //更新全部
+	            form.render('select'); //刷新select选择框渲染
+	
+	            
+	        }
         }
 
 });

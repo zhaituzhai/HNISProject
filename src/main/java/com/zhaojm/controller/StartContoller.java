@@ -83,5 +83,8 @@ public class StartContoller {
     public String caseManagment() {
         return "doctor_case_management";
     }
-
+    @RequestMapping("/doctor_add")
+    public String doctorAdd() {
+        return "doctor_add";
+    }
 }

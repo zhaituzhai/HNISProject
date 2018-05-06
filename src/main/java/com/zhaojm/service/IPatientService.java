@@ -14,5 +14,6 @@ public interface IPatientService {
     
     int delete (Integer patientId);
 
+    PatientDTO getPatientById(Integer patientId);
 
 }
