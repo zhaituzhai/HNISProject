@@ -29,7 +29,7 @@
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
 		    <td class="word-size" align="right" valign="middle">流水号：</td>
-		    <td><input style="width: 90px;height: 25px;" id="caseId" /></td>
+		    <td><input style="width: 90px;height: 25px;" readonly="readonly" placeholder="不用填写" id="caseId" /></td>
 		  </tr>
 		  </table>
 		 </td></tr>
@@ -39,7 +39,7 @@
 		    <td width="90" align="right" valign="middle">姓名</td>
 		    <td width="90" align="right" valign="middle">
 		        <input id=patientId type="hidden" value="" />
-		    	<input id="patientName" required="required" onkeyup="getPatient()" lay-verify="requcheck" style="width: 90px;height: 25px;" />
+		    	<input id="patientName" required="required" onkeyup="getPatient()" onblur="cleanName()" lay-verify="requcheck" style="width: 90px;height: 25px;" />
 		    	<div id="nameshow" class="show">
                 </div>
 		    </td>

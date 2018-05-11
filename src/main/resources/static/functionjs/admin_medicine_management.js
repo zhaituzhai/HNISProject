@@ -196,6 +196,7 @@ layui.use(['laydate','element', 'upload' ,'laypage','layer','form'], function(){
   upload = layui.upload, 
   form = layui.form();
 
+    //批量导入药品信息导入
     upload({
 	    url : 'http://localhost:8080/medi/importFile',
 	    ext : 'xls|xlsx',

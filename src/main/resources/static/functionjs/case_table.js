@@ -122,7 +122,7 @@
 		   medicineNameList = medicines;
 		   var bort = $(obj).next();
 		   $(bort).empty();
-           var line = medicines.length >=3 ? 3 : medicines.length;
+           var line = medicines.length >=5 ? 5 : medicines.length;
            for (var item = 0; item < line; item++) {
                var height = 0;
                $("<button class='show-medi-size medishow-button' href='javascript:void(0)' onclick='fillMediBlack(this,"+item+")'></button>")
@@ -162,10 +162,15 @@
             });
 	   }
 	   
+	   function cleanName(){
+		   $("#nameshow").empty();
+		   $("#nameshow").css("height", 0);
+	   }
+	   
 	   function fillName (patients){
 		   $("#nameshow").empty();
 		   patientPerson = new Array();
-		   var line = patients.length >=3 ? 3 : patients.length;
+		   var line = patients.length >=5 ? 5 : patients.length;
 		   for (var item = 0; item < line; item++) {
 			   var height = 0;
 			   $("<button class='show-word-size show-button' href='javascript:void(0)' onclick='fillBlack("+item+")'></button>")
