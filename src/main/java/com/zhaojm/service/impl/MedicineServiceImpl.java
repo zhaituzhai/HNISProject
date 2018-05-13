@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PushbackInputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,7 +117,7 @@ public class MedicineServiceImpl implements IMedicineService {
                 medicine.setUserAttention(String.valueOf(hss.getCell(4)));
                 medicine.setSaveWay(String.valueOf(hss.getCell(5)));
                 medicine.setSpecifications(String.valueOf(hss.getCell(6)));
-                medicine.setPrice(Double.parseDouble(String.valueOf(hss.getCell(7))));
+                medicine.setPrice(new BigDecimal(String.valueOf(hss.getCell(7))));
                 list.add(medicine);
             }else{
                 break;

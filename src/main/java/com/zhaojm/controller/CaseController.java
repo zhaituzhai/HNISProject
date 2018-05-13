@@ -70,6 +70,7 @@ public class CaseController {
         caseInset.setDoctorName(caseInfo.getDoctorName());
         caseInset.setIllnessTime(caseInfo.getIllnessTime());
         caseInset.setCureCycle(caseInfo.getCureCycle());
+        caseInset.setCureTime(caseInfo.getCureTime());
         //加入session 中的登陆用户的
         caseInset.setEnterPerson(String.valueOf(loginUser.getDoctor().getDoctorId()));
         caseService.creatCase(caseInset);

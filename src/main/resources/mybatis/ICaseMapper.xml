@@ -13,10 +13,11 @@
     <result column="enter_time" jdbcType="TIMESTAMP" property="enterTime" />
     <result column="enter_person" jdbcType="VARCHAR" property="enterPerson" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="medicine_total_price" jdbcType="DECIMAL" property="medicineTotalPrice" />
   </resultMap>
   <sql id="Base_Column_List">
     case_id, patient_name, doctor_name, illness_desc, illness_time, illness_grade, cure_time, 
-    cure_cycle, enter_time, enter_person, remark
+    cure_cycle, enter_time, enter_person, remark, medicine_total_price
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -31,12 +32,13 @@
   <insert id="insert" useGeneratedKeys="true" keyProperty="case_id" parameterType="com.zhaojm.bean.CaseDTO">
     insert into `case` (case_id, patient_name, doctor_name, 
       illness_desc, illness_time, illness_grade, 
-      cure_time, cure_cycle, enter_time, enter_person, remark
+      cure_time, cure_cycle, enter_time, enter_person, remark ,medicine_total_price
       )
     values (#{caseId,jdbcType=INTEGER}, #{patientName,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, 
       #{illnessDesc,jdbcType=VARCHAR}, #{illnessTime,jdbcType=TIMESTAMP}, #{illnessGrade,jdbcType=VARCHAR}, 
       #{cureTime,jdbcType=TIMESTAMP}, #{cureCycle,jdbcType=VARCHAR}, 
-      #{enterTime,jdbcType=TIMESTAMP}, #{enterPerson,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      #{enterTime,jdbcType=TIMESTAMP}, #{enterPerson,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+      #{medicineTotalPrice,jdbcType=DECIMAL}
       )
   </insert>
   <insert id="insertSelective" useGeneratedKeys="true" keyProperty="caseId" parameterType="com.zhaojm.bean.CaseDTO">
@@ -75,6 +77,10 @@
       <if test="remark != null">
         remark,
       </if>
+      <if test="medicineTotalPrice != null">
+        medicine_total_price,
+      </if>
+      
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="caseId != null">
@@ -109,6 +115,9 @@
       </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="medicineTotalPrice != null">
+        #{medicineTotalPrice,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -145,6 +154,9 @@
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="medicineTotalPrice != null">
+        #{medicineTotalPrice,jdbcType=DECIMAL},
+      </if>
     </set>
     where case_id = #{caseId,jdbcType=INTEGER}
   </update>
@@ -159,7 +171,8 @@
       cure_cycle = #{cureCycle,jdbcType=VARCHAR},
       enter_time = #{enterTime,jdbcType=TIMESTAMP},
       enter_person = #{enter_person,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR}
+      remark = #{remark,jdbcType=VARCHAR},
+      medicine_total_price = #{medicineTotalPrice,jdbcType=DECIMAL}
     where case_id = #{caseId,jdbcType=INTEGER}
   </update>
   

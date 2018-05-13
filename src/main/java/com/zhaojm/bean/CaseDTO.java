@@ -1,6 +1,7 @@
 package com.zhaojm.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -48,9 +49,20 @@ public class CaseDTO implements Serializable {
     @ApiModelProperty("备注")
     private String remark;
     
+    @ApiModelProperty("处方单药品的总钱数")
+    private BigDecimal medicineTotalPrice;
+    
     private List<CaseMedicineDetailDTO> caseDetail;
 
     private static final long serialVersionUID = 1L;
+
+    public BigDecimal getMedicineTotalPrice() {
+        return medicineTotalPrice;
+    }
+
+    public void setMedicineTotalPrice(BigDecimal medicineTotalPrice) {
+        this.medicineTotalPrice = medicineTotalPrice;
+    }
 
     public Date getEnterTime() {
         return enterTime;

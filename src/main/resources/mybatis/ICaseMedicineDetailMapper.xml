@@ -6,8 +6,8 @@
     <result column="case_id" jdbcType="INTEGER" property="caseId" />
     <result column="medicine_name" jdbcType="VARCHAR" property="medicineName" />
     <result column="consumption" jdbcType="VARCHAR" property="consumption" />
-    <result column="price" jdbcType="DOUBLE" property="price" />
-    <result column="total_price" jdbcType="DOUBLE" property="totalPrice" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
   </resultMap>
   <sql id="Base_Column_List">
     case_medicine_id, case_id, medicine_name, consumption, price, total_price
@@ -27,7 +27,7 @@
       consumption, price, total_price
       )
     values (#{caseMedicineId,jdbcType=INTEGER}, #{caseId,jdbcType=INTEGER}, #{medicineName,jdbcType=VARCHAR}, 
-      #{consumption,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{totalPrice,jdbcType=DOUBLE}
+      #{consumption,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{totalPrice,jdbcType=DECIMAL}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zhaojm.bean.CaseMedicineDetailDTO">
@@ -66,10 +66,10 @@
         #{consumption,jdbcType=VARCHAR},
       </if>
       <if test="price != null">
-        #{price,jdbcType=DOUBLE},
+        #{price,jdbcType=DECIMAL},
       </if>
       <if test="totalPrice != null">
-        #{totalPrice,jdbcType=DOUBLE},
+        #{totalPrice,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -86,10 +86,10 @@
         consumption = #{consumption,jdbcType=VARCHAR},
       </if>
       <if test="price != null">
-        price = #{price,jdbcType=DOUBLE},
+        price = #{price,jdbcType=DECIMAL},
       </if>
       <if test="totalPrice != null">
-        total_price = #{totalPrice,jdbcType=DOUBLE},
+        total_price = #{totalPrice,jdbcType=DECIMAL},
       </if>
     </set>
     where case_medicine_id = #{caseMedicineId,jdbcType=INTEGER}
@@ -99,8 +99,8 @@
     set case_id = #{caseId,jdbcType=INTEGER},
       medicine_name = #{medicineName,jdbcType=VARCHAR},
       consumption = #{consumption,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DOUBLE},
-      total_price = #{totalPrice,jdbcType=DOUBLE}
+      price = #{price,jdbcType=DECIMAL},
+      total_price = #{totalPrice,jdbcType=DECIMAL}
     where case_medicine_id = #{caseMedicineId,jdbcType=INTEGER}
   </update>
   

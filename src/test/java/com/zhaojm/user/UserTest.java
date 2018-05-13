@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.Test;
@@ -105,7 +106,7 @@ public class UserTest {
         medicine.setUserAttention("过敏者不可复用");
         medicine.setSaveWay("干燥处");
         medicine.setSpecifications("20片一版，一盒两版");
-        medicine.setPrice(200.00);
+        medicine.setPrice(new BigDecimal(200.00));
         
         int isSave = medicineService.addMedicine(medicine);
         assertTrue(isSave>0);

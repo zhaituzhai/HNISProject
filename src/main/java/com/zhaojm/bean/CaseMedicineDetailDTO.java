@@ -1,6 +1,7 @@
 package com.zhaojm.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -21,10 +22,10 @@ public class CaseMedicineDetailDTO implements Serializable {
     private String consumption;
 
     @ApiModelProperty("单价")
-    private Double price;
+    private BigDecimal price;
 
     @ApiModelProperty("总价")
-    private Double totalPrice;
+    private BigDecimal totalPrice;
 
     private static final long serialVersionUID = 1L;
 
@@ -60,19 +61,19 @@ public class CaseMedicineDetailDTO implements Serializable {
         this.consumption = consumption;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public Double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Double totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 

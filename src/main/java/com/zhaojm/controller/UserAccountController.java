@@ -123,7 +123,6 @@ public class UserAccountController {
     @RequestMapping(value="/sys/getPatientName",method=RequestMethod.POST)
     public ResultDTO<List<PatientDTO>> getPatientName(@RequestBody PatientDTO patient){
         List<PatientDTO> list = useraccountService.queryPatientName(patient);
-        
         return ResultDTO.valueOfSuccess(list);
     }
     

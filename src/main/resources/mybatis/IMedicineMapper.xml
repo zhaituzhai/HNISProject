@@ -10,7 +10,7 @@
     <result column="user_attention" jdbcType="VARCHAR" property="userAttention" />
     <result column="save_way" jdbcType="VARCHAR" property="saveWay" />
     <result column="specifications" jdbcType="VARCHAR" property="specifications" />
-    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
   </resultMap>
   <sql id="Base_Column_List">
     medicine_id, medicine_name, main_components, user_range, user_way, user_attention, 
@@ -33,7 +33,7 @@
       )
     values (#{medicineId,jdbcType=INTEGER}, #{medicineName,jdbcType=VARCHAR}, #{mainComponents,jdbcType=VARCHAR}, 
       #{userRange,jdbcType=VARCHAR}, #{userWay,jdbcType=VARCHAR}, #{userAttention,jdbcType=VARCHAR}, 
-      #{saveWay,jdbcType=VARCHAR}, #{specifications,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}
+      #{saveWay,jdbcType=VARCHAR}, #{specifications,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zhaojm.bean.MedicineDTO">
@@ -87,7 +87,7 @@
         #{specifications,jdbcType=VARCHAR},
       </if>
       <if test="price != null">
-        #{price,jdbcType=DOUBLE},
+        #{price,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -116,7 +116,7 @@
         specifications = #{specifications,jdbcType=VARCHAR},
       </if>
       <if test="price != null">
-        price = #{price,jdbcType=DOUBLE},
+        price = #{price,jdbcType=DECIMAL},
       </if>
     </set>
     where medicine_id = #{medicineId,jdbcType=INTEGER}
@@ -130,7 +130,7 @@
       user_attention = #{userAttention,jdbcType=VARCHAR},
       save_way = #{saveWay,jdbcType=VARCHAR},
       specifications = #{specifications,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DOUBLE}
+      price = #{price,jdbcType=DECIMAL}
     where medicine_id = #{medicineId,jdbcType=INTEGER}
   </update>
   
