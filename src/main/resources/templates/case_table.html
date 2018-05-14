@@ -9,13 +9,20 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="format-detection" content="telephone=no">
-		<link href="css/case_table.css" rel="stylesheet" />
+        <link href="css/case_table.css" rel="stylesheet" />
 	</head>
 	<body>
+		<div class="x-nav" style="top: 8px;">
+		<span class="layui-breadcrumb"> <a><cite>首页</cite></a> <a><cite>开处方</cite></a>
+		</span> <a class="layui-btn layui-btn-small"
+			style="line-height: 1.6em; margin-top: 3px; float: right"
+			href="javascript:location.replace(location.href);" title="刷新"><i
+			class="layui-icon" style="line-height: 30px">ဂ</i></a>
+	</div>
 	<div class="x-body">
-	<form class="layui-form" action="">
+	<form action="" onsubmit="saveCase()">
 	<div align="center">
-		<table align="center" class="my-table1" border="1">
+		<table align="center" class="my-table1" border="1" >
 			<tr><td class="my-table-td1">
 		<table cellspacing="8px;" class="word-size" width="581" align="center">
 		  <tr>
@@ -39,17 +46,17 @@
 		    <td width="90" align="right" valign="middle">姓名</td>
 		    <td width="90" align="right" valign="middle">
 		        <input id=patientId type="hidden" value="" />
-		    	<input id="patientName" required="required" onkeyup="getPatient()" onblur="cleanName()" lay-verify="requcheck" style="width: 90px;height: 25px;" />
+		    	<input id="patientName" required="required" onkeyup="getPatient()" lay-verify="requcheck" style="width: 90px;height: 25px;" />
 		    	<div id="nameshow" class="show">
                 </div>
 		    </td>
 		    <td width="90" align="right" valign="middle">性别</td>
 		    <td width="90" align="right" valign="middle">
-		          <input id="patientSex" required="required" lay-verify="requcheck" style="width: 90px;height: 25px;" />
-<!-- 		    	<select id="patientSex" style="width: 90px;height: 25px;">
-	                 <option value="M" selected="selected">男</option>
-	                 <option value="F">女</option>
-	             </select> -->
+		          <!-- <input id="patientSex" required="required" lay-verify="requcheck" style="width: 90px;height: 25px;" /> -->
+	    		 <select id="patientSex" style="width: 90px;height: 30px;">
+	                 <option value="男" selected="selected">男</option>
+	                 <option value="女">女</option>
+	             </select>
 		    </td>
 		    <td width="90" align="right" valign="middle">年龄</td>
 		    <td width="90" align="right" valign="middle">
@@ -100,8 +107,16 @@
 		    </td>
 		    <td align="right">用&nbsp;量</td>
 		    <td align="left" colspan="2">
-		    	<input name="consumption" required="required" lay-verify="requcheck" style="width: 90px;height: 25px;" />
-		    	<input type="button" style="width: 30px;height: 25px;" onclick="operateMedicine(this)" id="addMedicine" value="+" />
+		    	<input name="price" type="hidden" />
+		    	<input name="consumption" required="required" onblur="countPrice(this);" style="width: 20px;height: 25px;" />
+		    	<select name="mediunit" style="width: 45px;height: 30px;">
+	                 <option value="盒" selected="selected">盒</option>
+	                 <option value="袋">袋</option>
+	                 <option value="瓶">瓶</option>
+	                 <option value="其他">其他</option>
+	            </select>
+		    	<input type="button" style="width: 25px;height: 25px;" onclick="operateMedicine(this)" id="addMedicine" value="+" />
+		    	<input name="total" onblur="countPrice(this);" style="width: 50px;height: 25px;" />
 		    </td>
 		  </tr>
 		  </tbody>
@@ -133,7 +148,8 @@
 		</table>
 		<br />
 		<div id="modify">
-		  <button class="layui-btn" style="width: 178px;height: 25px;" lay-filter="add" lay-submit="" >保存</button>
+		  <input type="submit" style="width: 178px;height: 31px;" value="保存" />
+		  <!-- <button class="layui-btn" style="width: 178px;height: 25px;" lay-filter="add" lay-submit="" >保存</button> -->
 		</div>
 		<div id="seem" style="display: none;">
           <button class="layui-btn" style="width: 178px;height: 25px;" lay-filter="print" lay-submit="" >打印</button>

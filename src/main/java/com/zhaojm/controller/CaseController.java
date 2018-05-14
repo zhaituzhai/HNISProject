@@ -1,5 +1,6 @@
 package com.zhaojm.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +49,11 @@ public class CaseController {
     @RequestMapping(value = "/case/saveCase",method=RequestMethod.POST)
     public ResultDTO<Integer> saveCase(@RequestBody CaseInfoDTO caseInfo,HttpSession session){
         
+        BigDecimal medicinePrice = new BigDecimal(0);
+        for (CaseMedicineDetailDTO detail : caseInfo.getDetailList()) {
+            medicinePrice = medicinePrice.add(detail.getTotalPrice());
+        }
+        
         UseraccountDTO loginUser =(UseraccountDTO) session.getAttribute("logUser");
         
         //判断此人是否在数据库中（根据是否有patientID传值 如何存在就是数据库的老病人，如果没有就是新病人）
@@ -71,6 +77,7 @@ public class CaseController {
         caseInset.setIllnessTime(caseInfo.getIllnessTime());
         caseInset.setCureCycle(caseInfo.getCureCycle());
         caseInset.setCureTime(caseInfo.getCureTime());
+        caseInset.setMedicineTotalPrice(medicinePrice);
         //加入session 中的登陆用户的
         caseInset.setEnterPerson(String.valueOf(loginUser.getDoctor().getDoctorId()));
         caseService.creatCase(caseInset);

@@ -8,8 +8,8 @@
 	                    return '必填项必填啊！';
 	                }
 	            },
-	            price: [/^[0-9]+(.[0-9]{2})?$/, '只能是小数点后两位'],
-	            
+	            price: [/^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?$/, '最多只能是小数点后两位'],
+	            num: [/[^\d]/g, '只能是数字'],
 	        });
 
 	        var iframeOpt = parent.iframeOpt;
@@ -53,11 +53,12 @@
 	   	    });
 	        
 		   form.on('submit(add)', function() {
-			   var caseInfo = getInfo();
+			   /*var caseInfo = getInfo();
 	           console.log(caseInfo);
 	           debugger;
 	           $.ajax({
 	                  type: "post",
+	                  async: false,
 	                  contentType: "application/json;charset=UTF-8",
 	                  url: "http://localhost:8080/case/saveCase",
 	                  data: JSON.stringify(caseInfo),
@@ -65,19 +66,19 @@
 	                      console.log(result);
 	                      debugger;
 	                     if(result.success){
-	                         fillName(result.value);
-	                    	 layer.msg('存入成功！',{time:500});
+	                         alert("存入成功！");
 	                      }else{
-	                         layer.msg(result.message,{time:500});
+	                    	 alert("存入失败！");
 	                      }
 	                  }
-	            });
+	            });*/
 			   
 		   });
 	   });
 	   var medNum = 1;
 	   var patientPerson = new Array();
 	   var medicineNameList = new Array();
+	   var priceList = new Array();
 	   //初始化加载
 	   $(function(){
 
@@ -126,7 +127,7 @@
            for (var item = 0; item < line; item++) {
                var height = 0;
                $("<button class='show-medi-size medishow-button' href='javascript:void(0)' onclick='fillMediBlack(this,"+item+")'></button>")
-                     .append(medicines[item].medicineId +"&nbspൠ&nbsp;"+medicines[item].medicineName).appendTo(bort);
+                     .append(medicines[item].medicineId +"ൠ"+medicines[item].medicineName).appendTo(bort);
                height = height + 25;
                medicineNameList.push(medicines[item]);
                $(obj).css("height", height);
@@ -137,6 +138,9 @@
        function fillMediBlack(obj,item){
     	   var bort = $(obj).parent().prev();
     	   $(bort).val(medicineNameList[item].medicineName);
+    	   var price = $(obj).parent().parent().next().next().children(":first");
+    	   $(price).val(medicineNameList[item].price);
+    	   debugger;
            $(obj).parent().empty();
            $(obj).parent().css("height", 0);
        }
@@ -156,7 +160,7 @@
                      if(result.success){
                     	 fillName(result.value);
                       }else{
-                         layer.msg(result.message,{time:500});
+                         //layer.msg(result.message,{time:500});
                       }
                   }
             });
@@ -168,18 +172,18 @@
 	   }
 	   
 	   function fillName (patients){
+		   var height = 0;
 		   $("#nameshow").empty();
 		   patientPerson = new Array();
 		   var line = patients.length >=5 ? 5 : patients.length;
 		   for (var item = 0; item < line; item++) {
-			   var height = 0;
+			   
 			   $("<button class='show-word-size show-button' href='javascript:void(0)' onclick='fillBlack("+item+")'></button>")
 			         .append(patients[item].patientId +"ൠ"+patients[item].patientName).appendTo("#nameshow");
 			   height = height + 25;
 			   patientPerson.push(patients[item]);
-			   $("#nameshow").css("height", height);
            }
-		   
+		   $("#nameshow").css("height", height);
 	   }
 	   function fillBlack(item){
 		   $("#patientName").val(patientPerson[item].patientName);
@@ -207,10 +211,15 @@
 			var list = new Array();
 			var medicineNames = $("[name='medicineName']");
 			var consumptions = $("[name='consumption']");
+			var mediunits = $("[name='mediunit']");
+			var prices = $("[name='price']");
+			var totalPrices = $("[name='total']");
 			for (var i = 0; i < medicineNames.length; i++) {
 				var medicine = {};
 				medicine.medicineName = $(medicineNames[i]).val();
-				medicine.consumption = $(consumptions[i]).val();
+				medicine.consumption = ""+$(consumptions[i]).val()+$(mediunits[i]).val();
+				medicine.price = $(prices[i]).val();
+				medicine.totalPrice = $(totalPrices[i]).val();
 				list.push(medicine);
 			}
 			//病例信息
@@ -222,18 +231,46 @@
 				"illnessTime" : "" + $("#illnessTime").val(),
 				"cureCycle" : "" + $("#cureCycle").val(),
 				"doctorName" : "" + $("#doctorName").val(),
+				"cureTime" : "" + $("#cureTime").val(),
 				"illnessDesc": "" + $("#illnessDesc").val(),
 				"detailList" : list
 			};
 
 			return caseInfo;
 		}
+		
+		function countPrice(obj){
+			
+			var num = $(obj).val();
+			var price = $(obj).prev().val();
+			var priBou = $(obj).next().next().next();
+			debugger;
+			$(priBou).val(num*price); 
+		}
 
 		//保存信息
-		$("#save").click(function() {
-			//1、读取信息
+		function saveCase() {
+			//1、验证信息
+			
+			//2、读取信息
 			var caseInfo = getInfo();
-			console.log(caseInfo);
-			debugger;
+           console.log(caseInfo);
+           debugger;
+           $.ajax({
+                  type: "post",
+                  async: false,
+                  contentType: "application/json;charset=UTF-8",
+                  url: "http://localhost:8080/case/saveCase",
+                  data: JSON.stringify(caseInfo),
+                  success:function(result){
+                      console.log(result);
+                      debugger;
+                     if(result.success){
+                         alert("存入成功！");
+                      }else{
+                    	 alert("存入失败！");
+                      }
+                  }
+            });
 
-		});
+		}

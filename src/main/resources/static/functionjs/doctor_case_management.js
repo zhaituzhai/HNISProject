@@ -71,7 +71,7 @@ var totalRecord,currentPage,queryUser;
 	        var userWayTd = $("<td></td>").append(item.illnessTime);
 	        var userAttentionTd = $("<td></td>").append(item.cureTime);
 	        var saveWayTd = $("<td></td>").append(item.cureCycle);
-	        var specificationsTd = $("<td></td>").append(item.remark);
+	        var specificationsTd = $("<td></td>").append(item.medicineTotalPrice);
 	        var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn").append(
 	                $("<span></span>").addClass("glyphicon glyphicon-pencil")).append("查看详情");
 	        var delBtn = $("<a></a>").addClass("btn btn-danger btn-sm delete_btn").append(
