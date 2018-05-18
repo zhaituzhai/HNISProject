@@ -149,8 +149,13 @@
     from medicine
     where medicine_id is not null
 	  <if test="medicineName != null and medicineName != ''">
-	    and medicine_name LIKE 
+	    and ( medicine_name LIKE 
 	        concat(concat('%',#{medicineName,jdbcType=VARCHAR}),'%')
+	         OR
+	          medicine_mark LIKE 
+            concat(concat('%',#{medicineName,jdbcType=VARCHAR}),'%')
+            )
+	         
 	  </if>
 	  <if test="mainComponents != null and mainComponents != ''">
         and main_components LIKE 

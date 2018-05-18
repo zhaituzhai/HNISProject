@@ -119,7 +119,7 @@ function creat_medicine_table(result){
 		var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn").append(
 				$("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
 		var delBtn = $("<a></a>").addClass("btn btn-danger btn-sm delete_btn").append(
-				$("<span></span>").addClass("glyphicon glyphicon-trash")).append("开启");
+				$("<span></span>").addClass("glyphicon glyphicon-trash")).append("删除");
 		editBtn.attr("modify-id",item.medicineId);
 		delBtn.attr("delete-id",item.medicineId);
 		var btnTd = $("<td></td>").append(editBtn).append(" ").append(delBtn);
