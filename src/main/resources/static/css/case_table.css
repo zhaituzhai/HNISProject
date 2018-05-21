@@ -37,7 +37,7 @@
     background-color: #f9f8f1;
 }
 .show-word-size {
-    font-size: 17px;
+    font-size: 14px;
     text-align: center;
 }
 .show-button {
@@ -47,9 +47,28 @@
 	border: 0; 
 }
 
+.diseaseShow {
+	position: absolute;
+    width: 150px;
+    height: 0px;
+    border: 1px solid #bfd1eb;
+    border-top-width: 0px;
+    z-index: 999;
+    background-color: #f9f8f1;
+}
+
+.diseaseShow button {
+    width: 150px;
+    height: 25px;
+    background-color: #ffffff;
+    border: 0; 
+}
+
+
 .medishow {
     position: absolute;
-    width: 180px;
+    margin-left: 41px;
+    width: 120px;
     height: 0px;
     border: 1px solid #bfd1eb;
     border-top-width: 0px;
@@ -57,11 +76,11 @@
     background-color: #f9f8f1;
 }
 .show-medi-size {
-    font-size: 17px;
+    font-size: 14px;
     text-align: center;
 }
-.medishow-button {
-    width: 180px;
+.medishow button {
+    width: 120px;
     height: 25px;
     background-color: #ffffff;
     border: 0; 

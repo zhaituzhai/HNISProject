@@ -8,9 +8,10 @@
     <result column="consumption" jdbcType="VARCHAR" property="consumption" />
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
   <sql id="Base_Column_List">
-    case_medicine_id, case_id, medicine_name, consumption, price, total_price
+    case_medicine_id, case_id, medicine_name, consumption, price, total_price, remark
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,10 +25,10 @@
   </delete>
   <insert id="insert" parameterType="com.zhaojm.bean.CaseMedicineDetailDTO">
     insert into case_medicine_detail (case_medicine_id, case_id, medicine_name, 
-      consumption, price, total_price
+      consumption, price, total_price, remark
       )
     values (#{caseMedicineId,jdbcType=INTEGER}, #{caseId,jdbcType=INTEGER}, #{medicineName,jdbcType=VARCHAR}, 
-      #{consumption,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{totalPrice,jdbcType=DECIMAL}
+      #{consumption,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{totalPrice,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zhaojm.bean.CaseMedicineDetailDTO">
@@ -51,6 +52,9 @@
       <if test="totalPrice != null">
         total_price,
       </if>
+      <if test="remark != null">
+        remark,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="caseMedicineId != null">
@@ -70,6 +74,9 @@
       </if>
       <if test="totalPrice != null">
         #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -91,6 +98,9 @@
       <if test="totalPrice != null">
         total_price = #{totalPrice,jdbcType=DECIMAL},
       </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
     </set>
     where case_medicine_id = #{caseMedicineId,jdbcType=INTEGER}
   </update>
@@ -100,7 +110,8 @@
       medicine_name = #{medicineName,jdbcType=VARCHAR},
       consumption = #{consumption,jdbcType=VARCHAR},
       price = #{price,jdbcType=DECIMAL},
-      total_price = #{totalPrice,jdbcType=DECIMAL}
+      total_price = #{totalPrice,jdbcType=DECIMAL},
+      remark = #{remark,jdbcType=VARCHAR}
     where case_medicine_id = #{caseMedicineId,jdbcType=INTEGER}
   </update>
   

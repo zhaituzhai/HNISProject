@@ -78,6 +78,7 @@ public class CaseController {
         caseInset.setCureCycle(caseInfo.getCureCycle());
         caseInset.setCureTime(caseInfo.getCureTime());
         caseInset.setMedicineTotalPrice(medicinePrice);
+        caseInset.setIllnessGrade(caseInfo.getIllnessGrade());
         //加入session 中的登陆用户的
         caseInset.setEnterPerson(String.valueOf(loginUser.getDoctor().getDoctorId()));
         caseService.creatCase(caseInset);
@@ -109,6 +110,13 @@ public class CaseController {
         
         
     }
+    ///case/getCaseName
+    @RequestMapping(value="/case/getCaseName",method=RequestMethod.POST)
+    public ResultDTO<PageInfo<CaseDTO>> getCaseListByIllName(@RequestBody PageRequestDTO<CaseDTO> caseinfo){
+        
+        return ResultDTO.valueOfSuccess(caseService.getCaseList(caseinfo));
+        
+    }
     
     
     //根据 casdid 查出改信息的所有内容
@@ -135,6 +143,7 @@ public class CaseController {
         caseAll.setDetailList(detailList);
         caseAll.setDoctorName(caseInfo.getDoctorName());
         caseAll.setIllnessDesc(caseInfo.getIllnessDesc());
+        caseAll.setIllnessGrade(caseInfo.getIllnessGrade());
         caseAll.setIllnessTime(caseInfo.getIllnessTime());
         caseAll.setPatientAge(patient.getPatientBorn());
         caseAll.setPatientId(""+patient.getPatientId());

@@ -26,8 +26,19 @@ public class CaseMedicineDetailDTO implements Serializable {
 
     @ApiModelProperty("总价")
     private BigDecimal totalPrice;
+    
+    @ApiModelProperty("备注")
+    private String remark;
 
     private static final long serialVersionUID = 1L;
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public Integer getCaseMedicineId() {
         return caseMedicineId;

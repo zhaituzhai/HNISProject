@@ -26,6 +26,7 @@
 		    	    $("#patientAge").val(data.patientAge);
 		    	    $("#illnessTime").val(data.illnessTime);
 		    	    $("#illnessDesc").val(data.illnessDesc);
+		    	    $("#diseaseName").val(data.illnessGrade);
 		    	    fillMedicine(data.detailList);
 		    	    $("#doctorName").val(data.doctorName);
 		    	    $("#cureCycle").val(data.cureCycle);
@@ -79,10 +80,153 @@
 	   var patientPerson = new Array();
 	   var medicineNameList = new Array();
 	   var priceList = new Array();
+	   var diseaseList = new Array();
 	   //初始化加载
 	   $(function(){
-
+		   getLogUser();
 	   });
+	   
+	   function getDisease(){
+		   
+		   var selectWay = $("#selectWay").val();
+		   if(selectWay == 1){
+			   var pageDise = {
+						"pageNum":"1",
+						"pageSize":"5",
+						"param": {
+							"diseaseName": ""+$("#diseaseName").val()
+						}
+				}
+			   
+			   $.ajax({
+					async: false,
+					type: "post",
+					contentType: "application/json;charset=UTF-8",
+					url: "http://localhost:8080/dise/getDiseList",
+					data: JSON.stringify(pageDise),
+					success:function(result){
+						debugger;
+						fillDisease(result.value.list);
+					}
+				});
+		   }else if(selectWay == 2){
+			   var pageDise = {
+						"pageNum":"1",
+						"pageSize":"5",
+						"param": {
+							"illnessGrade": ""+$("#diseaseName").val()
+						}
+				}
+			   
+			   $.ajax({
+					async: false,
+					type: "post",
+					contentType: "application/json;charset=UTF-8",
+					url: "http://localhost:8080/case/getCaseName",
+					data: JSON.stringify(pageDise),
+					success:function(result){
+						debugger;
+						fillCaseList(result.value.list);
+					}
+				});
+		   }
+		   
+	   }
+	   
+	   function fillCaseList(diseases){
+		   var height = 0;
+		   $("#diseaseShow").empty();
+		   diseaseList = new Array();
+		   var line = diseases.length >=5 ? 5 : diseases.length;
+		   for (var item = 0; item < line; item++) {
+			   
+			   $("<button class='show-word-size show-button' href='javascript:void(0)' onclick='FillCaseBlack("+item+")'></button>")
+			         .append(diseases[item].illnessGrade).appendTo("#diseaseShow");
+			   height = height + 25;
+			   diseaseList.push(diseases[item]);
+           }
+		   $("#diseaseShow").css("height", height);
+	   }
+	   
+	   function FillCaseBlack(item){
+		   $("#diseaseName").val(diseaseList[item].illnessGrade);
+		   $("#illnessDesc").val(diseaseList[item].illnessDesc);
+		   fillCaseMedicine(diseaseList[item].caseDetail);
+		   $("#diseaseShow").empty();
+		   $("#diseaseShow").css("height", 0);
+	   }
+	   
+	   function fillCaseMedicine(caseDetail){
+		   
+		   $("#medicineBody").empty();
+			$.each(caseDetail, function(index, item) {
+			//药名和用量
+			var medicineNameTd = $("<input name='medicineName' onkeyup='getMedicine(this)' required='required' value='"+item.medicineName+"' style='width: 120px;height: 25px;'  /><div id='medishow' class='medishow'></div>"+
+					"<input name='remark' placeholder='用量' required='required' value='"+item.remark+"' style='width: 100px;height: 25px;'  />");
+			var diseaseMedicine= $("<td colspan='3' align='right'>药名</td>").append(medicineNameTd);
+			//数量
+			var diseaseMedicineLable = $("<td align='right'>数&nbsp;量</td>");
+			//数量和价格text.replace(/[^0-9]/ig,"");
+			var medicineNumAndPrice = $("<input name='price' type='hidden' value='"+item.price+"' />"+
+					"<input name='consumption' required='required' value='"+item.consumption.replace(/[^0-9]/ig,'')+"' onblur='countPrice(this);' style='width: 20px;height: 25px;' />"+
+					"<select name='mediunit' style='width: 45px;height: 30px;'><option value='盒' selected='selected'>盒</option><option value='袋'>袋</option><option value='瓶'>瓶</option><option value='其他'>其他</option></select>"+
+					"<input type='button' style='width: 25px;height: 25px;' onclick='operateMedicine(this)' id='addMedicine' value='+' /><input name='total' value='"+item.totalPrice+"' onblur='countPrice(this);' placeholder='总价' style='width: 50px;height: 25px;' />");
+			
+			$("#mediunit").val(item.consumption.replace(/[0-9]/ig,''));
+			var diseaseNumAndPrice= $("<td align='left' colspan='2'></td>").append(medicineNumAndPrice);
+			
+			$("<tr></tr>").append(diseaseMedicine).append(diseaseMedicineLable).append(diseaseNumAndPrice)
+			.appendTo("#medicineBody");
+			});
+			
+			
+	   }
+	   
+	   function fillDisease(diseases){
+		   var height = 0;
+		   $("#diseaseShow").empty();
+		   diseaseList = new Array();
+		   var line = diseases.length >=5 ? 5 : diseases.length;
+		   for (var item = 0; item < line; item++) {
+			   
+			   $("<button class='show-word-size show-button' href='javascript:void(0)' onclick='fillDiseaseBlack("+item+")'></button>")
+			         .append(diseases[item].diseaseName).appendTo("#diseaseShow");
+			   height = height + 25;
+			   diseaseList.push(diseases[item]);
+           }
+		   $("#diseaseShow").css("height", height);
+	   }
+	   
+	   function fillDiseaseBlack(item){
+		   $("#diseaseName").val(diseaseList[item].diseaseName);
+		   $("#illnessDesc").val(diseaseList[item].deseaseDescription+"\n"+diseaseList[item].therapeuticMethod);
+		   fillCaseMedicine(null);
+		   $("#diseaseShow").empty();
+		   $("#diseaseShow").css("height", 0);
+	   }
+	   
+	   function cleandiseaseShow(){
+		   $("#diseaseShow").empty();
+		   $("#diseaseShow").css("height", 0);
+	   }
+	   
+	   function getLogUser(){
+			$.ajax({
+		        async: false,
+		        type: "get",
+		        contentType: "application/json;charset=UTF-8",
+		        url: "http://localhost:8080/sys/getLoginUser",
+		        success:function(result){
+		        	debugger;
+		            //alert(result.success);
+		            if(result.success){
+		                $("#doctorName").val(result.value.doctor.doctorName);
+		            }else{
+		            	window.location.href = "http://localhost:8080/login";
+		            }
+		        }
+		    });
+		}
 	   
 	   	function fillMedicine(medicine){
 			$("#medicineBody").empty();
@@ -210,6 +354,7 @@
 			//药品
 			var list = new Array();
 			var medicineNames = $("[name='medicineName']");
+			var remarks = $("[name='remark']");
 			var consumptions = $("[name='consumption']");
 			var mediunits = $("[name='mediunit']");
 			var prices = $("[name='price']");
@@ -217,6 +362,7 @@
 			for (var i = 0; i < medicineNames.length; i++) {
 				var medicine = {};
 				medicine.medicineName = $(medicineNames[i]).val();
+				medicine.remark = $(remarks[i]).val();
 				medicine.consumption = ""+$(consumptions[i]).val()+$(mediunits[i]).val();
 				medicine.price = $(prices[i]).val();
 				medicine.totalPrice = $(totalPrices[i]).val();
@@ -229,6 +375,7 @@
 				"patientSex" : "" + $("#patientSex").val(),
 				"patientAge" : "" + $("#patientAge").val(),
 				"illnessTime" : "" + $("#illnessTime").val(),
+				"illnessGrade" : "" + $("#diseaseName").val(),
 				"cureCycle" : "" + $("#cureCycle").val(),
 				"doctorName" : "" + $("#doctorName").val(),
 				"cureTime" : "" + $("#cureTime").val(),

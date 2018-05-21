@@ -27,6 +27,11 @@ public class CaseServiceServiceImpl implements ICaseService{
     public PageInfo<CaseDTO> getCaseList(PageRequestDTO<CaseDTO> page) {
         PageHelper.startPage(page.getPageNum(), page.getPageSize());
         List<CaseDTO> list = caseMapper.queryCaseList(page.getParam());
+        for (CaseDTO ca : list) {
+            List<CaseMedicineDetailDTO> detailList = caseMedicineDetailMapper.queryDetailList(ca.getCaseId());
+            if(detailList.size()>0)
+                ca.setCaseDetail(detailList);
+        }
         return new PageInfo<CaseDTO>(list);
     }
 

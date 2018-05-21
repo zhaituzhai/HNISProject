@@ -27,8 +27,15 @@ public class CaseInfoDTO {
     private Date cureTime;
     private String doctorName;
     private String illnessDesc;
+    private String illnessGrade;
     private List<CaseMedicineDetailDTO> detailList;
     
+    public String getIllnessGrade() {
+        return illnessGrade;
+    }
+    public void setIllnessGrade(String illnessGrade) {
+        this.illnessGrade = illnessGrade;
+    }
     public Date getCureTime() {
         return cureTime;
     }

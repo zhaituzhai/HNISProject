@@ -52,7 +52,6 @@
 		    </td>
 		    <td width="90" align="right" valign="middle">性别</td>
 		    <td width="90" align="right" valign="middle">
-		          <!-- <input id="patientSex" required="required" lay-verify="requcheck" style="width: 90px;height: 25px;" /> -->
 	    		 <select id="patientSex" style="width: 90px;height: 30px;">
 	                 <option value="男" selected="selected">男</option>
 	                 <option value="女">女</option>
@@ -60,7 +59,7 @@
 		    </td>
 		    <td width="90" align="right" valign="middle">年龄</td>
 		    <td width="90" align="right" valign="middle">
-		    	<input id="patientAge" required="required" lay-verify="requcheck" style="width: 90px;height: 25px;" />
+		    	<input id="patientAge" required="required" onfocus="cleanName();" lay-verify="requcheck" style="width: 90px;height: 25px;" />
 		    </td>
 		  </tr>
 		  <tr>
@@ -75,14 +74,24 @@
 		  <tr><td class="my-table-td2">		  
 		  <table cellspacing="8px;" class="word-size" width="581" align="center">
 		  <tr>
-		    <td colspan="3" align="left" width="90">病情描述</td>
-		    <td width="90">&nbsp;</td>
-		    <td width="90">&nbsp;</td>
-		    <td width="90">&nbsp;</td>
+		    <td colspan="2" align="left" width="90">病情描述</td>
+		    <td width="90">
+		    <select id="selectWay" style="width: 85px;height: 30px;">
+                     <option value="1" selected="selected">疾病库</option>
+                     <option value="2">历史</option>
+                </select>
+            </td>
+		    <td width="90">疾病名称</td>
+		    <td colspan="2" align="left" width="90">
+                <input id="diseaseName" onkeyup="getDisease()" style="width: 150px;height: 25px;" />
+                <div id="diseaseShow" class="diseaseShow">
+                </div>
+            </td>
+		    
 		  </tr>
 		  <tr>
 		    <td align="left" colspan="6">
-		    	<textarea id="illnessDesc" lay-verify="requcheck" style="width: 553px;height: 130px;"></textarea>
+		    	<textarea id="illnessDesc" onfocus="cleandiseaseShow();" style="width: 553px;height: 130px;"></textarea>
 		    </td>
 		    </tr>
 		  </table>
@@ -99,13 +108,14 @@
 		  </tr>
 		  <tbody id="medicineBody">
 		  <tr>
-		    <td align="right">药&nbsp;名</td>
-		    <td colspan="2" align="left">
-		    	<input name="medicineName" onkeyup="getMedicine(this)" lay-verify="requcheck" required="required" style="width: 180px;height: 25px;"  />
+		    <!-- <td align="right">药&nbsp;名</td> -->
+		    <td colspan="3" align="right">药名
+		    	<input name="medicineName" onkeyup="getMedicine(this)" required="required" style="width: 120px;height: 25px;"  />
 		    	<div id="medishow" class="medishow">
                 </div>
+                <input name="remark" placeholder="用量" required="required" value="" style="width: 100px;height: 25px;"  />
 		    </td>
-		    <td align="right">用&nbsp;量</td>
+		    <td align="right">数&nbsp;量</td>
 		    <td align="left" colspan="2">
 		    	<input name="price" type="hidden" />
 		    	<input name="consumption" required="required" onblur="countPrice(this);" style="width: 20px;height: 25px;" />
@@ -116,7 +126,7 @@
 	                 <option value="其他">其他</option>
 	            </select>
 		    	<input type="button" style="width: 25px;height: 25px;" onclick="operateMedicine(this)" id="addMedicine" value="+" />
-		    	<input name="total" onblur="countPrice(this);" style="width: 50px;height: 25px;" />
+		    	<input name="total" onblur="countPrice(this);" placeholder="总价" style="width: 50px;height: 25px;" />
 		    </td>
 		  </tr>
 		  </tbody>
@@ -135,7 +145,7 @@
 		  <tr>
 		    <td width="90">医生</td>
 		    <td width="90">
-		    	<input id="doctorName" required="required" lay-verify="requcheck" style="width: 90px;height: 25px;" />
+		    	<input id="doctorName" required="required" readonly="readonly" style="width: 90px;height: 25px;" />
 		    </td>
 		    <td>&nbsp;</td>
 		    <td width="90">时间</td>

@@ -190,6 +190,9 @@
     <if test="illnessDesc != null and illnessDesc !='' ">
     and  illness_desc LIKE concat(concat('%',#{illnessDesc,jdbcType=VARCHAR}),'%')
     </if>
+    <if test="illnessGrade != null and illnessGrade !='' ">
+    and  illness_grade LIKE concat(concat('%',#{illnessGrade,jdbcType=VARCHAR}),'%')
+    </if>
     <if test="enterPerson !=null and enterPerson !=''">
     and enter_person = #{enterPerson,jdbcType=VARCHAR}
     </if>
