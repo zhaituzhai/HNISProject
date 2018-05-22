@@ -178,9 +178,9 @@
 			$("<tr></tr>").append(diseaseMedicine).append(diseaseMedicineLable).append(diseaseNumAndPrice)
 			.appendTo("#medicineBody");
 			});
-			
-			
 	   }
+	   
+	   
 	   
 	   function fillDisease(diseases){
 		   var height = 0;
@@ -200,10 +200,19 @@
 	   function fillDiseaseBlack(item){
 		   $("#diseaseName").val(diseaseList[item].diseaseName);
 		   $("#illnessDesc").val(diseaseList[item].deseaseDescription+"\n"+diseaseList[item].therapeuticMethod);
-		   fillCaseMedicine(null);
+		   fillCaseNullMedicine(null);
 		   $("#diseaseShow").empty();
 		   $("#diseaseShow").css("height", 0);
 	   }
+	   function fillCaseNullMedicine(){
+		   $("#medicineBody").empty();
+		   $("<tr><td colspan='3' align='right'>药名<input name='medicineName' onkeyup='getMedicine(this)' required='required' style='width: 120px;height: 25px;'  /><div id='medishow' class='medishow'></div>"+
+				   "<input name='remark' placeholder='用量' required='required' value='' style='width: 100px;height: 25px;'  /></td><td align='right'>数&nbsp;量</td>"+
+				   "<td align='left' colspan='2'><input name='price' type='hidden' /><input name='consumption' required='required' onblur='countPrice(this);' style='width: 20px;height: 25px;' />"+
+				   "<select name='mediunit' style='width: 45px;height: 30px;'><option value='盒' selected='selected'>盒</option><option value='袋'>袋</option><option value='瓶'>瓶</option><option value='其他'>其他</option></select>"+
+				   "<input type='button' style='width: 25px;height: 25px;' onclick='operateMedicine(this)' id='addMedicine' value='+' /><input name='total' onblur='countPrice(this);' placeholder='总价' style='width: 50px;height: 25px;' /></td></tr>").appendTo("#medicineBody");
+	   }
+	   
 	   
 	   function cleandiseaseShow(){
 		   $("#diseaseShow").empty();
