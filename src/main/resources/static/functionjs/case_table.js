@@ -142,7 +142,7 @@
 			   
 			   $("<button class='show-word-size show-button' href='javascript:void(0)' onclick='FillCaseBlack("+item+")'></button>")
 			         .append(diseases[item].illnessGrade).appendTo("#diseaseShow");
-			   height = height + 25;
+			   height = height + 20;
 			   diseaseList.push(diseases[item]);
            }
 		   $("#diseaseShow").css("height", height);
@@ -161,7 +161,8 @@
 		   $("#medicineBody").empty();
 			$.each(caseDetail, function(index, item) {
 			//药名和用量
-			var medicineNameTd = $("<input name='medicineName' onkeyup='getMedicine(this)' required='required' value='"+item.medicineName+"' style='width: 120px;height: 25px;'  /><div id='medishow' class='medishow'></div>"+
+				
+			/*var medicineNameTd = $("<input name='medicineName' onkeyup='getMedicine(this)' required='required' value='"+item.medicineName+"' style='width: 120px;height: 25px;'  /><div id='medishow' class='medishow'></div>"+
 					"<input name='remark' placeholder='用量' required='required' value='"+item.remark+"' style='width: 100px;height: 25px;'  />");
 			var diseaseMedicine= $("<td colspan='3' align='right'>药名</td>").append(medicineNameTd);
 			//数量
@@ -173,11 +174,17 @@
 					"<input type='button' style='width: 25px;height: 25px;' onclick='operateMedicine(this)' id='addMedicine' value='+' /><input name='total' value='"+item.totalPrice+"' onblur='countPrice(this);' placeholder='总价' style='width: 50px;height: 25px;' />");
 			
 			$("#mediunit").val(item.consumption.replace(/[0-9]/ig,''));
-			var diseaseNumAndPrice= $("<td align='left' colspan='2'></td>").append(medicineNumAndPrice);
+			var diseaseNumAndPrice= $("<td align='left' colspan='2'></td>").append(medicineNumAndPrice);*/
 			
-			$("<tr></tr>").append(diseaseMedicine).append(diseaseMedicineLable).append(diseaseNumAndPrice)
+			$("<tr><td></td><td><input name='medicineName' onkeyup='getMedicine(this)' required='required' style='width: 120px;height: 25px;' value='"+item.medicineName.substring(0,item.medicineName.indexOf('_'))+"'  />"+
+					"<div id='medishow' class='medishow'></div></td>"+
+					"<td><input name='consumption' required='required' onblur='countPrice(this);' style='width: 40px;height: 27px;' />&nbsp;<select name='mediunit' style='width: 55px;height: 30px;'><option value='克' selected='selected'>克</option><option value='袋'>袋</option><option value='其他'>其他</option></select></td>"+
+					"<td><input name='price' type='text' readonly='readonly' value='"+item.price+"' style='width: 60px;height: 25px;' /></td>"+
+					"<td><input name='total' onblur='countPrice(this);' placeholder='总价' style='width: 60px;height: 25px;' /></td>"+
+					"<td><input type='button' style='width: 25px;height: 25px;' onclick='operateMedicine(this)' id='addMedicine' value='-' /></td></tr>")
 			.appendTo("#medicineBody");
 			});
+			$("#medicineBody").children(":last").children(":last").children(":last").val("+");
 	   }
 	   
 	   
@@ -188,7 +195,7 @@
 		   diseaseList = new Array();
 		   var line = diseases.length >=5 ? 5 : diseases.length;
 		   for (var item = 0; item < line; item++) {
-			   
+			   //item.medicineName.substring(0,item.medicineName.indexOf('_'))
 			   $("<button class='show-word-size show-button' href='javascript:void(0)' onclick='fillDiseaseBlack("+item+")'></button>")
 			         .append(diseases[item].diseaseName).appendTo("#diseaseShow");
 			   height = height + 25;
@@ -200,7 +207,7 @@
 	   function fillDiseaseBlack(item){
 		   $("#diseaseName").val(diseaseList[item].diseaseName);
 		   $("#illnessDesc").val(diseaseList[item].deseaseDescription+"\n"+diseaseList[item].therapeuticMethod);
-		   fillCaseNullMedicine(null);
+		   fillCaseMedicine(diseaseList[item].diseaseMedicineList);
 		   $("#diseaseShow").empty();
 		   $("#diseaseShow").css("height", 0);
 	   }
@@ -276,12 +283,12 @@
 		   medicineNameList = medicines;
 		   var bort = $(obj).next();
 		   $(bort).empty();
-           var line = medicines.length >=5 ? 5 : medicines.length;
+           var line = medicines.length >=5 ? 5 : medicines.length;//item.medicineName.substring(0,item.medicineName.indexOf('_'))
            for (var item = 0; item < line; item++) {
                var height = 0;
                $("<button class='show-medi-size medishow-button' href='javascript:void(0)' onclick='fillMediBlack(this,"+item+")'></button>")
-                     .append(medicines[item].medicineId +"ൠ"+medicines[item].medicineName).appendTo(bort);
-               height = height + 25;
+                     .append(medicines[item].medicineId +"ൠ"+medicines[item].medicineName.substring(0,medicines[item].medicineName.indexOf('_'))).appendTo(bort);
+               height = height + 20;
                medicineNameList.push(medicines[item]);
                $(obj).css("height", height);
            }
@@ -290,7 +297,7 @@
 	   
        function fillMediBlack(obj,item){
     	   var bort = $(obj).parent().prev();
-    	   $(bort).val(medicineNameList[item].medicineName);
+    	   $(bort).val(medicineNameList[item].medicineName.substring(0,medicineNameList[item].medicineName.indexOf('_')));
     	   var price = $(obj).parent().parent().next().next().children(":first");
     	   $(price).val(medicineNameList[item].price);
     	   debugger;
@@ -333,7 +340,7 @@
 			   
 			   $("<button class='show-word-size show-button' href='javascript:void(0)' onclick='fillBlack("+item+")'></button>")
 			         .append(patients[item].patientId +"ൠ"+patients[item].patientName).appendTo("#nameshow");
-			   height = height + 25;
+			   height = height + 20;
 			   patientPerson.push(patients[item]);
            }
 		   $("#nameshow").css("height", height);
@@ -398,10 +405,10 @@
 		function countPrice(obj){
 			
 			var num = $(obj).val();
-			var price = $(obj).prev().val();
-			var priBou = $(obj).next().next().next();
+			var price = $(obj).parent().next().children(":first").val();
+			var priBou = $(obj).parent().next().next().children(":first");
 			debugger;
-			$(priBou).val(num*price); 
+			$(priBou).val((num*price).toFixed(2)); 
 		}
 
 		//保存信息

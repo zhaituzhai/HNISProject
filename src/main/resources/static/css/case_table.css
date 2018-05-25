@@ -3,6 +3,11 @@
     text-align: right; 
     text-valign: middle;
 }
+.word-size1 {
+    font-size: 17px;
+    text-align: center; 
+    text-valign: middle;
+}
 .my-table1 {
     border-top-width: 1px;
     border-left-width: 1px;
@@ -67,7 +72,7 @@
 
 .medishow {
     position: absolute;
-    margin-left: 41px;
+    margin-left: 19px;
     width: 120px;
     height: 0px;
     border: 1px solid #bfd1eb;
@@ -81,7 +86,7 @@
 }
 .medishow button {
     width: 120px;
-    height: 25px;
+    height: 20px;
     background-color: #ffffff;
     border: 0; 
 }

@@ -2,6 +2,7 @@ package com.zhaojm.bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -41,8 +42,28 @@ public class DiseaseDetailDTO implements Serializable {
 
     @ApiModelProperty("录入人")
     private String entryPerson;
+    
+    private String diseaseMedicine;
+    
+    private List<MedicineDTO> diseaseMedicineList;
 
     private static final long serialVersionUID = 1L;
+
+    public List<MedicineDTO> getDiseaseMedicineList() {
+        return diseaseMedicineList;
+    }
+
+    public void setDiseaseMedicineList(List<MedicineDTO> diseaseMedicineList) {
+        this.diseaseMedicineList = diseaseMedicineList;
+    }
+
+    public String getDiseaseMedicine() {
+        return diseaseMedicine;
+    }
+
+    public void setDiseaseMedicine(String diseaseMedicine) {
+        this.diseaseMedicine = diseaseMedicine;
+    }
 
     public Integer getDiseaseId() {
         return diseaseId;

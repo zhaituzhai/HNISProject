@@ -96,38 +96,49 @@
 		    </tr>
 		  </table>
         </td></tr>
-        <tr><td class="my-table-td2">
-        <table id="medicineTable" cellspacing="8px;" class="word-size" width="581" align="center">
-		  <tr>
-		    <td width="90px;" align="left">用&nbsp;药</td>
-		    <td width="90px;">&nbsp;</td>
-		    <td width="90px;">&nbsp;</td>
-		    <td width="90px;">&nbsp;</td>
-		    <td width="90px;">&nbsp;</td>
-		    <td width="90px;">&nbsp;</td>
-		  </tr>
+        <tr>
+            <td width="90px;" align="left">用&nbsp;药</td>
+          </tr>
+        <tr>
+        <td class="my-table-td2">
+        <table id="medicineTable" cellspacing="8px;" class="word-size1" width="581" align="center">
+		  <thead>
+			  <tr>
+			      
+			      <td></td>
+			      <td>药名</td>
+			      <td>用量</td>
+			      <td>价格</td>
+			      <td>总价</td>
+			      <td>操作</td>
+			  </tr>
+		  </thead>
 		  <tbody id="medicineBody">
-		  <tr>
-		    <td colspan="3" align="right">药名
-		    	<input name="medicineName" onkeyup="getMedicine(this)" required="required" style="width: 120px;height: 25px;"  />
-		    	<div id="medishow" class="medishow">
-                </div>
-                <input name="remark" placeholder="用量" required="required" value="" style="width: 100px;height: 25px;"  />
-		    </td>
-		    <td align="right">数&nbsp;量</td>
-		    <td align="left" colspan="2">
-		    	<input name="price" type="hidden" />
-		    	<input name="consumption" required="required" onblur="countPrice(this);" style="width: 20px;height: 25px;" />
-		    	<select name="mediunit" style="width: 45px;height: 30px;">
-	                 <option value="盒" selected="selected">盒</option>
-	                 <option value="袋">袋</option>
-	                 <option value="瓶">瓶</option>
-	                 <option value="其他">其他</option>
-	            </select>
-		    	<input type="button" style="width: 25px;height: 25px;" onclick="operateMedicine(this)" id="addMedicine" value="+" />
-		    	<input name="total" onblur="countPrice(this);" placeholder="总价" style="width: 50px;height: 25px;" />
-		    </td>
-		  </tr>
+		      <tr>
+		          <td></td>
+		          <td>
+			        <input name="medicineName" onkeyup="getMedicine(this)" required="required" style="width: 120px;height: 25px;"  />
+	                <div id="medishow" class="medishow">
+	                </div>
+		          </td>
+		          <td>
+		            <input name="consumption" required="required" onblur="countPrice(this);" style="width: 40px;height: 27px;" />&nbsp;
+	                <select name="mediunit" style="width: 55px;height: 30px;">
+	                     <option value="克" selected="selected">克</option>
+	                     <option value="袋">袋</option>
+	                     <option value="其他">其他</option>
+	                </select>
+		          </td>
+		          <td>
+		              <input name="price" type="text" readonly="readonly" style="width: 60px;height: 25px;" />
+		          </td>
+		          <td>
+                      <input name="total" onblur="countPrice(this);" placeholder="总价" style="width: 60px;height: 25px;" />
+                  </td>
+                  <td>
+                      <input type="button" style="width: 25px;height: 25px;" onclick="operateMedicine(this)" id="addMedicine" value="+" />
+                  </td>
+		      </tr>
 		  </tbody>
 		  </table>
 		  </td></tr>
@@ -167,6 +178,27 @@
 	</div>
 	</form>
 	</div>
+	<!-- <tr>
+            <td colspan="3" align="right">药名
+                <input name="medicineName" onkeyup="getMedicine(this)" required="required" style="width: 120px;height: 25px;"  />
+                <div id="medishow" class="medishow">
+                </div>
+                <input name="remark" placeholder="用量" required="required" value="" style="width: 100px;height: 25px;"  />
+            </td>
+            <td align="right">数&nbsp;量</td>
+            <td align="left" colspan="2">
+                <input name="price" type="hidden" />
+                <input name="consumption" required="required" onblur="countPrice(this);" style="width: 20px;height: 25px;" />
+                <select name="mediunit" style="width: 45px;height: 30px;">
+                     <option value="盒" selected="selected">克</option>
+                     <option value="袋">袋</option>
+                     <option value="瓶">瓶</option>
+                     <option value="其他">其他</option>
+                </select>
+                <input type="button" style="width: 25px;height: 25px;" onclick="operateMedicine(this)" id="addMedicine" value="+" />
+                <input name="total" onblur="countPrice(this);" placeholder="总价" style="width: 50px;height: 25px;" />
+            </td>
+          </tr> -->
 	<br />
 	<br />
 	<br />
