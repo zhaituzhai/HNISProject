@@ -2,14 +2,11 @@ package com.zhaojm.bean;
 
 import java.io.Serializable;
 
-import org.springframework.boot.test.mock.mockito.MockBean;
-
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * @author 
  */
-@MockBean
 public class DictionaryDTO implements Serializable {
     @ApiModelProperty("字典主键")
     private Integer dictionaryId;

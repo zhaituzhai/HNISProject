@@ -2,14 +2,11 @@ package com.zhaojm.bean;
 
 import java.io.Serializable;
 
-import org.springframework.boot.test.mock.mockito.MockBean;
-
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * @author 
  */
-@MockBean
 public class InformationDTO implements Serializable {
     @ApiModelProperty("资讯主键")
     private Integer informationId;

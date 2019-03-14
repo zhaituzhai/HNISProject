@@ -19,3 +19,12 @@ spring:
     max-idle: 8
     min-idle: 8
     initial-size: 10
+    
+    
+    
+app.session.outtime: 3600
+    
+    
+    
+    
+    

@@ -2,14 +2,11 @@ package com.zhaojm.bean;
 
 import java.io.Serializable;
 
-import org.springframework.boot.test.mock.mockito.MockBean;
-
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * @author 
  */
-@MockBean
 public class DoctorDTO implements Serializable {
     @ApiModelProperty("医生主键")
     private Integer doctorId;

@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.zhaojm</groupId>
@@ -88,28 +87,67 @@
 		</dependency>
 		<!-- 如果想用springmvc @RequestBody注解做提交json字符串自动绑定到pojo入参时， 类型需要是"application/json;charset=UTF-8"，否则会抛"not 
 			supported"异常。 -->
-		
+
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
-
 	</dependencies>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<dependencies>
-					<dependency>
-						<groupId>org.springframework</groupId>
-						<artifactId>springloaded</artifactId>
-						<version>1.2.5.RELEASE</version>
-					</dependency>
-				</dependencies>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<formats>
+						<!-- 报告显示格式（html为浏览器版，xml为数据版嵌入jenkins的数据） -->
+						<format>html</format>
+						<format>xml</format>
+					</formats>
+					<check>
+						<!-- 每个类的分支覆盖率 <branchRate>85</branchRate> 每个类的代码行覆盖率 <lineRate>85</lineRate> -->
+						<!--校验失败则中止.即为true时如果校验失败则打包执行失败,反之则只是打出告警日志 -->
+						<haltOnFailure>true</haltOnFailure>
+						<!--整体的分支覆盖率 -->
+						<!-- <totalBranchRate>85</totalBranchRate> 整体的代码行覆盖率 <totalLineRate>85</totalLineRate> 
+							每个包的分支行覆盖率 <packageBranchRate>85</packageBranchRate> 每个包的代码行覆盖率 <packageLineRate>85</packageLineRate> -->
+						<!-- 使用正则表达统计符合某个规则的的覆盖率的程度 （运行mvn cobertura:check时如果没有达到转haltOnFailure配置的内容） -->
+						<regexes>
+							<regex>
+								<pattern>com.zhaojm.cobertura.controller.*</pattern>
+								<branchRate>100</branchRate>
+								<lineRate>100</lineRate>
+							</regex>
+						</regexes>
+					</check>
+					<!-- 过滤不处理的类 -->
+					<instrumentation>
+						<!--<ignore>.*</ignore> -->
+						<excludes>
+							<!-- 过滤类名为某个规则的类 -->
+							<exclude>**/*Application.class</exclude>
+							<exclude>**/*Enum.class</exclude>
+							<!-- 过滤包下的所有类 -->
+							<exclude>**/bean/*.class</exclude>
+							<!-- <exclude>**/*Service.class</exclude> -->
+							<!-- <exclude>**/*Test.class</exclude> -->
+						</excludes>
+					</instrumentation>
+				</configuration>
+				<!-- 执行周期 -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>clean</goal>
+							<goal>cobertura</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
+
 </project>

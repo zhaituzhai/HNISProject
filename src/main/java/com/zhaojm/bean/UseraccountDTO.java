@@ -3,8 +3,6 @@ package com.zhaojm.bean;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.springframework.boot.test.mock.mockito.MockBean;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -12,7 +10,6 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * @author 
  */
-@MockBean
 public class UseraccountDTO implements Serializable {
     @ApiModelProperty("用户主键")
     private Integer userId;
