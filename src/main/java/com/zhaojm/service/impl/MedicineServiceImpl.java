@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.DocumentFactoryHelper;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -135,7 +135,7 @@ public class MedicineServiceImpl implements IMedicineService {
             }
             if (POIFSFileSystem.hasPOIFSHeader(inputStream)) {// 2003
                 workbook = new HSSFWorkbook(inputStream);
-            } else if (POIXMLDocument.hasOOXMLHeader(inputStream)) {// 2007
+            } else if (DocumentFactoryHelper.hasOOXMLHeader(inputStream)) {// 2007
                 workbook = new XSSFWorkbook(inputStream);
             }
             return workbook;
